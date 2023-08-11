@@ -15,6 +15,9 @@ class ParticleMap:
         self.mass_grav_body = mass_grav_body  # the mass of the main planetary body
         self.initial_equatorial_radius = initial_equatorial_radius  # the initial equatorial radius of the planet
         self.center = center  # whether to center the particles around the center of mass of the planet
+        self.bulk_density = None  # the bulk density of the planet
+        self.has_converged = False  # whether the iterative solution has converged
+        self.iterations = 0  # the number of iterations to converge
 
     def center_of_mass(self, particles: pd.DataFrame):
         """

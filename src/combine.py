@@ -8,7 +8,7 @@ class CombinedFile:
     Class for combining SPH outputs from different processes.
     """
 
-    def __init__(self, path: str, iteration: int, number_of_processes: int, to_fname):
+    def __init__(self, path: str, iteration: int, number_of_processes: int, to_fname: str):
         self.total_particles = None
         self.sim_time = None
         self.file_format = "results.{}_{}_{}.dat"
@@ -59,6 +59,7 @@ class CombinedFile:
         self.total_particles = total_N
 
     def combine_to_memory(self):
+        print("Combining to memory...")
         dfs = []
         total_N = 0
         time = 0
@@ -72,4 +73,5 @@ class CombinedFile:
             dfs.append(self.__read_sph_file())
         self.sim_time = time
         merged_df = pd.concat(dfs)
+        print(f"Done combining to memory.  {total_N} particles found in {self.number_of_processes} processes.")
         return merged_df

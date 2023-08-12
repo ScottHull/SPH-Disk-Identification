@@ -28,6 +28,7 @@ class ParticleMap:
         """
         Check if the iterative solution has converged.
         :param target_error: the target error to converge to.
+        :param equatorial_radius: the equatorial radius of the planet.
         :return:
         """
         self.error = np.abs(equatorial_radius - self.equatorial_radius) / self.equatorial_radius

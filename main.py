@@ -8,6 +8,8 @@ from src.identify import ParticleMap
 path = '/home/theia/scotthull/Paper2_SPH/gi/500_mars/500_mars'
 number_of_proceses = 600
 iteration = 500
+file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
+                "potential energy", "entropy", "temperature"]
 
 # define the planet parameters
 mass_planet = 6.39e23
@@ -21,6 +23,8 @@ combined_file = CombinedFile(
     number_of_processes=number_of_proceses,
     to_fname=to_fname
 ).combine_to_memory()
+# replace the headers
+combined_file.columns = file_headers
 
 # create the particle map
 particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)

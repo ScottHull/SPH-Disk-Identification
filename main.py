@@ -15,7 +15,12 @@ equatorial_radius = 3390e3
 
 # create the combined file
 to_fname = f"merged_{iteration}_{randint(1, int(1e5))}.dat"
-combined_file = CombinedFile(path, number_of_proceses, iteration, to_fname).combine_to_memory()
+combined_file = CombinedFile(
+    path=path,
+    iteration=iteration,
+    number_of_processes=number_of_proceses,
+    to_fname=to_fname
+).combine_to_memory()
 
 # create the particle map
 particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)

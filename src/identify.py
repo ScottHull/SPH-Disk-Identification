@@ -183,8 +183,14 @@ class ParticleMap:
         self.prepare_particles()  # prepare the particles for identification
         while not self.has_converged:
             print(f"Beginning convergence iteration {self.iterations}")
+            # calculate orbital elements
+            print("Calculating orbital elements...")
+            self.calculate_elements()
+            print("Calculating orbital elements complete.")
             # map the particles to their respective location
+            print("Mapping particles to their respective location...")
             self.particles.apply(self.is_planet_disk_or_escaping, axis=1)
+            print("Mapping particles to their respective location complete.")
             # calculate the new oblateness, planet mass, and equatorial radius
             mass_planet = self.particles[self.particles['label'] == 'PLANET']['mass'].sum()
             equatorial_radius = self.calculate_planetary_radii(mass_planet)

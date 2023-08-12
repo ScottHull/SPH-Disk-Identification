@@ -100,24 +100,24 @@ class ParticleMap:
         if particle['circular_semi_major_axis'] <= self.equatorial_radius:
             particle['label'] = 'PLANET'
 
-    def is_disk(self, particle):
+    def is_disk_or_escaping(self, particle):
         """
         If the periapsis of the particle is greater than the equatorial radius of the planet and it's not
         on a hyperbolic orbit, then it is part of the disk.
         :param particle:
         :return:
         """
-        if particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] < 1:
+        if particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] <= 1:
             particle['label'] = 'DISK'
-
-    def is_escaping(self, particle):
-        """
-        If the eccentricity of the particle is greater than 1 (i.e., hyperbolic orbit), then it is escaping.
-        :param particle:
-        :return:
-        """
-        if particle['eccentricity'] > 1:
+        elif particle['eccentricity'] > 1:
             particle['label'] = 'ESCAPE'
+
+    def is_planet_disk_or_escaping(self, particle):
+        """
+        Determine if a particle is part of the planet, disk, or escaping.
+        """
+        self.is_planet(particle)
+        self.is_disk_or_escaping(particle)
 
     def roche_radius(self):
         """
@@ -184,9 +184,7 @@ class ParticleMap:
         while not self.has_converged:
             print(f"Beginning convergence iteration {self.iterations}")
             # map the particles to their respective location
-            self.particles.apply(self.is_planet, axis=1)
-            self.particles.apply(self.will_be_planet, axis=1)
-            self.particles.apply(self.is_disk, axis=1)
+            self.particles.apply(self.is_planet_disk_or_escaping, axis=1)
             # calculate the new oblateness, planet mass, and equatorial radius
             mass_planet = self.particles[self.particles['label'] == 'PLANET']['mass'].sum()
             equatorial_radius = self.calculate_planetary_radii(mass_planet)
@@ -197,7 +195,8 @@ class ParticleMap:
             self.mass_planet = mass_planet
             self.equatorial_radius = equatorial_radius
             self.poloidal_radius = self.poloidal_radius * (1 - self.oblateness)
-            print(f"Convergence iteration {self.iterations} complete.")
+            print(f"Convergence iteration {self.iterations} complete (error: {self.error}).")
+            self.iterations += 1
 
     def loop(self, num_iterations=2):
         """

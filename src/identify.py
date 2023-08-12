@@ -36,7 +36,7 @@ class ParticleMap:
             self.has_converged = True
             return True
 
-    def center_of_mass(self, particles: pd.DataFrame):
+    def calculate_center_of_mass(self, particles: pd.DataFrame):
         """
         Calculate the center of mass.
         :return:
@@ -55,7 +55,7 @@ class ParticleMap:
         :return:
         """
         target_iron = self.particles[self.particles['tag'] == target_iron_id]
-        return self.center_of_mass(target_iron)
+        return self.calculate_center_of_mass(target_iron)
 
     def prepare_particles(self):
         """

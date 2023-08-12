@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 
-from src.elements import total_orbital_energy, angular_momentum, eccentricity, semi_major_axis
+from src.elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
+                          equivalent_circular_semi_major_axis, angular_momentum_vector, z_angular_momentum_vector)
 
 
 class ParticleMap:
@@ -9,15 +10,30 @@ class ParticleMap:
     Class for mapping particles to their respective location (planet, disk, or escaping particles.
     """
 
-    def __init__(self, particles: pd.DataFrame, mass_grav_body: float, initial_equatorial_radius: float, center=True):
+    def __init__(self, particles: pd.DataFrame, mass_planet: float, equatorial_radius: float, center=True):
         self.center_of_mass = None
         self.particles = particles  # the dataframe of particles
-        self.mass_grav_body = mass_grav_body  # the mass of the main planetary body
-        self.initial_equatorial_radius = initial_equatorial_radius  # the initial equatorial radius of the planet
+        self.mass_planet = mass_planet  # the mass of the main planetary body
+        self.equatorial_radius = equatorial_radius  # the equatorial radius of the planet
+        self.poloidal_radius = equatorial_radius  # the initial poloidal radius of the planet
+        self.oblateness = None  # the oblateness of the planet
         self.center = center  # whether to center the particles around the center of mass of the planet
+        self.f = None  # the oblateness factor of the planet
         self.bulk_density = None  # the bulk density of the planet
         self.has_converged = False  # whether the iterative solution has converged
         self.iterations = 0  # the number of iterations to converge
+        self.error = 1e99  # the error of the iterative solution
+
+    def check_convergence(self, equatorial_radius, target_error=10 ** -8):
+        """
+        Check if the iterative solution has converged.
+        :param target_error: the target error to converge to.
+        :return:
+        """
+        self.error = np.abs(equatorial_radius - self.equatorial_radius) / self.equatorial_radius
+        if self.error <= target_error:
+            self.has_converged = True
+            return True
 
     def center_of_mass(self, particles: pd.DataFrame):
         """
@@ -53,42 +69,44 @@ class ParticleMap:
 
         self.particles['velocity'] = np.linalg.norm(self.particles[['vx', 'vy', 'vz']].values, axis=1)
         self.particles['position'] = np.linalg.norm(self.particles[['x', 'y', 'z']].values, axis=1)
-        self.particles['orbital_energy'] = total_orbital_energy(self.particles, self.mass_grav_body)
-        self.particles['angular_momentum'] = angular_momentum(self.particles)
-        self.particles['eccentricity'] = eccentricity(self.particles)
-        self.particles['circular_semi_major_axis'] = -self.particles['orbital_energy'] / (self.mass_grav_body ** 2)
         self.particles['label'] = None
+
+    def planet_bulk_density(self):
+        """
+        Calculate the bulk density of the planet.
+        :return:
+        """
+        return self.mass_planet / (4 / 3 * np.pi * self.equatorial_radius ** 3)
 
     def is_planet(self, particle):
         """
         Determine if a particle is part of the planet.
-        Determines if the position of the particle is currently within the initial equatorial radius of the planet.
+        Determines if the position of the particle is currently within the equatorial radius of the planet.
         If so, it is by definition part of the planet.
         :param particle:
         :return:
         """
-        if particle['position'] <= self.initial_equatorial_radius:
+        if particle['position'] <= self.equatorial_radius:
             particle['label'] = 'PLANET'
 
     def will_be_planet(self, particle):
         """
         Determine if a particle will become part of the planet.
-        Determines if the semi-major axis of the circular orbit of the particle is within the initial equatorial radius
+        Determines if the semi-major axis of the circular orbit of the particle is within the equatorial radius
         of the planet.  If so, the particle will eventually accrete to the planet and become part of it.
         :return:
         """
-        if particle['circular_semi_major_axis'] <= self.initial_equatorial_radius:
+        if particle['circular_semi_major_axis'] <= self.equatorial_radius:
             particle['label'] = 'PLANET'
-
 
     def is_disk(self, particle):
         """
-        If the periapsis of the particle is greater than the initial equatorial radius of the planet and it's not
+        If the periapsis of the particle is greater than the equatorial radius of the planet and it's not
         on a hyperbolic orbit, then it is part of the disk.
         :param particle:
         :return:
         """
-        if particle['periapsis'] > self.initial_equatorial_radius and particle['eccentricity'] < 1:
+        if particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] < 1:
             particle['label'] = 'DISK'
 
     def is_escaping(self, particle):
@@ -100,14 +118,91 @@ class ParticleMap:
         if particle['eccentricity'] > 1:
             particle['label'] = 'ESCAPE'
 
+    def roche_radius(self):
+        """
+        Get the Roche radius of the planet.
+        :return: 
+        """
+        return 2.9 * self.equatorial_radius
+
+    def calculate_elements(self):
+        """
+        Calculate all necessary orbital elements in order.
+        :return:
+        """
+        self.particles['z_angular_momentum_vector'] = z_angular_momentum_vector(self.particles['mass'],
+                                                                                self.particles['position'],
+                                                                                self.particles['velocity'])
+        self.particles['angular_momentum_vector'] = angular_momentum_vector(self.particles['mass'],
+                                                                            self.particles['position'],
+                                                                            self.particles['velocity'])
+        self.particles['orbital_energy'] = total_orbital_energy(self.particles['mass'], self.particles['velocity'],
+                                                                self.mass_planet, self.particles['position'])
+        self.particles['angular_momentum'] = angular_momentum(self.particles['mass'], self.particles['position'],
+                                                              self.particles['velocity'])
+        self.particles['eccentricity'] = eccentricity(self.particles['mass'], self.mass_planet,
+                                                      self.particles['orbital_energy'],
+                                                      self.particles['angular_momentum'])
+        self.particles['semi_major_axis'] = semi_major_axis(self.particles['orbital_energy'],
+                                                            self.particles['mass'], self.mass_planet)
+        self.particles['circular_semi_major_axis'] = equivalent_circular_semi_major_axis(self.particles['mass'],
+                                                                                         self.particles[
+                                                                                             'angular_momentum'],
+                                                                                         self.mass_planet)
+
+    def calculate_planetary_oblateness(self, K=0.335):
+        """
+        Calculate the oblateness of the planet.
+        :param K:
+        :return:
+        """
+        G = 6.67408e-11  # m^3 kg^-1 s^-2, gravitational constant
+        z_angular_momentum_planet = self.particles['z_angular_momentum_vector'].sum()
+        moment_of_inertia_planet = (2.0 / 5.0) * self.mass_planet * self.equatorial_radius ** 2
+        angular_velocity_protoplanet = z_angular_momentum_planet / moment_of_inertia_planet
+        keplerian_velocity_protoplanet = np.sqrt(G * self.mass_planet / self.equatorial_radius ** 3)
+        numerator = (5.0 / 2.0) * ((angular_velocity_protoplanet / keplerian_velocity_protoplanet) ** 2)
+        denominator = 1.0 + ((5.0 / 2.0) - ((15.0 * K) / 4.0)) ** 2
+        return numerator / denominator
+
+    def calculate_planetary_radii(self, mass_planet):
+        """
+        Calculate the equatorial and polar radii of the planet.
+        :param mass_planet:
+        :return:
+        """
+        self.oblateness = self.calculate_planetary_oblateness()
+        return ((3 * mass_planet) / (4 * np.pi * self.bulk_density * (1 - self.oblateness))) ** (1 / 3)
+
     def identify(self):
         """
         The main function for identifying particles.
         :return:
         """
         self.prepare_particles()  # prepare the particles for identification
-        # map the particles to their respective location
-        self.particles.apply(self.is_planet, axis=1)
-        self.particles.apply(self.will_be_planet, axis=1)
-        self.particles.apply(self.is_disk, axis=1)
+        while not self.has_converged:
+            # map the particles to their respective location
+            self.particles.apply(self.is_planet, axis=1)
+            self.particles.apply(self.will_be_planet, axis=1)
+            self.particles.apply(self.is_disk, axis=1)
+            # calculate the new oblateness, planet mass, and equatorial radius
+            mass_planet = self.particles[self.particles['label'] == 'PLANET']['mass'].sum()
+            equatorial_radius = self.calculate_planetary_radii(mass_planet)
+            self.error = np.abs(equatorial_radius - self.equatorial_radius) / self.equatorial_radius
+            # check for solution convergence
+            self.has_converged = self.check_convergence(equatorial_radius)
+            # update the planet mass and equatorial radius
+            self.mass_planet = mass_planet
+            self.equatorial_radius = equatorial_radius
+            self.poloidal_radius = self.poloidal_radius * (1 - self.oblateness)
 
+    def loop(self, num_iterations=2):
+        """
+        Loop over the identification process until convergence.
+        :param num_iterations:
+        :return:
+        """
+        for i in range(num_iterations):
+            self.bulk_density = self.planet_bulk_density()
+            self.identify()
+        return self.particles

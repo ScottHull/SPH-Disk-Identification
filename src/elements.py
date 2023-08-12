@@ -14,6 +14,17 @@ def angular_momentum_vector(mass: float, position: np.array, velocity: np.array)
     return mass * np.cross(position, velocity)
 
 
+def z_angular_momentum_vector(mass: float, position: np.array, velocity: np.array):
+    """
+    Return the z component of the angular momentum of a particle.
+    :param mass:
+    :param position:
+    :param velocity:
+    :return:
+    """
+    return angular_momentum_vector(mass, position, velocity)[2]
+
+
 def angular_momentum(mass: float, position: np.array, velocity: np.array):
     """
     Returns the magnitude of the angular momentum of a particle.
@@ -51,8 +62,7 @@ def total_orbital_energy(mass: float, velocity: np.array, mass_grav_body: float,
     return kinetic_energy + potential_energy
 
 
-def eccentricity(mass: float, velocity: np.array, mass_grav_body: float, position: np.array,
-                 orbital_energy: float, angular_momentum: float):
+def eccentricity(mass: float, mass_grav_body: float, orbital_energy: float, angular_momentum: float):
     """
     Returns the eccentricity of a particle.
     :param mass:

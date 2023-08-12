@@ -182,6 +182,7 @@ class ParticleMap:
         """
         self.prepare_particles()  # prepare the particles for identification
         while not self.has_converged:
+            print(f"Beginning convergence iteration {self.iterations}")
             # map the particles to their respective location
             self.particles.apply(self.is_planet, axis=1)
             self.particles.apply(self.will_be_planet, axis=1)
@@ -196,6 +197,7 @@ class ParticleMap:
             self.mass_planet = mass_planet
             self.equatorial_radius = equatorial_radius
             self.poloidal_radius = self.poloidal_radius * (1 - self.oblateness)
+            print(f"Convergence iteration {self.iterations} complete.")
 
     def loop(self, num_iterations=2):
         """

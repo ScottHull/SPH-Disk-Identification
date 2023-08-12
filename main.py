@@ -24,13 +24,14 @@ combined_file = CombinedFile(
 
 # create the particle map
 particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
+particles = particle_map.loop()
 
 print("Particle map created!")
 print(
-    f"Planet mass: {particle_map.mass_planet}\n"
-    f"Planet radius: {particle_map.equatorial_radius}\n"
-    f"Planet density: {particle_map.bulk_density}\n"
-    f"# escaping particles: {len(particle_map[particle_map['label'] == 'ESCAPE'])}\n"
-    f"# disk particles: {len(particle_map[particle_map['label'] == 'DISK'])}\n"
-    f"# planet particles: {len(particle_map[particle_map['label'] == 'PLANET'])}\n"
+    f"Planet mass: {particles.mass_planet}\n"
+    f"Planet radius: {particles.equatorial_radius}\n"
+    f"Planet density: {particles.bulk_density}\n"
+    f"# escaping particles: {len(particles[particles['label'] == 'ESCAPE'])}\n"
+    f"# disk particles: {len(particles[particles['label'] == 'DISK'])}\n"
+    f"# planet particles: {len(particles[particles['label'] == 'PLANET'])}\n"
 )

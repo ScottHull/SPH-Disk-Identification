@@ -63,8 +63,8 @@ class CombinedFile:
         dfs = []
         total_N = 0
         time = 0
-        for proc in range(0, self.num_processes, 1):
-            self.curr_process = proc
+        for proc in range(0, self.number_of_processes, 1):
+            self.current_process = proc
             with open(self.__get_filename(), 'r') as infile:
                 reader = csv.reader(infile, delimiter="\t")
                 time = float(list(next(reader))[0])

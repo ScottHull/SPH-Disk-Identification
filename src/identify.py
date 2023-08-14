@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src.vectorized_elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
-                          equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
+                                     equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
 
 
 class ParticleMap:
@@ -125,7 +125,6 @@ class ParticleMap:
         is_disk_condition = particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] <= 1
         is_escape_condition = particle['eccentricity'] > 1 and particle['position'] > self.equatorial_radius
 
-
     def get_label(self):
         """
         Get the label of the particle, either planet, disk, or escaping.
@@ -133,8 +132,8 @@ class ParticleMap:
         """
         return np.where(self.particles['position'] <= self.equatorial_radius, 'PLANET',
                         np.where(self.particles['circular semi major axis'] <= self.equatorial_radius, 'PLANET',
-                                    np.where(self.particles['periapsis'] > self.equatorial_radius, 'DISK',
-                                                np.where(self.particles['eccentricity'] > 1, 'ESCAPE', None))))
+                                 np.where(self.particles['periapsis'] > self.equatorial_radius, 'DISK',
+                                          np.where(self.particles['eccentricity'] > 1, 'ESCAPE', None))))
 
     def roche_radius(self):
         """
@@ -221,7 +220,6 @@ class ParticleMap:
         The main function for identifying particles.
         :return:
         """
-        self.prepare_particles()  # prepare the particles for identification
         while not self.has_converged:
             print(f"Beginning convergence iteration {self.iterations}")
             # calculate orbital elements
@@ -252,6 +250,7 @@ class ParticleMap:
         :param num_iterations:
         :return:
         """
+        self.prepare_particles()  # prepare the particles for identification
         for i in range(num_iterations):
             self.bulk_density = self.planet_bulk_density()
             self.identify()

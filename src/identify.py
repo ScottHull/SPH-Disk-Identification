@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from src.elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
+from src.vectorized_elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
                           equivalent_circular_semi_major_axis, angular_momentum_vector, z_angular_momentum_vector)
 
 
@@ -131,24 +131,13 @@ class ParticleMap:
         Calculate all necessary orbital elements in order.
         :return:
         """
-        self.particles['z_angular_momentum_vector'] = z_angular_momentum_vector(self.particles['mass'],
-                                                                                self.particles['position'],
-                                                                                self.particles['velocity'])
-        self.particles['angular_momentum_vector'] = angular_momentum_vector(self.particles['mass'],
-                                                                            self.particles['position'],
-                                                                            self.particles['velocity'])
-        self.particles['orbital_energy'] = total_orbital_energy(self.particles['mass'], self.particles['velocity'],
-                                                                self.mass_planet, self.particles['position'])
-        self.particles['angular_momentum'] = angular_momentum(self.particles['mass'], self.particles['position'],
-                                                              self.particles['velocity'])
-        self.particles['eccentricity'] = eccentricity(self.particles['mass'], self.mass_planet,
-                                                      self.particles['orbital_energy'],
-                                                      self.particles['angular_momentum'])
-        self.particles['semi_major_axis'] = semi_major_axis(self.particles['orbital_energy'],
-                                                            self.particles['mass'], self.mass_planet)
-        self.particles['circular_semi_major_axis'] = equivalent_circular_semi_major_axis(self.particles['mass'],
-                                                                                         self.particles[
-                                                                                             'angular_momentum'],
+        self.particles['angular momentum vector'] = angular_momentum_vector(self.particles)
+        self.particles['z angular momentum vector'] = z_angular_momentum_vector(self.particles)
+        self.particles['angular momentum'] = angular_momentum(self.particles)
+        self.particles['orbital energy'] = total_orbital_energy(self.particles, self.mass_planet)
+        self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)
+        self.particles['semi major axis'] = semi_major_axis(self.particles, self.mass_planet)
+        self.particles['circular semi major axis'] = equivalent_circular_semi_major_axis(self.particles,
                                                                                          self.mass_planet)
 
     def calculate_planetary_oblateness(self, K=0.335):

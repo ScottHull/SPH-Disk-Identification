@@ -1,5 +1,6 @@
 import pandas as pd
 from random import randint
+import matplotlib.pyplot as plt
 
 from src.combine import CombinedFile
 from src.identify import ParticleMap
@@ -40,3 +41,22 @@ print(
     f"# planet particles: {len(particles[particles['label'] == 'PLANET'])}\n"
     f"# error particles: {len(particles[particles['label'] == None])}"
 )
+
+fig = plt.figure(figsize=(10, 10))
+# use the dark background
+plt.style.use('dark_background')
+ax = fig.add_subplot(111)
+# scatter planet, disk, and escaping particles
+for i in ['PLANET', 'DISK', 'ESCAPE']:
+    ax.scatter(
+        particles[particles['label'] == i]['x'] / 10 ** 7,
+        particles[particles['label'] == i]['y'] / 10 ** 7,
+        s=2,
+        label=i
+    )
+legend = ax.legend(loc='upper right')
+# increase legend marker size
+for i in legend.legendHandles:
+    i.set_sizes([20])
+
+plt.savefig("test.png", dpi=300)

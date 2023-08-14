@@ -211,7 +211,9 @@ class ParticleMap:
         planet = len(self.particles[self.particles['label'] == 'PLANET'])
         disk = len(self.particles[self.particles['label'] == 'DISK'])
         escape = len(self.particles[self.particles['label'] == 'ESCAPE'])
-        print(f"Getting number of particles in planet, disk, and escaping complete ({planet}, {disk}, {escape}).")
+        not_labelled = len(self.particles[self.particles['label'] == None])
+        print(f"Getting number of particles in planet, disk, and escaping complete ({planet}, {disk}, {escape} "
+              f"(errors, {not_labelled})).")
         return planet, disk, escape
 
     def identify(self):

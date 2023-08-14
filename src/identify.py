@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src.vectorized_elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
-                          equivalent_circular_semi_major_axis, angular_momentum_vector, z_angular_momentum_vector)
+                          equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
 
 
 class ParticleMap:
@@ -138,6 +138,7 @@ class ParticleMap:
         self.particles['orbital energy'] = total_orbital_energy(self.particles, self.mass_planet)
         self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)
         self.particles['semi major axis'] = semi_major_axis(self.particles, self.mass_planet)
+        self.particles['periapsis'] = periapsis(self.particles, self.mass_planet)
         self.particles['circular semi major axis'] = equivalent_circular_semi_major_axis(self.particles,
                                                                                          self.mass_planet)
 

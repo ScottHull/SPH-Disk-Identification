@@ -18,21 +18,24 @@ equatorial_radius = 3390e3
 
 # create the combined file
 to_fname = f"merged_{iteration}_{randint(1, int(1e5))}.dat"
-combined_file = CombinedFile(
+c = CombinedFile(
     path=path,
     iteration=iteration,
     number_of_processes=number_of_proceses,
     to_fname=to_fname
-).combine_to_memory()
+)
+combined_file = c.combine_to_memory()
 # replace the headers
 combined_file.columns = file_headers
-
+time = combined_file.sim_time
 # create the particle map
 particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
 particles = particle_map.loop()
 
 print("Particle map created!")
 print(
+    f"Time: {time} hours\n"
+    f"Iteration: {iteration}\n"
     f"Planet mass: {particle_map.mass_planet} kg\n"
     f"Planet radius: {particle_map.equatorial_radius / 1000} km\n"
     f"Planet density: {particle_map.bulk_density} kg/m3\n"
@@ -46,6 +49,9 @@ fig = plt.figure(figsize=(10, 10))
 # use the dark background
 plt.style.use('dark_background')
 ax = fig.add_subplot(111)
+ax.set_title(f"{time} hrs. (Iteration {iteration})")
+ax.set_xlim(-20, 20)
+ax.set_ylim(-20, 20)
 # scatter planet, disk, and escaping particles
 for i in ['PLANET', 'DISK', 'ESCAPE']:
     ax.scatter(

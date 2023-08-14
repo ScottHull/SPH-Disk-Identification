@@ -31,6 +31,12 @@ class CombinedFile:
         df = pd.read_csv(self.__get_filename(), sep='\t', skiprows=2, header=None)
         return df
 
+    def format_time(self, time):
+        """
+        Takes the SPH time given in seconds and converts it to hours with 2 decimal places.
+        """
+        return round(time / 3600, 2)
+
     def write_combined_file(self):
         dfs = []
         total_N = 0
@@ -55,7 +61,7 @@ class CombinedFile:
         temp.close()
         os.remove(self.to_fname.format(self.iteration))
         os.rename(tmp_fname, self.to_fname.format(self.iteration))
-        self.sim_time = time
+        self.sim_time = self.format_time(time)
         self.total_particles = total_N
 
     def combine_to_memory(self):
@@ -71,7 +77,7 @@ class CombinedFile:
                 total_N += int(list(next(reader))[0])
                 infile.close()
             dfs.append(self.__read_sph_file())
-        self.sim_time = time
+        self.sim_time = self.format_time(time)
         merged_df = pd.concat(dfs)
         print(f"Done combining to memory.  {total_N} particles found in {self.number_of_processes} processes.")
         return merged_df

@@ -70,6 +70,8 @@ class ParticleMap:
 
         self.particles['velocity'] = np.linalg.norm(self.particles[['vx', 'vy', 'vz']].values, axis=1)
         self.particles['position'] = np.linalg.norm(self.particles[['x', 'y', 'z']].values, axis=1)
+        self.particles['position vector'] = self.particles[['x', 'y', 'z']].values
+        self.particles['velocity vector'] = self.particles[['vx', 'vy', 'vz']].values
         self.particles['label'] = None
 
     def planet_bulk_density(self):

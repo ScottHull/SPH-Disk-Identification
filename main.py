@@ -28,7 +28,7 @@ c = CombinedFile(
 combined_file = c.combine_to_memory()
 # replace the headers
 combined_file.columns = file_headers
-time = combined_file.sim_time
+time = c.sim_time
 # create the particle map
 particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
 particles = particle_map.loop()

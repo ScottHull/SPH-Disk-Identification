@@ -9,13 +9,17 @@ from src.combine import CombinedFile
 from src.identify import ParticleMap
 from src.animate import animate
 
+"""
+This file can be used to profile a range of timesteps for a FDPS SPH generated file.
+"""
+
 # define where the data is
 path = '/home/theia/scotthull/Paper2_SPH/gi/500_mars/500_mars'
 to_path = 'test_animation'
 start_iteration = 60
 end_iteration = 1500
 increment = 20
-number_of_proceses = 600
+number_of_processes = 600
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
                 "potential energy", "entropy", "temperature"]
 
@@ -33,7 +37,7 @@ for iteration in range(start_iteration, end_iteration + 1, increment):
     c = CombinedFile(
         path=path,
         iteration=iteration,
-        number_of_processes=number_of_proceses,
+        number_of_processes=number_of_processes,
         to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"
     )
     combined_file = c.combine_to_memory()

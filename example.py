@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 from src.combine import CombinedFile
 from src.identify import ParticleMap
 
+"""
+This file can be used to profile a single timestep for a FDPS SPH generated file.
+"""
+
 # define where the data is
 path = '/home/theia/scotthull/Paper2_SPH/gi/500_mars/500_mars'
-number_of_proceses = 600
+number_of_processes = 600
 iteration = 500
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
                 "potential energy", "entropy", "temperature"]
@@ -21,7 +25,7 @@ equatorial_radius = 3390e3
 c = CombinedFile(
     path=path,
     iteration=iteration,
-    number_of_processes=number_of_proceses,
+    number_of_processes=number_of_processes,
     to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"
 )
 combined_file = c.combine_to_memory()

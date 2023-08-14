@@ -89,7 +89,7 @@ class ParticleMap:
         :return:
         """
         if particle['position'] <= self.equatorial_radius:
-            particle['label'] = 'PLANET'
+            self.particles.loc[particle.name, 'label'] = 'PLANET'
 
     def will_be_planet(self, particle):
         """
@@ -99,7 +99,7 @@ class ParticleMap:
         :return:
         """
         if particle['circular semi major axis'] <= self.equatorial_radius:
-            particle['label'] = 'PLANET'
+            self.particles.loc[particle.name, 'label'] = 'PLANET'
 
     def is_disk_or_escaping(self, particle):
         """
@@ -109,9 +109,9 @@ class ParticleMap:
         :return:
         """
         if particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] <= 1:
-            particle['label'] = 'DISK'
+            self.particles.loc[particle.name, 'label'] = 'DISK'
         elif particle['eccentricity'] > 1:
-            particle['label'] = 'ESCAPE'
+            self.particles.loc[particle.name, 'label'] = 'ESCAPE'
 
     def is_planet_disk_or_escaping(self, particle):
         """

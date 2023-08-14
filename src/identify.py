@@ -68,8 +68,8 @@ class ParticleMap:
             self.particles['y'] -= self.center_of_mass[1]
             self.particles['z'] -= self.center_of_mass[2]
 
-        self.particles['velocity'] = np.linalg.norm(self.particles[['vx', 'vy', 'vz']].values, axis=1)
         self.particles['position'] = np.linalg.norm(self.particles[['x', 'y', 'z']].values, axis=1)
+        self.particles['velocity'] = np.linalg.norm(self.particles[['vx', 'vy', 'vz']].values, axis=1)
         # store the position of the particles as a vector in a new column
         self.particles['label'] = None
 

@@ -10,7 +10,8 @@ def angular_momentum_vector(df: pd.DataFrame):
     """
     position = df[['x', 'y', 'z']].values
     velocity = df[['vx', 'vy', 'vz']].values
-    return df['mass'] * np.cross(position, velocity)
+    # return df['mass'] * np.cross(position, velocity)
+    return df['mass'] * np.array([np.cross(p, v) for p, v in zip(position, velocity)])
 
 
 def z_angular_momentum_vector(df: pd.DataFrame):
@@ -31,12 +32,10 @@ def total_orbital_energy(df: pd.DataFrame, mass_grav_body: float):
     """
     Returns the total orbital energy of a particle.
     """
-    position = df[['x', 'y', 'z']].values
-    velocity = df[['vx', 'vy', 'vz']].values
     # kinetic energy, KE = 1/2 m v^2
-    kinetic_energy = 0.5 * df['mass'] * (np.linalg.norm(velocity) ** 2)
+    kinetic_energy = 0.5 * df['mass'] * (df['velocity'] ** 2)
     # vectorized gravitational potential energy, PE = (G M_1 M_2) / r
-    potential_energy = - (G * mass_grav_body * df['mass']) / np.linalg.norm(position)
+    potential_energy = - (G * mass_grav_body * df['mass']) / df['position']
     return kinetic_energy + potential_energy
 
 

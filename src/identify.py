@@ -138,7 +138,7 @@ class ParticleMap:
         self.particles['orbital energy'] = total_orbital_energy(self.particles, self.mass_planet)
         self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)
         self.particles['semi major axis'] = semi_major_axis(self.particles, self.mass_planet)
-        self.particles['periapsis'] = periapsis(self.particles, self.mass_planet)
+        self.particles['periapsis'] = periapsis(self.particles)
         self.particles['circular semi major axis'] = equivalent_circular_semi_major_axis(self.particles,
                                                                                          self.mass_planet)
 

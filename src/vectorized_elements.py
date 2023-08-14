@@ -10,7 +10,9 @@ def angular_momentum_vector(df: pd.DataFrame):
     """
     position = np.array(df[['x', 'y', 'z']].values)
     velocity = np.array(df[['vx', 'vy', 'vz']].values)
-    return (df['mass'][:, np.newaxis] * np.cross(position, velocity)).tolist()
+    # return (df['mass'][:, np.newaxis] * np.cross(position, velocity)).tolist()
+    # return the angular momentum vector as lists of the x, y, and z components
+    return (df['mass'][:, np.newaxis] * np.cross(position, velocity)).T.tolist()
 
 
 def z_angular_momentum_vector(df: pd.DataFrame):
@@ -24,7 +26,9 @@ def angular_momentum(df: pd.DataFrame):
     """
     Returns the magnitude of the angular momentum of a particle.
     """
-    return np.linalg.norm(df['angular momentum vector'].tolist())
+    # return np.linalg.norm(df['angular momentum vector'].tolist())
+    angular_momentum_components = df[['Lx', 'Ly', 'Lz']].values
+    return np.linalg.norm(angular_momentum_components, axis=1)
 
 
 def total_orbital_energy(df: pd.DataFrame, mass_grav_body: float):

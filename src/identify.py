@@ -134,8 +134,9 @@ class ParticleMap:
         :return:
         """
         print("Calculating orbital elements...")
-        self.particles['angular momentum vector'] = angular_momentum_vector(self.particles)
+        # self.particles['angular momentum vector'] = angular_momentum_vector(self.particles)
         # self.particles['z angular momentum vector'] = z_angular_momentum_vector(self.particles)
+        self.particles["Lx"], self.particles["Ly"], self.particles["Lz"] = angular_momentum_vector(self.particles)
         self.particles['angular momentum'] = angular_momentum(self.particles)
         self.particles['orbital energy'] = total_orbital_energy(self.particles, self.mass_planet)
         self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)
@@ -154,7 +155,7 @@ class ParticleMap:
         print("Calculating planetary oblateness...")
         G = 6.67408e-11  # m^3 kg^-1 s^-2, gravitational constant
         # sum the third element of the angular momentum vector for all particles
-        z_angular_momentum_planet = self.particles['angular momentum vector'].sum(axis=0)[2]
+        z_angular_momentum_planet = self.particles['angular momentum vector'].apply(lambda x: x[2]).sum()
         moment_of_inertia_planet = (2.0 / 5.0) * self.mass_planet * self.equatorial_radius ** 2
         angular_velocity_protoplanet = z_angular_momentum_planet / moment_of_inertia_planet
         keplerian_velocity_protoplanet = np.sqrt(G * self.mass_planet / self.equatorial_radius ** 3)

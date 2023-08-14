@@ -51,6 +51,7 @@ for i in ['PLANET', 'DISK', 'ESCAPE']:
     ax.scatter(
         particles[particles['label'] == i]['x'] / 10 ** 7,
         particles[particles['label'] == i]['y'] / 10 ** 7,
+        marker='.',
         s=2,
         label=i
     )

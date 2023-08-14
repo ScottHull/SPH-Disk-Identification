@@ -118,6 +118,7 @@ class ParticleMap:
         Determine if a particle is part of the planet, disk, or escaping.
         """
         self.is_planet(particle)
+        self.will_be_planet(particle)
         self.is_disk_or_escaping(particle)
 
     def roche_radius(self):

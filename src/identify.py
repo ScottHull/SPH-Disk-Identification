@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 
 from src.elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
-                          equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
+                          equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis, inclination,
+                          circularization_entropy_gain)
 
 
 class ParticleMap:
@@ -161,8 +162,10 @@ class ParticleMap:
         self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)
         self.particles['semi major axis'] = semi_major_axis(self.particles, self.mass_planet)
         self.particles['periapsis'] = periapsis(self.particles)
+        self.particles['inclination'] = inclination(self.particles)
         self.particles['circular semi major axis'] = equivalent_circular_semi_major_axis(self.particles,
                                                                                          self.mass_planet)
+        self.particles['circularization entropy gain'] = circularization_entropy_gain(self.particles, self.mass_planet)
         print("Calculating orbital elements complete.")
 
     def calculate_planetary_oblateness(self, K=0.335):

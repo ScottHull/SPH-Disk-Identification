@@ -61,7 +61,7 @@ def inclination(df: pd.DataFrame):
     """
     Returns the inclination of a particle.
     """
-    return np.arccos(df['angular momentum vector'][2] / df['angular momentum']) * (180 / np.pi)
+    return np.arccos(df['Lz'] / df['angular momentum']) * (180 / np.pi)
 
 
 def periapsis(df: pd.DataFrame):
@@ -79,3 +79,18 @@ def equivalent_circular_semi_major_axis(df: pd.DataFrame, mass_grav_body: float)
     """
     specific_angular_momentum = df['angular momentum'] / df['mass']
     return specific_angular_momentum ** 2 / (G * mass_grav_body)
+
+def circularization_energy_gain(df: pd.DataFrame, mass_grav_body: float):
+    """
+    The internal energy gain associated with orbital circularization of a particle.
+    """
+    grav_coeff = G * mass_grav_body / (2 * df['semi major axis'])
+    eccentric = 1 / ((1 - df['eccentricity'] ** 2) * (np.cos(df['inclination'] * (np.pi / 180)) ** 2))
+    return grav_coeff * (1 - eccentric)
+
+def circularization_entropy_gain(df: pd.DataFrame, mass_grav_body: float):
+    """
+    Returns the circularization entropy gain of a particle.
+    """
+    energy_gain = circularization_energy_gain(df, mass_grav_body)
+    return - energy_gain / df['temperature']

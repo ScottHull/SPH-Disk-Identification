@@ -149,7 +149,7 @@ class ParticleMap:
         :return:
         """
         G = 6.67408e-11  # m^3 kg^-1 s^-2, gravitational constant
-        z_angular_momentum_planet = self.particles['z_angular_momentum_vector'].sum()
+        z_angular_momentum_planet = np.array([i[2] for i in self.particles['angular momentum vector']]).sum()
         moment_of_inertia_planet = (2.0 / 5.0) * self.mass_planet * self.equatorial_radius ** 2
         angular_velocity_protoplanet = z_angular_momentum_planet / moment_of_inertia_planet
         keplerian_velocity_protoplanet = np.sqrt(G * self.mass_planet / self.equatorial_radius ** 3)

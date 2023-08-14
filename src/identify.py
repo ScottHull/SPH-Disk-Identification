@@ -130,10 +130,12 @@ class ParticleMap:
         Get the label of the particle, either planet, disk, or escaping.
         Use numpy.where to do this faster so that the operation can be vectorized.
         """
-        return np.where(self.particles['position'] <= self.equatorial_radius, 'PLANET',
-                        np.where(self.particles['circular semi major axis'] <= self.equatorial_radius, 'PLANET',
-                                 np.where(self.particles['periapsis'] > self.equatorial_radius, 'DISK',
-                                          np.where(self.particles['eccentricity'] > 1, 'ESCAPE', None))))
+        is_planet = ((self.particles['position'] <= self.equatorial_radius) or
+                     (self.particles['circular semi major axis'] <= self.equatorial_radius))
+        is_disk = self.particles['periapsis'] > self.equatorial_radius and self.particles['eccentricity'] <= 1
+        is_escape = self.particles['eccentricity'] > 1 and self.particles['position'] > self.equatorial_radius
+        return np.where(is_planet, 'PLANET',
+                        np.where(is_disk, 'DISK', np.where(is_escape, 'ESCAPE', None)))
 
     def roche_radius(self):
         """

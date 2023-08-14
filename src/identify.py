@@ -117,9 +117,24 @@ class ParticleMap:
         """
         Determine if a particle is part of the planet, disk, or escaping.
         """
-        self.is_planet(particle)
-        self.will_be_planet(particle)
-        self.is_disk_or_escaping(particle)
+        # self.is_planet(particle)
+        # self.will_be_planet(particle)
+        # self.is_disk_or_escaping(particle)
+        is_planet_condition = particle['position'] <= self.equatorial_radius
+        will_be_planet_condition = particle['circular semi major axis'] <= self.equatorial_radius
+        is_disk_condition = particle['periapsis'] > self.equatorial_radius and particle['eccentricity'] <= 1
+        is_escape_condition = particle['eccentricity'] > 1 and particle['position'] > self.equatorial_radius
+
+
+    def get_label(self):
+        """
+        Get the label of the particle, either planet, disk, or escaping.
+        Use numpy.where to do this faster so that the operation can be vectorized.
+        """
+        return np.where(self.particles['position'] <= self.equatorial_radius, 'PLANET',
+                        np.where(self.particles['circular semi major axis'] <= self.equatorial_radius, 'PLANET',
+                                    np.where(self.particles['periapsis'] > self.equatorial_radius, 'DISK',
+                                                np.where(self.particles['eccentricity'] > 1, 'ESCAPE', None))))
 
     def roche_radius(self):
         """
@@ -211,7 +226,8 @@ class ParticleMap:
             self.calculate_elements()
             # map the particles to their respective location
             print("Mapping particles to their respective location...")
-            self.particles.apply(self.is_planet_disk_or_escaping, axis=1)
+            # self.particles['label'].apply(self.is_planet_disk_or_escaping, axis=1)
+            self.particles['label'] = self.get_label()
             print("Mapping particles to their respective location complete.")
             # calculate the new oblateness, planet mass, and equatorial radius
             mass_planet = self.calculate_planet_mass()

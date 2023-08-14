@@ -10,7 +10,7 @@ def angular_momentum_vector(df: pd.DataFrame):
     """
     position = np.array(df[['x', 'y', 'z']].values)
     velocity = np.array(df[['vx', 'vy', 'vz']].values)
-    return df['mass'] * np.cross(position, velocity)
+    return df['mass'][:, np.newaxis] * np.cross(position, velocity)
 
 
 def z_angular_momentum_vector(df: pd.DataFrame):

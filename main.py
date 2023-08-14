@@ -32,11 +32,11 @@ particles = particle_map.loop()
 
 print("Particle map created!")
 print(
-    f"Planet mass: {particle_map.mass_planet}\n"
-    f"Planet radius: {particle_map.equatorial_radius}\n"
-    f"Planet density: {particle_map.bulk_density}\n"
+    f"Planet mass: {particle_map.mass_planet} kg\n"
+    f"Planet radius: {particle_map.equatorial_radius / 1000} km\n"
+    f"Planet density: {particle_map.bulk_density} kg/m3\n"
     f"# escaping particles: {len(particles[particles['label'] == 'ESCAPE'])}\n"
     f"# disk particles: {len(particles[particles['label'] == 'DISK'])}\n"
     f"# planet particles: {len(particles[particles['label'] == 'PLANET'])}\n"
-    f"# error particles: {len(particles[particles['label'] is None])}"
+    f"# error particles: {len(particles[particles['label'] == None])}"
 )

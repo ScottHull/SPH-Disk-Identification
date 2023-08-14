@@ -66,4 +66,4 @@ legend = ax.legend(loc='upper right')
 for i in legend.legendHandles:
     i.set_sizes([20])
 
-plt.savefig("test.png", dpi=300)
+plt.savefig(f"test_{iteration}.png", dpi=300)

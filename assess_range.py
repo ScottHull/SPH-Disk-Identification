@@ -20,6 +20,7 @@ mass_planet = 6.39e23
 equatorial_radius = 3390e3
 
 for iteration in range(start_iteration, end_iteration + 1, increment):
+    print(f"Processing iteration {iteration}...")
     # create the combined file
     c = CombinedFile(
         path=path,
@@ -57,3 +58,5 @@ for iteration in range(start_iteration, end_iteration + 1, increment):
         i.set_sizes([20])
 
     plt.savefig(f"test_{iteration}.png", dpi=300)
+
+    print(f"Finished iteration {iteration}!\n")

@@ -133,6 +133,7 @@ class ParticleMap:
         Calculate all necessary orbital elements in order.
         :return:
         """
+        print("Calculating orbital elements...")
         self.particles['angular momentum vector'] = angular_momentum_vector(self.particles)
         # self.particles['z angular momentum vector'] = z_angular_momentum_vector(self.particles)
         self.particles['angular momentum'] = angular_momentum(self.particles)
@@ -142,6 +143,7 @@ class ParticleMap:
         self.particles['periapsis'] = periapsis(self.particles)
         self.particles['circular semi major axis'] = equivalent_circular_semi_major_axis(self.particles,
                                                                                          self.mass_planet)
+        print("Calculating orbital elements complete.")
 
     def calculate_planetary_oblateness(self, K=0.335):
         """
@@ -149,6 +151,7 @@ class ParticleMap:
         :param K:
         :return:
         """
+        print("Calculating planetary oblateness...")
         G = 6.67408e-11  # m^3 kg^-1 s^-2, gravitational constant
         # sum the third element of the angular momentum vector for all particles
         z_angular_momentum_planet = self.particles['angular momentum vector'].sum(axis=0)[2]
@@ -157,7 +160,9 @@ class ParticleMap:
         keplerian_velocity_protoplanet = np.sqrt(G * self.mass_planet / self.equatorial_radius ** 3)
         numerator = (5.0 / 2.0) * ((angular_velocity_protoplanet / keplerian_velocity_protoplanet) ** 2)
         denominator = 1.0 + ((5.0 / 2.0) - ((15.0 * K) / 4.0)) ** 2
-        return numerator / denominator
+        f = numerator / denominator
+        print(f"Calculating planetary oblateness complete ({f}).")
+        return f
 
     def calculate_planetary_radii(self, mass_planet):
         """
@@ -165,8 +170,21 @@ class ParticleMap:
         :param mass_planet:
         :return:
         """
+        print("Calculating planetary radii...")
         self.oblateness = self.calculate_planetary_oblateness()
-        return ((3 * mass_planet) / (4 * np.pi * self.bulk_density * (1 - self.oblateness))) ** (1 / 3)
+        r = ((3 * mass_planet) / (4 * np.pi * self.bulk_density * (1 - self.oblateness))) ** (1 / 3)
+        print(f"Calculating planetary radii complete ({r / 1000} km).")
+        return r
+
+    def calculate_planet_mass(self):
+        """
+        Calculate the mass of the planet.
+        :return:
+        """
+        print("Calculating planetary mass...")
+        m = self.particles[self.particles['label'] == 'PLANET']['mass'].sum()
+        print(f"Calculating planetary mass complete ({m} kg).")
+        return m
 
     def identify(self):
         """
@@ -177,15 +195,13 @@ class ParticleMap:
         while not self.has_converged:
             print(f"Beginning convergence iteration {self.iterations}")
             # calculate orbital elements
-            print("Calculating orbital elements...")
             self.calculate_elements()
-            print("Calculating orbital elements complete.")
             # map the particles to their respective location
             print("Mapping particles to their respective location...")
             self.particles.apply(self.is_planet_disk_or_escaping, axis=1)
             print("Mapping particles to their respective location complete.")
             # calculate the new oblateness, planet mass, and equatorial radius
-            mass_planet = self.particles[self.particles['label'] == 'PLANET']['mass'].sum()
+            mass_planet = self.calculate_planet_mass()
             equatorial_radius = self.calculate_planetary_radii(mass_planet)
             self.error = np.abs(equatorial_radius - self.equatorial_radius) / self.equatorial_radius
             # check for solution convergence

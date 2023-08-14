@@ -24,7 +24,7 @@ def angular_momentum(df: pd.DataFrame):
     """
     Returns the magnitude of the angular momentum of a particle.
     """
-    return np.linalg.norm(df['angular momentum vector'])
+    return np.linalg.norm(df['angular momentum vector'].tolist())
 
 
 def total_orbital_energy(df: pd.DataFrame, mass_grav_body: float):

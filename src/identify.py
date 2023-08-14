@@ -186,6 +186,18 @@ class ParticleMap:
         print(f"Calculating planetary mass complete ({m} kg).")
         return m
 
+    def get_number_of_particles_in_planet_disk_escape(self):
+        """
+        Get the number of particles in the planet, disk, and escaping.
+        :return:
+        """
+        print("Getting number of particles in planet, disk, and escaping...")
+        planet = len(self.particles[self.particles['label'] == 'PLANET'])
+        disk = len(self.particles[self.particles['label'] == 'DISK'])
+        escape = len(self.particles[self.particles['label'] == 'ESCAPE'])
+        print(f"Getting number of particles in planet, disk, and escaping complete ({planet}, {disk}, {escape}).")
+        return planet, disk, escape
+
     def identify(self):
         """
         The main function for identifying particles.
@@ -210,6 +222,8 @@ class ParticleMap:
             self.mass_planet = mass_planet
             self.equatorial_radius = equatorial_radius
             self.poloidal_radius = self.poloidal_radius * (1 - self.oblateness)
+            # get the number of particles in the planet, disk, and escaping
+            planet, disk, escape = self.get_number_of_particles_in_planet_disk_escape()
             print(f"Convergence iteration {self.iterations} complete (error: {self.error}).")
             self.iterations += 1
 

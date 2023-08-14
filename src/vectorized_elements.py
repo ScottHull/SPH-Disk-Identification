@@ -10,15 +10,15 @@ def angular_momentum_vector(df: pd.DataFrame):
     """
     position = df[['x', 'y', 'z']].values
     velocity = df[['vx', 'vy', 'vz']].values
-    # return df['mass'] * np.cross(position, velocity)
-    return [mass * np.cross(p, v) for mass, p, v in zip(df['mass'], position, velocity)]
+    return df['mass'] * np.cross(position, velocity)
+    # return [mass * np.cross(p, v) for mass, p, v in zip(df['mass'], position, velocity)]
 
 
 def z_angular_momentum_vector(df: pd.DataFrame):
     """
     Return the z component of the angular momentum of a particle.
     """
-    return df['angular_momentum_vector'][2]
+    return df['angular momentum vector'][2]
 
 
 def angular_momentum(df: pd.DataFrame):

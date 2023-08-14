@@ -133,7 +133,7 @@ class ParticleMap:
         :return:
         """
         self.particles['angular momentum vector'] = angular_momentum_vector(self.particles)
-        self.particles['z angular momentum vector'] = z_angular_momentum_vector(self.particles)
+        # self.particles['z angular momentum vector'] = z_angular_momentum_vector(self.particles)
         self.particles['angular momentum'] = angular_momentum(self.particles)
         self.particles['orbital energy'] = total_orbital_energy(self.particles, self.mass_planet)
         self.particles['eccentricity'] = eccentricity(self.particles, self.mass_planet)

@@ -18,12 +18,11 @@ mass_planet = 6.39e23
 equatorial_radius = 3390e3
 
 # create the combined file
-to_fname = f"merged_{iteration}_{randint(1, int(1e5))}.dat"
 c = CombinedFile(
     path=path,
     iteration=iteration,
     number_of_processes=number_of_proceses,
-    to_fname=to_fname
+    to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"
 )
 combined_file = c.combine_to_memory()
 # replace the headers

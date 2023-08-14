@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src.elements import (total_orbital_energy, angular_momentum, eccentricity, semi_major_axis,
-                                     equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
+                          equivalent_circular_semi_major_axis, angular_momentum_vector, periapsis)
 
 
 class ParticleMap:
@@ -130,7 +130,8 @@ class ParticleMap:
         Get the label of the particle, either planet, disk, or escaping.
         Use numpy.where to do this faster so that the operation can be vectorized.
         """
-        is_planet = (self.particles['position'] <= self.equatorial_radius) | (self.particles['circular semi major axis'] <= self.equatorial_radius)
+        is_planet = (self.particles['position'] <= self.equatorial_radius) | (
+                    self.particles['circular semi major axis'] <= self.equatorial_radius)
         is_disk = (self.particles['periapsis'] > self.equatorial_radius) & (self.particles['eccentricity'] <= 1)
         is_escape = (self.particles['eccentricity'] > 1) & (self.particles['position'] > self.equatorial_radius)
         # return np.where(self.particles['position'] <= self.equatorial_radius, 'PLANET',

@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
+import os
+import shutil
 import pandas as pd
 from random import randint
 import matplotlib.pyplot as plt
 
 from src.combine import CombinedFile
 from src.identify import ParticleMap
+from src.animate import animate
 
 # define where the data is
 path = '/home/theia/scotthull/Paper2_SPH/gi/500_mars/500_mars'
-start_iteration = 100
-end_iteration = 1800
-increment = 50
+to_path = 'test_animation'
+start_iteration = 60
+end_iteration = 1500
+increment = 20
 number_of_proceses = 600
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
                 "potential energy", "entropy", "temperature"]
@@ -18,6 +22,10 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 # define the planet parameters
 mass_planet = 6.39e23
 equatorial_radius = 3390e3
+
+if os.path.exists(to_path):
+    shutil.rmtree(to_path)
+os.mkdir(to_path)
 
 for iteration in range(start_iteration, end_iteration + 1, increment):
     print(f"Processing iteration {iteration}...")
@@ -57,6 +65,14 @@ for iteration in range(start_iteration, end_iteration + 1, increment):
     for i in legend.legendHandles:
         i.set_sizes([20])
 
-    plt.savefig(f"test_{iteration}.png", dpi=300)
+    plt.savefig(f"{to_path}/test_{iteration}.png", dpi=300)
 
     print(f"Finished iteration {iteration}!\n")
+
+animate(
+    start_time=start_iteration,
+    end_time=end_iteration,
+    interval=increment,
+    path=to_path,
+    fps=15
+)

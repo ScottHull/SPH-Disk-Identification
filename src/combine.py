@@ -3,6 +3,7 @@ import csv
 from random import randint
 import pandas as pd
 
+
 class CombinedFile:
     """
     Class for combining SPH outputs from different processes.
@@ -24,8 +25,8 @@ class CombinedFile:
         :return:
         """
         return self.path + "/" + self.file_format.format(str(self.iteration).zfill(5),
-                                                                str(self.number_of_processes).zfill(5),
-                                                                str(self.current_process).zfill(5))
+                                                         str(self.number_of_processes).zfill(5),
+                                                         str(self.current_process).zfill(5))
 
     def __read_sph_file(self):
         df = pd.read_csv(self.__get_filename(), sep='\t', skiprows=2, header=None)

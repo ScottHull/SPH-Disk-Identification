@@ -98,7 +98,7 @@ class ParticleMap:
         of the planet.  If so, the particle will eventually accrete to the planet and become part of it.
         :return:
         """
-        if particle['circular_semi_major_axis'] <= self.equatorial_radius:
+        if particle['circular semi major axis'] <= self.equatorial_radius:
             particle['label'] = 'PLANET'
 
     def is_disk_or_escaping(self, particle):

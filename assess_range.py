@@ -69,7 +69,7 @@ for iteration in range(start_iteration, end_iteration + 1, increment):
     for i in legend.legendHandles:
         i.set_sizes([20])
 
-    plt.savefig(f"{to_path}/test_{iteration}.png", dpi=300)
+    plt.savefig(f"{to_path}/{iteration}.png", dpi=300)
 
     print(f"Finished iteration {iteration}!\n")
 

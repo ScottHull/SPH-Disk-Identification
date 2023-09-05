@@ -46,7 +46,10 @@ print(
     f"# escaping particles: {len(particles[particles['label'] == 'ESCAPE'])}\n"
     f"# disk particles: {len(particles[particles['label'] == 'DISK'])}\n"
     f"# planet particles: {len(particles[particles['label'] == 'PLANET'])}\n"
-    f"# error particles: {len(particles[particles['label'] == None])}"
+    f"# error particles: {len(particles[particles['label'] == None])}\n"
+    f"Total particles: {len(particles)}\n"
+    f"Target particles: {len(particles[particles['tag'] < 2])}\n"
+    f"Impactor particles: {len(particles[particles['tag'] > 1])}\n"
 )
 
 fig = plt.figure(figsize=(10, 10))

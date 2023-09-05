@@ -50,6 +50,8 @@ print(
     f"Total particles: {len(particles)}\n"
     f"Target particles: {len(particles[particles['tag'] < 2])}\n"
     f"Impactor particles: {len(particles[particles['tag'] > 1])}\n"
+    f"Target Mass: {sum(particles[particles['tag'] < 2]['mass'])} kg\n"
+    f"Impactor Mass: {sum(particles[particles['tag'] > 1]['mass'])} kg\n"
 )
 
 fig = plt.figure(figsize=(10, 10))

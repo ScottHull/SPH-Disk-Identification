@@ -11,8 +11,10 @@ class ParticleMap:
     Class for mapping particles to their respective location (planet, disk, or escaping particles.
     """
 
-    def __init__(self, particles: pd.DataFrame, mass_planet: float, equatorial_radius: float, center=True):
+    def __init__(self, particles: pd.DataFrame, mass_planet: float, equatorial_radius: float, center=True,
+                 center_on_iron=True):
         self.center_of_mass = None
+        self.center_on_iron = center_on_iron
         self.particles = particles  # the dataframe of particles
         self.mass_planet = mass_planet  # the mass of the main planetary body
         self.equatorial_radius = equatorial_radius  # the equatorial radius of the planet
@@ -55,8 +57,11 @@ class ParticleMap:
         Override this function for really, really exotic impacts.
         :return:
         """
-        target_iron = self.particles[self.particles['tag'] == target_iron_id]
-        return self.calculate_center_of_mass(target_iron)
+        if self.center_on_iron:
+            center_on = self.particles[self.particles['tag'] == target_iron_id]
+        else:
+            center_on = self.particles
+        return self.calculate_center_of_mass(center_on)
 
     def prepare_particles(self):
         """

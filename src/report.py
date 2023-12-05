@@ -9,11 +9,12 @@ class GiantImpactReport:
     This class is responsible for generating a report of the giant impact simulation.
     """
 
-    def calculate_vmf(self, particles: pd.DataFrame, phase_curve: pd.DataFrame, nn: NearestNeighbor1D()):
+    def calculate_vmf(self, particles: pd.DataFrame, phase_curve: pd.DataFrame):
         """
         Calculates the vapor mass fraction (vmf) of the particles.
         Assumes single phase particles.
         """
+        nn = NearestNeighbor1D()
         # if the total entropy column is not defined, raise an error stating that it is required
         # ideally, total entropy should include both the particle entropy and the entropy gain associated with the
         # orbital circularization

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 from src.combine import CombinedFile
 from src.identify import ParticleMap
+from src.report import GiantImpactReport
 
 # use seaborn colorblind palette
 plt.style.use('seaborn-colorblind')
@@ -35,6 +36,10 @@ axes = ['times', 'disk_entropy', 'disk_temperature', 'disk_vmf', 'disk_mass', 'd
         'disk_impactor_mass_fraction']
 ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", r"Disk Mass ($M_{\rm Mars}$)",
              r"Disk Angular Momentum ($L_{\rm MM}$)", "Disk Impactor Mass Fraction (%)"]
+phase_curve = pd.read_fwf("src/phase_curves/forstSTS__vapour_curve.txt", skiprows=1,
+                           names=["temperature", "density_sol_liq", "density_vap", "pressure",
+                                  "entropy_sol_liq", "entropy_vap"])
+dr = GiantImpactReport()
 
 # collect disk info for each run
 for run in runs:
@@ -67,7 +72,8 @@ for run in runs:
         run['disk_entropy'].append(disk_particles['entropy'].mean())
         run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum())
         run['disk_temperature'].append(disk_particles['temperature'].mean())
-        run['disk_vmf'].append(None)
+        run['disk_vmf'].append(dr.calculate_vmf(disk_particles, phase_curve))
+
 fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()
 for ax, (axis, ylabel) in zip(axs, zip(axes[1:], ylabels)):

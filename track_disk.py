@@ -55,11 +55,17 @@ for run in runs:
         particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
+        try:
+            disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum()
+            disk_ang_mom = disk_particles[disk_particles['tag'] > 1]['angular momentum'].sum()
+        except:
+            disk_mass = None
+            disk_ang_mom = None
         run['times'].append(time)
         run['disk_mass'].append(disk_particles['mass'].sum()) / mass_planet
-        run['disk_angular_momentum'].append(disk_particles['angular momentum'].sum())
+        run['disk_angular_momentum'].append(disk_ang_mom)
         run['disk_entropy'].append(disk_particles['entropy'].mean())
-        run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum())
+        run['disk_impactor_mass_fraction'].append(disk_mass)
         run['disk_temperature'].append(disk_particles['temperature'].mean())
         run['disk_vmf'].append(None)
 fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')

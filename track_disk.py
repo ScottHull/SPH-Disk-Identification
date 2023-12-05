@@ -33,7 +33,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
                 "potential energy", "entropy", "temperature"]
 axes = ['times', 'disk_entropy', 'disk_temperature', 'disk_vmf', 'disk_mass', 'disk_angular_momentum',
         'disk_impactor_mass_fraction']
-ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", "Disk Mass (kg)",
+ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", r"Disk Mass ($M_{\rm Mars}$)",
              r"Disk Angular Momentum ($L_{\rm MM}$)", "Disk Impactor Mass Fraction (%)"]
 
 # collect disk info for each run
@@ -56,7 +56,7 @@ for run in runs:
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
         run['times'].append(time)
-        run['disk_mass'].append(disk_particles['mass'].sum())
+        run['disk_mass'].append(disk_particles['mass'].sum()) / mass_planet
         run['disk_angular_momentum'].append(disk_particles['angular momentum'].sum())
         run['disk_entropy'].append(disk_particles['entropy'].mean())
         run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum())

@@ -56,7 +56,7 @@ for run in runs:
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
         try:
-            disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum()
+            disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / mass_planet
             disk_ang_mom = disk_particles['angular momentum'].sum()
         except:
             disk_mass = None

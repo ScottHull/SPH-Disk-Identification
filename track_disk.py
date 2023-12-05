@@ -61,9 +61,10 @@ for run in runs:
         run['disk_entropy'].append(disk_particles['entropy'].mean())
         run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum())
         run['disk_temperature'].append(disk_particles['temperature'].mean())
+        run['disk_vmf'].append(None)
 fig, axs = plt.subplots(2, 3, figsize=(15, 10), sharex='all')
 axs = axs.flatten()
-for ax, (axis, ylabel) in zip(axs, zip(axes, ylabels)):
+for ax, (axis, ylabel) in zip(axs, zip(axes[1:], ylabels)):
     for run in runs:
         ax.plot(run['times'], run[axis], linewidth=2.0, label=run['name'])
     ax.set_ylabel(ylabel, fontsize=16)

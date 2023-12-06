@@ -118,5 +118,7 @@ for run in runs:
         disk_particles['total entropy'], disk_particles['temperature'], s=1, alpha=1, label=run['name']
     )
 
+ax.set_xlim(1800, 12000)
+ax.set_ylim(0, 12500)
 ax.legend()
 plt.savefig("phase_diagram.png", dpi=200)

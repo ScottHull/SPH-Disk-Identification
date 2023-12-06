@@ -13,11 +13,16 @@ from src.report import GiantImpactReport
 plt.style.use('seaborn-colorblind')
 
 runs = [
+    # {
+    #     "name": "mars_citron_1vesc_b073_stewart_undiff",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
+    #     "num_processes": 400,
+    # },
     {
-        "name": "mars_citron_1vesc_b073_stewart_undiff",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
+        "name": "mars_citron_1.4vesc_b073_stewart_undiff",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
         "num_processes": 400,
-    }
+    },
 ]
 
 # define the iteration parameters

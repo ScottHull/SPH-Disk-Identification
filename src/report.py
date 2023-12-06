@@ -52,4 +52,4 @@ class GiantImpactReport:
                 )
             )
         )
-        return particles['vmf'].sum() / len(particles)
+        return particles['vmf'].sum() / len(particles) * 100  # return as units of percent

@@ -32,8 +32,13 @@ class GiantImpactReport:
         # particles['nearest temperature index'] = nn.neighbor_index(given_val=particles['temperature'],
         #                                                             array=list(phase_curve['temperature']))
         # get the corresponding phase curve entropy on the liquid and vapor curves
-        particles['nearest liquid entropy'] = phase_curve['entropy_sol_liq'][particles['nearest temperature index']]
-        particles['nearest vapor entropy'] = phase_curve['entropy_vap'][particles['nearest temperature index']]
+        # do so for each particle in the array
+        particles['nearest liquid entropy'] = particles['nearest temperature index'].apply(
+            lambda x: phase_curve['entropy_sol_liq'][x])
+        particles['nearest vapor entropy'] = particles['nearest temperature index'].apply(
+            lambda x: phase_curve['entropy_vap'][x])
+        # particles['nearest liquid entropy'] = phase_curve['entropy_sol_liq'][particles['nearest temperature index']]
+        # particles['nearest vapor entropy'] = phase_curve['entropy_vap'][particles['nearest temperature index']]
         # define rules on whether the particle is pure liquid or pure vapor, or supercritical or mixed phase
         is_supercritical = particles['temperature'] >= supercritical_T
         is_pure_liquid = particles['total entropy'] <= particles['nearest liquid entropy']

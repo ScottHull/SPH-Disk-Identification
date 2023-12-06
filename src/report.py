@@ -26,8 +26,11 @@ class GiantImpactReport:
         supercritical_T = max(phase_curve['temperature'])
         # get the nearest temperature index for each particle on the phase curve corresponding to the
         # particle's temperature
-        particles['nearest temperature index'] = nn.neighbor_index(given_val=particles['temperature'],
-                                                                    array=list(phase_curve['temperature']))
+        # apply the function to each particle in the list
+        particles['nearest temperature index'] = particles['temperature'].apply(
+            nn.neighbor_index, args=(list(phase_curve['temperature']),))
+        # particles['nearest temperature index'] = nn.neighbor_index(given_val=particles['temperature'],
+        #                                                             array=list(phase_curve['temperature']))
         # get the corresponding phase curve entropy on the liquid and vapor curves
         particles['nearest liquid entropy'] = phase_curve['entropy_sol_liq'][particles['nearest temperature index']]
         particles['nearest vapor entropy'] = phase_curve['entropy_vap'][particles['nearest temperature index']]

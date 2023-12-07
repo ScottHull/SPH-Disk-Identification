@@ -118,7 +118,7 @@ for handle in legend.legendHandles:
     
 letters = list(string.ascii_lowercase)
 for index, a in enumerate(ax.flatten()):
-    x1, x2, y1, y2 = a.ais()
+    x1, x2, y1, y2 = a.axis()
     x_loc = x1 + (0.02 * (x2 - x1))
     y_loc = y2 - (0.08 * (y2 - y1))
     a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)

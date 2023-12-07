@@ -59,7 +59,6 @@ square_scale = 6e7 / 10 ** 7
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(iterations), len(runs), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
                        sharey='all')
-ax = ax.flatten()
 
 for run_index, run in enumerate(runs):
     # generate the end state data

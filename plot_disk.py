@@ -30,20 +30,20 @@ runs = [
         'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
-    {
-        "name": "C",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
-        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    },
-    {
-        "name": "F",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
-        'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
-    },
+    # {
+    #     "name": "C",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "F",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    # },
 ]
 
 iterations = [20, 100, 200, 300, 360]
@@ -79,8 +79,8 @@ for run_index, run in enumerate(runs):
     # loop through iterations
     for time_index, i in enumerate(iterations):
         if time_index == 0:
-            ax[run_index, time_index].set_title(f"{run['name']}", fontsize=20)
-            ax[run_index, time_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
+            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
+            ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
                                            f"{time} hrs.", fontsize=20)
         # generate the data
         c = CombinedFile(
@@ -102,7 +102,7 @@ for run_index, run in enumerate(runs):
             if run_index == time_index == 0:
                 label = l.title()
             # plot the particles
-            ax[run_index, time_index].scatter(
+            ax[time_index, run_index].scatter(
                 relevant_particles['x'] / (10 ** 7),
                 relevant_particles['y'] / (10 ** 7),
                 marker='.',
@@ -131,8 +131,8 @@ for index, a in enumerate(ax.flatten()):
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
 
-# plt.tight_layout()
-# fig.subplots_adjust(wspace=0, hspace=0)
+plt.tight_layout()
+fig.subplots_adjust(wspace=0, hspace=0)
 # axs = ax.flatten()
 # for ax in axs[-len(runs):-2]:
 #     nbins_x = len(ax.get_xticklabels())

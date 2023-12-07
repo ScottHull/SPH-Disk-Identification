@@ -14,6 +14,9 @@ class GiantImpactReport:
         Calculates the vapor mass fraction (vmf) of the particles.
         Assumes single phase particles.
         """
+        # if the number of particles is zero, return zero
+        if len(particles) == 0:
+            return [0.0, 0.0]
         nn = NearestNeighbor1D()
         # if the total entropy column is not defined, raise an error stating that it is required
         # ideally, total entropy should include both the particle entropy and the entropy gain associated with the

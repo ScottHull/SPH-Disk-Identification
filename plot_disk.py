@@ -79,8 +79,8 @@ for run_index, run in enumerate(runs):
     # loop through iterations
     for time_index, i in enumerate(iterations):
         if time_index == 0:
-            ax[run_index, time_index].set_title(f"{run['name']}", fontsize=20)
-            ax[run_index, time_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
+            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
+            ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
                                            f"{time} hrs.", fontsize=20)
         # generate the data
         c = CombinedFile(
@@ -102,7 +102,7 @@ for run_index, run in enumerate(runs):
             if run_index == time_index == 0:
                 label = l.title()
             # plot the particles
-            ax[run_index, time_index].scatter(
+            ax[time_index, run_index].scatter(
                 relevant_particles['x'] / (10 ** 7),
                 relevant_particles['y'] / (10 ** 7),
                 marker='.',

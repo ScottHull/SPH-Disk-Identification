@@ -57,7 +57,7 @@ equatorial_radius = 3390e3
 square_scale = 6e7 / 10 ** 7
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
-fig, ax = plt.subplots(len(runs), len(iterations), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
+fig, ax = plt.subplots(len(iterations), len(runs), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
                        sharey='all')
 ax = ax.flatten()
 

@@ -124,7 +124,7 @@ for index, a in enumerate(ax.flatten()):
     a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
-    a.axs.set_aspect('equal')
+    a.axes.set_aspect('equal')
     
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')

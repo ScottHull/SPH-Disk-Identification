@@ -44,7 +44,7 @@ runs = [
     },
     {
         "name": "F",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/mars_b073_1v_esc",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
         "num_processes": 600,
         'final_iteration': 360,
         'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",

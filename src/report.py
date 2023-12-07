@@ -80,6 +80,11 @@ class GiantImpactReport:
         protoplanet_particles = particles[particles['label'] == 'PLANET']
         disk_particles = particles[particles['label'] == 'DISK']
         escaping_particles = particles[particles['label'] == 'ESCAPE']
+        disk_iron_mass_fraction = 0.0
+        disk_impactor_mass_fraction = 0.0
+        if len(disk_particles) > 0:
+            disk_iron_mass_fraction = len(disk_particles[disk_particles['tag'] % 2 != 0]) / len(disk_particles) * 100
+            disk_impactor_mass_fraction = len(disk_particles[disk_particles['tag'] > 1]) / len(disk_particles) * 100
         d = {
             r"Proto-planet Mass ($M_{\rm P}$)": protoplanet_particles['mass'].sum() / planet_mass_normalizer,
             r"Disk Mass ($M_{\rm L}$)": disk_particles['mass'].sum() / disk_mass_normalizer,
@@ -87,8 +92,7 @@ class GiantImpactReport:
             r"$N_{proto-planet}$": len(protoplanet_particles),
             r"$N_{disk}$": len(disk_particles),
             r"$N_{escaping}$": len(escaping_particles),
-            r"Disk Iron Mass Fraction (%)": len(disk_particles[disk_particles['tag'] % 2 != 0]) / len(
-                disk_particles) * 100,
+            r"Disk Iron Mass Fraction (%)": disk_iron_mass_fraction,
             r"$L_{\rm disk}$)": disk_particles['angular momentum'].sum(),
             r"$L_{\rm total}$)": particles['angular momentum'].sum(),
             r"Disk VMF (w/ circ.) (%)": vmf_w_circ,
@@ -97,7 +101,6 @@ class GiantImpactReport:
             r"Avg. $S_{\rm disk}$ (w/o circ.) (J/kg/K)": disk_particles['entropy'].mean(),
             r"Avg. $\Delta S_{\rm circ.}$": np.mean(disk_particles['total entropy'] - disk_particles['entropy']),
             r"Avg. $T_{\rm disk}$ (K)": disk_particles['temperature'].mean(),
-            r"Disk Impactor Mass Fraction (%)": len(disk_particles[disk_particles['tag'] > 1]) /
-                                                len(disk_particles) * 100,
+            r"Disk Impactor Mass Fraction (%)": disk_impactor_mass_fraction
         }
         return d

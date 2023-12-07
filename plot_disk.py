@@ -80,6 +80,8 @@ for run_index, run in enumerate(runs):
     for time_index, i in enumerate(iterations):
         if time_index == 0:
             ax[run_index, time_index].set_title(f"{run['name']}", fontsize=20)
+            ax[run_index, time_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
+                                           f"{time} hrs.", fontsize=20)
         # generate the data
         c = CombinedFile(
             path=run['path'],
@@ -115,7 +117,7 @@ for handle in legend.legendHandles:
         handle.set_sizes([200.0])
     except:
         pass
-    
+
 letters = list(string.ascii_lowercase)
 for index, a in enumerate(ax.flatten()):
     x1, x2, y1, y2 = a.axis()
@@ -125,13 +127,13 @@ for index, a in enumerate(ax.flatten()):
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')
-    
+
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
 
-plt.tight_layout()
-fig.subplots_adjust(wspace=0, hspace=0)
-axs = ax.flatten()
+# plt.tight_layout()
+# fig.subplots_adjust(wspace=0, hspace=0)
+# axs = ax.flatten()
 # for ax in axs[-len(runs):-2]:
 #     nbins_x = len(ax.get_xticklabels())
 #     ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))

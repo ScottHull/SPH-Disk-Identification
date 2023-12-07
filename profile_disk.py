@@ -14,55 +14,55 @@ runs = [
         'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
-    # {
-    #     "name": "B",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "C",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "D",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/mars_b073_1vesc_rho_c_5kgm3/mars_b073_1vesc_rho_c_5kgm3",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "E",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/mars_b073_1vesc1.5_rtar/mars_b073_1vesc1.5_rtar",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "F",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/mars_b073_1v_esc/mars_b073_1v_esc",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
-    # },
-    # {
-    #     "name": "H",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_stewart/mars_citron_1vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "I",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_stewart/mars_citron_1.4vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
+    {
+        "name": "B",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "C",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "D",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/mars_b073_1vesc_rho_c_5kgm3/mars_b073_1vesc_rho_c_5kgm3",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "E",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/mars_b073_1vesc1.5_rtar/mars_b073_1vesc1.5_rtar",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "F",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/mars_b073_1v_esc/mars_b073_1v_esc",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    },
+    {
+        "name": "H",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_stewart/mars_citron_1vesc_b073_stewart_undiff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "I",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_stewart/mars_citron_1.4vesc_b073_stewart_undiff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
 ]
 
 # define the dataframe headers
@@ -92,13 +92,14 @@ for run in runs:
     # create the particle map
     particle_map = ParticleMap(particles=combined_file, mass_planet=mass_mars, equatorial_radius=equatorial_radius)
     particles = particle_map.loop()
+    disk_particles = particles[particles['label'] == 'DISK']
 
     # generate the report
     phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
                               names=["temperature", "density_sol_liq", "density_vap", "pressure",
                                      "entropy_sol_liq", "entropy_vap"])
     r = GiantImpactReport()
-    vmf_w_circ, vmf_wo_circ = r.calculate_vmf(particles=particles, phase_curve=phase_curve)
+    vmf_w_circ, vmf_wo_circ = r.calculate_vmf(particles=disk_particles, phase_curve=phase_curve)
     report = r.generate_report(
         particles=particles,
         planet_mass_normalizer=mass_mars,

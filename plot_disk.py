@@ -30,20 +30,20 @@ runs = [
         'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
-    # {
-    #     "name": "C",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "F",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
-    #     "num_processes": 600,
-    #     'final_iteration': 360,
-    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
-    # },
+    {
+        "name": "C",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "F",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
+        "num_processes": 600,
+        'final_iteration': 360,
+        'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    },
 ]
 
 iterations = [20, 100, 200, 300, 360]
@@ -59,6 +59,7 @@ square_scale = 6e7 / 10 ** 7
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(runs), len(iterations), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
                        sharey='all')
+ax = ax.flatten()
 
 for run_index, run in enumerate(runs):
     # generate the end state data

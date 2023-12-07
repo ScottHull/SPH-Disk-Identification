@@ -99,7 +99,8 @@ for run in runs:
                               names=["temperature", "density_sol_liq", "density_vap", "pressure",
                                      "entropy_sol_liq", "entropy_vap"])
     r = GiantImpactReport()
-    vmf_w_circ, vmf_wo_circ = r.calculate_vmf(particles=disk_particles, phase_curve=phase_curve)
+    vmf_w_circ, vmf_wo_circ = r.calculate_vmf(particles=disk_particles[particles['tag'] % 2 == 0],
+                                              phase_curve=phase_curve)
     report = r.generate_report(
         particles=particles,
         planet_mass_normalizer=mass_mars,

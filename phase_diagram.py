@@ -113,7 +113,7 @@ for run in runs:
     # create the particle map
     particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
     particles = particle_map.loop()
-    disk_particles = particles[particles['label'] == 'DISK']
+    disk_particles = particles[particles['label'] == 'DISK'][particles['tag'] % 2 == 0]
     ax.scatter(
         disk_particles['total entropy'], disk_particles['temperature'], s=1, alpha=1, label=run['name']
     )

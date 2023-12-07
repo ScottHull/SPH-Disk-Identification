@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
+import numpy as np
 import pandas as pd
+import string
 from random import randint
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 from src.combine import CombinedFile
 from src.identify import ParticleMap
@@ -51,6 +54,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 # define the planet parameters
 mass_mars = 6.39e23
 equatorial_radius = 3390e3
+square_scale = 6e7 / 10 ** 7
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(runs), len(iterations), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
@@ -61,8 +65,8 @@ for run_index, run in enumerate(runs):
     c = CombinedFile(
         path=run['path'],
         iteration=run['final_iteration'],
-        num_processes=run['num_processes'],
-        filetype='output'
+        number_of_processes=run['num_processes'],
+        to_fname=f"merged_{run['final_iteration']}_{randint(1, int(1e5))}.dat"
     )
     combined_file = c.combine_to_memory()
     # replace the headers
@@ -74,12 +78,14 @@ for run_index, run in enumerate(runs):
 
     # loop through iterations
     for time_index, i in enumerate(iterations):
+        if time_index == 0:
+            ax[run_index, time_index].set_title(f"{run['name']}", fontsize=20)
         # generate the data
         c = CombinedFile(
             path=run['path'],
             iteration=i,
-            num_processes=run['num_processes'],
-            filetype='output'
+            number_of_processes=run['num_processes'],
+            to_fname=f"merged_{i}_{randint(1, int(1e5))}.dat"
         )
         combined_file = c.combine_to_memory()
         # replace the headers
@@ -92,10 +98,42 @@ for run_index, run in enumerate(runs):
                 label = l.title()
             # plot the particles
             ax[run_index, time_index].scatter(
-                combined_file[combined_file['label'] == 'DISK']['x'],
-                combined_file[combined_file['label'] == 'DISK']['y'],
+                combined_file[combined_file['label'] == 'DISK']['x'] / (10 ** 7),
+                combined_file[combined_file['label'] == 'DISK']['y'] / (10 ** 7),
                 marker='.',
                 s=6,
                 alpha=1,
                 label=l
             )
+
+legend = ax[0, 0].legend(loc='upper right', fontsize=20)
+for handle in legend.legendHandles:
+    try:
+        handle.set_sizes([200.0])
+    except:
+        pass
+    
+letters = list(string.ascii_lowercase)
+for index, a in enumerate(ax.flatten()):
+    x1, x2, y1, y2 = a.ais()
+    x_loc = x1 + (0.02 * (x2 - x1))
+    y_loc = y2 - (0.08 * (y2 - y1))
+    a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
+    a.set_xlim(-square_scale, square_scale)
+    a.set_ylim(-square_scale, square_scale)
+    a.axs.set_aspect('equal')
+    
+ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
+ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
+
+plt.tight_layout()
+fig.subplots_adjust(wspace=0, hspace=0)
+axs = ax.flatten()
+for ax in axs[-len(runs):-2]:
+    nbins_x = len(ax.get_xticklabels())
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))
+for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
+    nbins_y = len(ax.get_yticklabels())
+    ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
+plt.tight_layout()
+plt.savefig("source_scenes.png", format='png', dpi=200)

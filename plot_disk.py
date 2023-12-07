@@ -132,11 +132,11 @@ ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fo
 plt.tight_layout()
 fig.subplots_adjust(wspace=0, hspace=0)
 axs = ax.flatten()
-for ax in axs[-len(runs):-2]:
-    nbins_x = len(ax.get_xticklabels())
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))
-for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
-    nbins_y = len(ax.get_yticklabels())
-    ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
+# for ax in axs[-len(runs):-2]:
+#     nbins_x = len(ax.get_xticklabels())
+#     ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))
+# for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
+#     nbins_y = len(ax.get_yticklabels())
+#     ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
 plt.tight_layout()
 plt.savefig("source_scenes.png", format='png', dpi=200)

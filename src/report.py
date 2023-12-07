@@ -50,7 +50,7 @@ class GiantImpactReport:
             is_supercritical, 1.0, np.where(
                 is_pure_liquid_w_circ, 0.0, np.where(
                     is_pure_vapor_w_circ, 1.0, (particles['total entropy'] - particles['nearest liquid entropy']) / (
-                                particles['nearest vapor entropy'] - particles['nearest liquid entropy'])
+                            particles['nearest vapor entropy'] - particles['nearest liquid entropy'])
                 )
             )
         )
@@ -71,3 +71,30 @@ class GiantImpactReport:
             particles['vmf_w_circ'].sum() / len(particles) * 100,
             particles['vmf_wo_circ'].sum() / len(particles) * 100
         ]  # return as units of percent
+
+    def generate_report(self, particles: pd.DataFrame, planet_mass_normalizer: float, disk_mass_normalizer: float,
+                        vmf_w_circ: float, vmf_wo_circ: float):
+        protoplanet_particles = particles[particles['label'] == 'PLANET']
+        disk_particles = particles[particles['label'] == 'DISK']
+        escaping_particles = particles[particles['label'] == 'ESCAPE']
+        d = {
+            r"Proto-planet Mass ($M_{\rm P}$)": protoplanet_particles['mass'].sum() / planet_mass_normalizer,
+            r"Disk Mass ($M_{\rm L}$)": disk_particles['mass'].sum() / disk_mass_normalizer,
+            r"Escaping Mass ($M_{\rm L}$)": escaping_particles['mass'].sum() / disk_mass_normalizer,
+            r"$N_{proto-planet}$": len(protoplanet_particles),
+            r"$N_{disk}$": len(disk_particles),
+            r"$N_{escaping}$": len(escaping_particles),
+            r"Disk Iron Mass Fraction (%)": len(disk_particles[disk_particles['tag'] % 2 != 0]) / len(
+                disk_particles) * 100,
+            r"$L_{\rm disk}$)": disk_particles['angular momentum'].sum(),
+            r"$L_{\rm total}$)": particles['angular momentum'].sum(),
+            r"Disk VMF (w/ circ.) (%)": vmf_w_circ,
+            r"Disk VMF (w/o circ.) (%)": vmf_wo_circ,
+            r"Avg. $S_{\rm disk}$ (w/ circ.) (J/kg/K)": disk_particles['total entropy'].mean(),
+            r"Avg. $S_{\rm disk}$ (w/o circ.) (J/kg/K)": disk_particles['entropy'].mean(),
+            r"Avg. $\Delta S_{\rm circ.}$": np.mean(disk_particles['total entropy'] - disk_particles['entropy']),
+            r"Avg. $T_{\rm disk}$ (K)": disk_particles['temperature'].mean(),
+            r"Disk Impactor Mass Fraction (%)": len(disk_particles[disk_particles['tag'] > 1]) /
+                                                len(disk_particles) * 100,
+        }
+        return d

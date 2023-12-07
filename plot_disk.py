@@ -93,13 +93,16 @@ for run_index, run in enumerate(runs):
         time = c.sim_time
 
         for label_index, l in enumerate(['DISK', 'PLANET', 'ESCAPE']):
+            endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
+            # get combined file particles that are in the end state
+            relevant_particles = combined_file[combined_file['id'].isin(endstate)]
             label = None
             if run_index == time_index == 0:
                 label = l.title()
             # plot the particles
             ax[run_index, time_index].scatter(
-                combined_file[combined_file['label'] == 'DISK']['x'] / (10 ** 7),
-                combined_file[combined_file['label'] == 'DISK']['y'] / (10 ** 7),
+                relevant_particles['x'] / (10 ** 7),
+                relevant_particles['y'] / (10 ** 7),
                 marker='.',
                 s=6,
                 alpha=1,

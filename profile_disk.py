@@ -113,6 +113,7 @@ for run in runs:
         vmf_w_circ=vmf_w_circ,
         vmf_wo_circ=vmf_wo_circ
     )
+    report.update("Time (hrs)", time)
     reports[run['name']] = report
 
 # create the dataframe

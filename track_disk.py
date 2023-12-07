@@ -11,6 +11,8 @@ from src.report import GiantImpactReport
 
 # use seaborn colorblind palette
 plt.style.use('seaborn-colorblind')
+# get the color cycle
+colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 runs = [
     # {
@@ -33,13 +35,15 @@ increment = 5
 # define the planet parameters
 mass_planet = 6.39e23
 equatorial_radius = 3390e3
+mass_phobos = 1.0659e16
+mass_deimos = 1.4762e15
 
 # define some misc stuff
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
                 "potential energy", "entropy", "temperature"]
-axes = ['times', 'disk_entropy', 'disk_temperature', 'disk_vmf', 'disk_mass', 'disk_angular_momentum',
-        'disk_impactor_mass_fraction']
-ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", r"Disk Mass ($M_{\rm Mars}$)",
+axes = ['times', 'disk_entropy_w_circ', 'disk_temperature', 'disk_vmf_w_circ', 'disk_mass', 'disk_angular_momentum',
+        'disk_impactor_mass_fraction', 'disk_vmf_wo_circ', 'disk_entropy_wo_circ']
+ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", r"Disk Mass ($M_{\rm PD}$)",
              r"Disk Angular Momentum ($L_{\rm MM}$)", "Disk Impactor Mass Fraction (%)"]
 phase_curve = pd.read_fwf("src/phase_curves/forstSTS__vapour_curve.txt", skiprows=1,
                            names=["temperature", "density_sol_liq", "density_vap", "pressure",
@@ -66,7 +70,7 @@ for run in runs:
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
         try:
-            disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / mass_planet
+            disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / (mass_phobos + mass_deimos)
             disk_ang_mom = disk_particles['angular momentum'].sum()
         except:
             disk_mass = None
@@ -74,21 +78,25 @@ for run in runs:
         run['times'].append(time)
         run['disk_mass'].append(disk_mass)
         run['disk_angular_momentum'].append(disk_ang_mom)
-        run['disk_entropy'].append(disk_particles['entropy'].mean())
-        run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum())
+        run['disk_entropy_w_circ'].append(disk_particles['total entropy'].mean())
+        run['disk_entropy_wo_circ'].append(disk_particles['entropy'].mean())
+        run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum() * 100)
         run['disk_temperature'].append(disk_particles['temperature'].mean())
-        run['disk_vmf'].append(dr.calculate_vmf(disk_particles, phase_curve))
+        run['disk_vmf_w_circ'].append(dr.calculate_vmf(disk_particles, phase_curve))
 
 fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()
-for ax, (axis, ylabel) in zip(axs, zip(axes[1:], ylabels)):
-    for run in runs:
-        ax.plot(run['times'], run[axis], linewidth=2.0, label=run['name'])
+for ax, (axis, ylabel) in zip(axs, zip(axes[1:-2], ylabels)):
+    for index, run in enumerate(runs):
+        ax.plot(run['times'], run[axis], linewidth=2.0, color=colors[index], label=run['name'])
     ax.set_ylabel(ylabel, fontsize=16)
     ax.set_xlabel("Time (hrs.)", fontsize=16)
     ax.grid()
     # use 16 point font on the axes
     ax.tick_params(axis='both', which='major', labelsize=16)
+for index, run in enumerate(runs):
+    axs[0].plot(run['times'], run['disk_entropy_wo_circ'], linewidth=2.0, color=colors[index], linestyle="--", label=run['name'])
+    axs[2].plot(run['times'], run['disk_vmf_wo_circ'], linewidth=2.0, color=colors[index], linestyle="--", label=run['name'])
 letters = string.ascii_lowercase
 # annotate the plots with letters in the upper left corner
 for ax, letter in zip(axs, letters):

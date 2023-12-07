@@ -41,15 +41,33 @@ class GiantImpactReport:
         # particles['nearest vapor entropy'] = phase_curve['entropy_vap'][particles['nearest temperature index']]
         # define rules on whether the particle is pure liquid or pure vapor, or supercritical or mixed phase
         is_supercritical = particles['temperature'] >= supercritical_T
-        is_pure_liquid = particles['total entropy'] <= particles['nearest liquid entropy']
-        is_pure_vapor = particles['total entropy'] >= particles['nearest vapor entropy']
+
+        # calculate vmf with effects of orbital circularization
+        is_pure_liquid_w_circ = particles['total entropy'] <= particles['nearest liquid entropy']
+        is_pure_vapor_w_circ = particles['total entropy'] >= particles['nearest vapor entropy']
         # calculate the vmf for each particle
-        particles['vmf'] = np.where(
+        particles['vmf_w_circ'] = np.where(
             is_supercritical, 1.0, np.where(
-                is_pure_liquid, 0.0, np.where(
-                    is_pure_vapor, 1.0, (particles['total entropy'] - particles['nearest liquid entropy']) / (
+                is_pure_liquid_w_circ, 0.0, np.where(
+                    is_pure_vapor_w_circ, 1.0, (particles['total entropy'] - particles['nearest liquid entropy']) / (
                                 particles['nearest vapor entropy'] - particles['nearest liquid entropy'])
                 )
             )
         )
-        return particles['vmf'].sum() / len(particles) * 100  # return as units of percent
+
+        is_pure_liquid_wo_circ = particles['entropy'] <= particles['nearest liquid entropy']
+        is_pure_vapor_wo_circ = particles['entropy'] >= particles['nearest vapor entropy']
+        # calculate vmf without effects of orbital circularization
+        particles['vmf_wo_circ'] = np.where(
+            is_supercritical, 1.0, np.where(
+                is_pure_liquid_wo_circ, 0.0, np.where(
+                    is_pure_vapor_wo_circ, 1.0, (particles['entropy'] - particles['nearest liquid entropy']) / (
+                            particles['nearest vapor entropy'] - particles['nearest liquid entropy'])
+                )
+            )
+        )
+
+        return [
+            particles['vmf_w_circ'].sum() / len(particles) * 100,
+            particles['vmf_wo_circ'].sum() / len(particles) * 100
+        ]  # return as units of percent

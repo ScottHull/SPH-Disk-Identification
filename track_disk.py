@@ -15,11 +15,11 @@ plt.style.use('seaborn-colorblind')
 colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 runs = [
-    # {
-    #     "name": "mars_citron_1vesc_b073_stewart_undiff",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    # },
+    {
+        "name": "mars_citron_1vesc_b073_stewart_undiff",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
+        "num_processes": 400,
+    },
     {
         "name": "mars_citron_1.4vesc_b073_stewart_undiff",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
@@ -104,7 +104,7 @@ for index, run in enumerate(runs):
 letters = string.ascii_lowercase
 # annotate the plots with letters in the upper left corner
 for ax, letter in zip(axs, letters):
-    ax.text(0.05, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
+    ax.text(0.95, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
 # axs[0].legend(fontsize=16)
 plt.tight_layout()
 plt.savefig(f"disk_profile.png", dpi=200)

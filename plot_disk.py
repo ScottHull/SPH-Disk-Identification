@@ -121,10 +121,11 @@ for handle in legend.legendHandles:
 
 letters = list(string.ascii_lowercase)
 for index, a in enumerate(ax.flatten()):
-    x1, x2, y1, y2 = a.axis()
-    x_loc = x1 + (0.02 * (x2 - x1))
-    y_loc = y2 - (0.08 * (y2 - y1))
-    a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
+    # x1, x2, y1, y2 = a.axis()
+    # x_loc = x1 + (0.02 * (x2 - x1))
+    # y_loc = y2 - (0.08 * (y2 - y1))
+    # a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
+    ax.text(0.05, 0.05, f"{letters[index]}", transform=ax.transAxes, va="center", fontsize=16, weight='bold')
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')
@@ -133,15 +134,16 @@ for index, a in enumerate(ax.flatten()):
 
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
-
+ax[0, 0].text(0.50, 0.05, r"x ($10^4$ km)", transform=ax.transAxes, va="center", fontsize=14, weight='bold')
+ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax.transAxes, va="center", rotation=90, fontsize=14, weight='bold')
 # plt.tight_layout()
 fig.subplots_adjust(wspace=0, hspace=0)
-# axs = ax.flatten()
-# for ax in axs[-len(runs):-2]:
-#     nbins_x = len(ax.get_xticklabels())
-#     ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))
-# for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
-#     nbins_y = len(ax.get_yticklabels())
-#     ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
+axs = ax.flatten()
+for ax in axs[-len(runs):-2]:
+    nbins_x = len(ax.get_xticklabels())
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=nbins_x, prune='upper'))
+for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
+    nbins_y = len(ax.get_yticklabels())
+    ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
 # plt.tight_layout()
 plt.savefig("source_scenes.png", format='png', dpi=200)

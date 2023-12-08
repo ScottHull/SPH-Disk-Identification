@@ -20,33 +20,33 @@ runs = [
         "name": "A",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
         "num_processes": 600,
-        'final_iteration': 380,
+        'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
         "name": "B",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
         "num_processes": 600,
-        'final_iteration': 380,
+        'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
         "name": "C",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
         "num_processes": 600,
-        'final_iteration': 380,
+        'final_iteration': 360,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
         "name": "F",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
         "num_processes": 600,
-        'final_iteration': 380,
+        'final_iteration': 360,
         'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
     },
 ]
 
-iterations = [20, 100, 200, 300, 380]
+iterations = [20, 100, 200, 300, 360]
 
 # define the dataframe headers
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
@@ -95,7 +95,7 @@ for run_index, run in enumerate(runs):
             ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
                                            f"{time} hrs.", fontsize=20)
 
-        for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
+        for label_index, l in enumerate(['ESCAPE', 'DISK', 'PLANET']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
             # get combined file particles that are in the end state
             relevant_particles = combined_file[combined_file['id'].isin(endstate)]

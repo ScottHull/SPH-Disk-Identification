@@ -29,8 +29,8 @@ runs = [
 
 # define the iteration parameters
 start_iteration = 0
-end_iteration = 500
-increment = 5
+end_iteration = 1800
+increment = 10
 
 # define the planet parameters
 mass_planet = 6.39e23
@@ -69,18 +69,20 @@ for run in runs:
         particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
-        try:
+        if len(disk_particles) > 0:
             disk_mass = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / (mass_phobos + mass_deimos)
             disk_ang_mom = disk_particles['angular momentum'].sum()
-        except:
-            disk_mass = None
-            disk_ang_mom = None
+            disk_impactor_mass_fraction = disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum() * 100
+        else:
+            disk_mass = 0.0
+            disk_ang_mom = 0.0
+            disk_impactor_mass_fraction = 0.0
         run['times'].append(time)
         run['disk_mass'].append(disk_mass)
         run['disk_angular_momentum'].append(disk_ang_mom)
         run['disk_entropy_w_circ'].append(disk_particles['total entropy'].mean())
         run['disk_entropy_wo_circ'].append(disk_particles['entropy'].mean())
-        run['disk_impactor_mass_fraction'].append(disk_particles[disk_particles['tag'] > 1]['mass'].sum() / disk_particles['mass'].sum() * 100)
+        run['disk_impactor_mass_fraction'].append(disk_impactor_mass_fraction)
         run['disk_temperature'].append(disk_particles['temperature'].mean())
         run['disk_vmf_w_circ'].append(dr.calculate_vmf(disk_particles, phase_curve))
 

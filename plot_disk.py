@@ -80,6 +80,7 @@ for run_index, run in enumerate(runs):
     for time_index, i in enumerate(iterations):
         if time_index == 0:
             ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
+        if run_index == 0:
             ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
                                            f"{time} hrs.", fontsize=20)
         # generate the data

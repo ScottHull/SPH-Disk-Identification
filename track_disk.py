@@ -30,7 +30,7 @@ runs = [
 # define the iteration parameters
 start_iteration = 0
 end_iteration = 1800
-increment = 10
+increment = 20
 
 # define the planet parameters
 mass_planet = 6.39e23

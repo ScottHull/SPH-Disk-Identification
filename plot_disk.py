@@ -57,7 +57,7 @@ equatorial_radius = 3390e3
 square_scale = 6e7 / 10 ** 7
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
-fig, ax = plt.subplots(len(iterations), len(runs), figsize=(len(iterations) * 5, len(runs) * 5), sharex='all',
+fig, ax = plt.subplots(len(iterations), len(runs), figsize=(24.5, 20), sharex='all',
                        sharey='all')
 
 for run_index, run in enumerate(runs):
@@ -131,8 +131,8 @@ for index, a in enumerate(ax.flatten()):
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
 
-# plt.tight_layout()
-fig.subplots_adjust(wspace=0, hspace=0)
+plt.tight_layout()
+# fig.subplots_adjust(wspace=0, hspace=0)
 # axs = ax.flatten()
 # for ax in axs[-len(runs):-2]:
 #     nbins_x = len(ax.get_xticklabels())

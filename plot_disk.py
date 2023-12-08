@@ -95,7 +95,7 @@ for run_index, run in enumerate(runs):
             ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
                                            f"{time} hrs.", fontsize=20)
 
-        for label_index, l in enumerate(['ESCAPE', 'DISK', 'PLANET']):
+        for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
             # get combined file particles that are in the end state
             relevant_particles = combined_file[combined_file['id'].isin(endstate)]
@@ -134,8 +134,8 @@ for index, a in enumerate(ax.flatten()):
 
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
-ax[0, 0].text(0.50, 0.05, r"x ($10^4$ km)", transform=ax[0, 0].transAxes, va="center", fontsize=14, weight='bold')
-ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, ha="center", rotation=90, fontsize=14, weight='bold')
+ax[0, 0].text(0.50, 0.05, r"x ($10^4$ km)", transform=ax[0, 0].transAxes, ha="center", fontsize=14, weight='bold')
+ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, va="center", rotation=90, fontsize=14, weight='bold')
 # plt.tight_layout()
 fig.subplots_adjust(wspace=0, hspace=0)
 axs = ax.flatten()

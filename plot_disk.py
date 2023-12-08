@@ -112,7 +112,7 @@ for run_index, run in enumerate(runs):
                 label=l
             )
 
-legend = ax[0, 0].legend(loc='upper right', fontsize=20)
+legend = ax[0, 0].legend(loc='upper right', fontsize=16)
 for handle in legend.legendHandles:
     try:
         handle.set_sizes([200.0])
@@ -128,12 +128,14 @@ for index, a in enumerate(ax.flatten()):
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')
+    # increase axis font size
+    a.tick_params(axis='both', which='major', labelsize=16)
 
 ax[0, 0].annotate(r"x ($10^4$ km)", xy=(0.0, -5.5), ha="center", fontsize=16, weight='bold')
 ax[0, 0].annotate(r"y ($10^4$ km)", xy=(-5.5, 0.0), va="center", rotation=90, fontsize=16, weight='bold')
 
-plt.tight_layout()
-# fig.subplots_adjust(wspace=0, hspace=0)
+# plt.tight_layout()
+fig.subplots_adjust(wspace=0, hspace=0)
 # axs = ax.flatten()
 # for ax in axs[-len(runs):-2]:
 #     nbins_x = len(ax.get_xticklabels())

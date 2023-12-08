@@ -71,18 +71,12 @@ for run_index, run in enumerate(runs):
     combined_file = c.combine_to_memory()
     # replace the headers
     combined_file.columns = file_headers
-    time = c.sim_time
     # create the particle map
     particle_map = ParticleMap(particles=combined_file, mass_planet=mass_mars, equatorial_radius=equatorial_radius)
     endstate_particles = particle_map.loop()[['id', 'label']]  # drop all columns except "id" and "label"
 
     # loop through iterations
     for time_index, i in enumerate(iterations):
-        if time_index == 0:
-            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
-        if run_index == 0:
-            ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
-                                           f"{time} hrs.", fontsize=20)
         # generate the data
         c = CombinedFile(
             path=run['path'],
@@ -94,6 +88,12 @@ for run_index, run in enumerate(runs):
         # replace the headers
         combined_file.columns = file_headers
         time = c.sim_time
+
+        if time_index == 0:
+            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
+        if run_index == 0:
+            ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
+                                           f"{time} hrs.", fontsize=20)
 
         for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values

@@ -94,7 +94,7 @@ for run_index, run in enumerate(runs):
         combined_file.columns = file_headers
         time = c.sim_time
 
-        for label_index, l in enumerate(['DISK', 'PLANET', 'ESCAPE']):
+        for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
             # get combined file particles that are in the end state
             relevant_particles = combined_file[combined_file['id'].isin(endstate)]

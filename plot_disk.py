@@ -54,10 +54,10 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 # define the planet parameters
 mass_mars = 6.39e23
 equatorial_radius = 3390e3
-square_scale = 6e7 / 10 ** 7
+square_scale = 4e7 / 10 ** 7
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
-fig, ax = plt.subplots(len(iterations), len(runs), figsize=(24.5, 20), sharex='all',
+fig, ax = plt.subplots(len(iterations), len(runs), figsize=(20, 24.5), sharex='all',
                        sharey='all')
 
 for run_index, run in enumerate(runs):

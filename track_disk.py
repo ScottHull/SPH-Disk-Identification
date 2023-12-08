@@ -77,6 +77,7 @@ for run in runs:
             disk_mass = 0.0
             disk_ang_mom = 0.0
             disk_impactor_mass_fraction = 0.0
+        disk_vmf_w_circ, disk_vmf_wo_circ = dr.calculate_vmf(disk_particles, phase_curve)
         run['times'].append(time)
         run['disk_mass'].append(disk_mass)
         run['disk_angular_momentum'].append(disk_ang_mom)
@@ -84,7 +85,8 @@ for run in runs:
         run['disk_entropy_wo_circ'].append(disk_particles['entropy'].mean())
         run['disk_impactor_mass_fraction'].append(disk_impactor_mass_fraction)
         run['disk_temperature'].append(disk_particles['temperature'].mean())
-        run['disk_vmf_w_circ'].append(dr.calculate_vmf(disk_particles, phase_curve))
+        run['disk_vmf_w_circ'].append(disk_vmf_w_circ)
+        run['disk_vmf_wo_circ'].append(disk_vmf_wo_circ)
 
 fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()

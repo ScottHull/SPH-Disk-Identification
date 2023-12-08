@@ -125,7 +125,7 @@ for index, a in enumerate(ax.flatten()):
     # x_loc = x1 + (0.02 * (x2 - x1))
     # y_loc = y2 - (0.08 * (y2 - y1))
     # a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
-    ax.text(0.05, 0.05, f"{letters[index]}", transform=ax.transAxes, va="center", fontsize=16, weight='bold')
+    a.text(0.05, 0.05, f"{letters[index]}", transform=ax.transAxes, va="center", fontsize=16, weight='bold')
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')

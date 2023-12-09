@@ -46,7 +46,7 @@ runs = [
     },
 ]
 
-iterations = [20, 100, 200, 300, 360]
+iterations = [50, 100, 200, 300, 360]
 
 # define the dataframe headers
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",

@@ -90,10 +90,10 @@ for run_index, run in enumerate(runs):
         time = c.sim_time
 
         if time_index == 0:
-            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=20)
+            ax[time_index, run_index].set_title(f"{run['name']}", fontsize=22)
         if run_index == 0:
             ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
-                                           f"{time} hrs.", fontsize=20)
+                                           f"{time} hrs.", fontsize=22)
 
         for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
@@ -125,15 +125,15 @@ for index, a in enumerate(ax.flatten()):
     # x_loc = x1 + (0.02 * (x2 - x1))
     # y_loc = y2 - (0.08 * (y2 - y1))
     # a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
-    a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=18, weight='bold')
+    a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=22, weight='bold')
     a.set_xlim(-square_scale, square_scale)
     a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')
     # increase axis font size
     a.tick_params(axis='both', which='major', labelsize=20)
 
-ax[0, 0].text(0.50, 0.05, r"x ($10^4$ km)", transform=ax[0, 0].transAxes, ha="center", fontsize=16, weight='bold')
-ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, va="center", rotation=90, fontsize=16,
+ax[0, 0].text(0.50, 0.05, r"x ($10^4$ km)", transform=ax[0, 0].transAxes, ha="center", fontsize=20, weight='bold')
+ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, va="center", rotation=90, fontsize=20,
               weight='bold')
 # plt.tight_layout()
 # fig.subplots_adjust(wspace=0, hspace=0)

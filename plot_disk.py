@@ -58,7 +58,7 @@ square_scale = 4e7 / 10 ** 7
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(iterations), len(runs), figsize=(20, 24.5), sharex='all',
-                       sharey='all')
+                       sharey='all', gridspec_kw=dict(hspace=0, wspace=0))
 
 for run_index, run in enumerate(runs):
     # generate the end state data
@@ -137,8 +137,8 @@ ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, va="cen
               weight='bold')
 # plt.tight_layout()
 # fig.subplots_adjust(wspace=0, hspace=0)
-plt.subplots_adjust(top=1, bottom=1, right=1, left=0, hspace=0, wspace=0)
-plt.margins(0, 0)
+# plt.subplots_adjust(top=1, bottom=2, right=2, left=0, hspace=0, wspace=0)
+# plt.margins(0, 0)
 axs = ax.flatten()
 for ax in axs[-len(runs):-2]:
     nbins_x = len(ax.get_xticklabels())
@@ -146,5 +146,5 @@ for ax in axs[-len(runs):-2]:
 for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs), len(runs))]:
     nbins_y = len(ax.get_yticklabels())
     ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
-# plt.tight_layout()
+plt.tight_layout()
 plt.savefig("source_scenes.png", format='png', dpi=200)

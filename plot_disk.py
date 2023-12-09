@@ -137,7 +137,7 @@ ax[0, 0].text(0.05, 0.5, r"y ($10^4$ km)", transform=ax[0, 0].transAxes, va="cen
               weight='bold')
 # plt.tight_layout()
 # fig.subplots_adjust(wspace=0, hspace=0)
-plt.subplots_adjust(top=10, bottom=0, right=1, left=0, hspace=0, wspace=0)
+plt.subplots_adjust(top=1, bottom=1, right=1, left=0, hspace=0, wspace=0)
 plt.margins(0, 0)
 axs = ax.flatten()
 for ax in axs[-len(runs):-2]:

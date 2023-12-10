@@ -103,13 +103,15 @@ for index, run in enumerate(runs):
 
 
     axs[index, 0].scatter(
-        combined_file['x'] / 1000, combined_file['y'] / 1000, s=2, marker=".", color='black'
+        combined_file['x'] / 10 ** 7, combined_file['y'] / 10 ** 7, s=2, marker=".", color='black'
     )
     axs[index, 0].scatter(
-        disk_particles['x'] / 1000, disk_particles['y'] / 1000, s=2, marker=".", color='red'
+        disk_particles['x'] / 10 ** 7, disk_particles['y'] / 10 ** 7, s=2, marker=".", color='red'
     )
+    axs[index, 0].set_xlim(-3, 3)
+    axs[index, 0].set_ylim(-3, 3)
     # axs[index, 0].set_xlabel("x (km)", fontsize=18)
-    axs[index, 0].set_ylabel("y (km)", fontsize=18)
+    axs[index, 0].set_ylabel(r"y ($10^7$ km)", fontsize=18)
     axs[index, 1].plot(
         run['times'], np.array(run['velocities']) / 1000, linewidth=2.0, color='black'
     )
@@ -123,7 +125,7 @@ for index, run in enumerate(runs):
         run['times'], run['temperatures'], linewidth=2.0, color='blue'
     )
     ax2 = axs[index, 2].twinx()
-    axs2.plot(
+    ax2.plot(
         run['times'], run['vmfs'], linewidth=2.0, color='red'
     )
     axs[index, 2].axvline(run['times'][max_iteration], color='black', linestyle='--')
@@ -150,7 +152,7 @@ for index, ax in enumerate(axs.flatten()):
     # increase the axis font size
     ax.tick_params(axis='both', which='major', labelsize=18)
 
-for ax, label in zip(axs.flatten()[:-3], ["x (km)", "Time (hrs.)", "Time (hrs.)"]):
+for ax, label in zip(axs.flatten()[-3:], [r"x ($10^3$ km)", "Time (hrs.)", "Time (hrs.)"]):
     ax.set_xlabel(label, fontsize=18)
 
 plt.tight_layout()

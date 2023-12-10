@@ -54,7 +54,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 # define the planet parameters
 mass_mars = 6.39e23
 equatorial_radius = 3390e3
-square_scale = 4e7 / 10 ** 7
+square_scale = 10 ** 4
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(iterations), len(runs), figsize=(20, 24.5), sharex='all',
@@ -104,8 +104,8 @@ for run_index, run in enumerate(runs):
                 label = l.title()
             # plot the particles
             ax[time_index, run_index].scatter(
-                relevant_particles['x'] / (10 ** 7),
-                relevant_particles['y'] / (10 ** 7),
+                relevant_particles['x'] / (10 ** 3 * square_scale),  # to km and units of the square scale
+                relevant_particles['y'] / (10 ** 3 * square_scale),
                 marker='.',
                 s=6,
                 alpha=1,

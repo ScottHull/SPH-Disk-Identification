@@ -126,8 +126,8 @@ for index, a in enumerate(ax.flatten()):
     # y_loc = y2 - (0.08 * (y2 - y1))
     # a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
     a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=22, weight='bold')
-    a.set_xlim(-square_scale, square_scale)
-    a.set_ylim(-square_scale, square_scale)
+    a.set_xlim(-square_scale * 10 ** 3, square_scale * 10 ** 3)
+    a.set_ylim(-square_scale * 10 ** 3, square_scale * 10 ** 3)
     a.axes.set_aspect('equal')
     # increase axis font size
     a.tick_params(axis='both', which='major', labelsize=20)

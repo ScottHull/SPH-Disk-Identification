@@ -31,7 +31,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 to_track = ['iterations', 'times', 'velocities', 'temperatures', 'vmfs']
 
 # fig, axs = plt.subplots(len(runs), 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
-fig, axs = plt.subplots(2, 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
+fig, axs = plt.subplots(2, 3, figsize=(20, 20 / 3))
 
 for index, run in enumerate(runs):
     for t in to_track:

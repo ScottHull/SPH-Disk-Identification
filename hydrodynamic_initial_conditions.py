@@ -94,36 +94,36 @@ for index, run in enumerate(runs):
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
 
 
-    axs[0, index].scatter(
+    axs[index, 0].scatter(
         combined_file['x'] / 1000, combined_file['y'] / 1000, s=2, marker=".", color='black'
     )
-    axs[0, index].scatter(
+    axs[index, 0].scatter(
         disk_particles['x'] / 1000, disk_particles['y'] / 1000, s=2, marker=".", color='red'
     )
-    axs[0, index].set_xlabel("x (km)", fontsize=18)
-    axs[0, index].set_ylabel("y (km)", fontsize=18)
-    axs[1, index].plot(
+    axs[index, 0].set_xlabel("x (km)", fontsize=18)
+    axs[index, 0].set_ylabel("y (km)", fontsize=18)
+    axs[index, 1].plot(
         run['times'], np.array(run['velocities']) / 1000, linewidth=2.0, color='black'
     )
-    axs[1, index].set_xlabel("Time (hrs.)", fontsize=18)
-    axs[1, index].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)
-    axs[1, index].axvline(run['times'][max_iteration], color='black', linestyle='--')
-    axs[1, index].text(
-        0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[1, index].transAxes, size=20
+    axs[index, 1].set_xlabel("Time (hrs.)", fontsize=18)
+    axs[index, 1].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)
+    axs[index, 1].axvline(run['times'][max_iteration], color='black', linestyle='--')
+    axs[index, 1].text(
+        0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[index, 1].transAxes, size=20
     )
-    axs[2, index].plot(
+    axs[index, 2].plot(
         run['times'], run['temperatures'], linewidth=2.0, color='blue'
     )
-    ax2 = axs[2, index].twinx()
-    axs[2, index].plot(
+    ax2 = axs[index, 2].twinx()
+    axs[index, 2].plot(
         run['times'], run['vmfs'], linewidth=2.0, color='red'
     )
-    axs[2, index].axvline(run['times'][max_iteration], color='black', linestyle='--')
-    axs[2, index].set_xlabel("Time (hrs.)", fontsize=18)
-    axs[2, index].set_ylabel("Avg. Disk Temperature (K)", fontsize=18)
+    axs[index, 2].axvline(run['times'][max_iteration], color='black', linestyle='--')
+    axs[index, 2].set_xlabel("Time (hrs.)", fontsize=18)
+    axs[index, 2].set_ylabel("Avg. Disk Temperature (K)", fontsize=18)
     ax2.set_ylabel("Disk VMF (%)", fontsize=18)
-    axs[0, index].text(
-        0.7, 0.9, f"{run['name']}", transform=axs[0, index].transAxes, size=20
+    axs[index, 0].text(
+        0.7, 0.9, f"{run['name']}", transform=axs[index, 0].transAxes, size=20
     )
 
 letters = list(string.ascii_lowercase)

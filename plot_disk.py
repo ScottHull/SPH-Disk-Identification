@@ -92,7 +92,7 @@ for run_index, run in enumerate(runs):
         if time_index == 0:
             ax[time_index, run_index].set_title(f"{run['name']}", fontsize=22)
         if run_index == 0:
-            ax[time_index, run_index].text(0.65, 0.3, f"{time} hrs.", transform=ax[0, 0].transAxes, ha='center',
+            ax[time_index, run_index].text(0.68, 0.22, f"{time} hrs.", transform=ax[time_index, run_index].transAxes, ha='center',
                                            va="center", fontsize=20, weight='bold')
 
         for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):

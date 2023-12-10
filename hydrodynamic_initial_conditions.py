@@ -35,7 +35,7 @@ if os.path.exists(fname):
     os.remove(fname)
 with open(fname, 'w') as f:
     # write the header
-    f.write("name,iteration,time,velocity,temperature,vmf\n")
+    f.write("name,iteration,time,velocity,temperature,vmf,impactor_disk_mass_fraction\n")
 f.close()
 
 # fig, axs = plt.subplots(len(runs), 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
@@ -59,6 +59,7 @@ for index, run in enumerate(runs):
     particle_map = ParticleMap(particles=combined_file, mass_planet=mass_mars, equatorial_radius=equatorial_radius)
     endstate_particles = particle_map.loop()
     endstate_disk_particles = endstate_particles[endstate_particles['label'] == 'DISK']
+    impactor_disk_mass_fraction = endstate_disk_particles[endstate_disk_particles['tag'] > 1]['mass'].sum() / endstate_disk_particles['mass'].sum() * 100
 
     for iteration in np.arange(0, run['max_vel_profile_iteration'] + 1, 1):
         c = CombinedFile(
@@ -139,7 +140,7 @@ for index, run in enumerate(runs):
     with open(fname, 'a') as f:
         f.write(
             run['name'] + "," + str(max_iteration) + "," + str(run['times'][max_iteration])+ "," + str(run['velocities'][max_iteration]) + "," +
-            str(run['temperatures'][max_iteration]) + "," + str(run['vmfs'][max_iteration]) + "\n"
+            str(run['temperatures'][max_iteration]) + "," + str(run['vmfs'][max_iteration]) + "," + str(impactor_disk_mass_fraction) + "\n"
         )
     f.close()
 

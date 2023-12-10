@@ -109,7 +109,7 @@ for index, run in enumerate(runs):
     axs[1, index].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)
     axs[1, index].axvline(run['times'][max_iteration], color='black', linestyle='--')
     axs[1, index].text(
-        0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[index].transAxes, size=20
+        0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[1, index].transAxes, size=20
     )
     axs[2, index].plot(
         run['times'], run['temperatures'], linewidth=2.0, color='blue'

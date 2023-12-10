@@ -108,8 +108,8 @@ for index, run in enumerate(runs):
     axs[index, 0].scatter(
         disk_particles['x'] / 10 ** 7, disk_particles['y'] / 10 ** 7, s=2, marker=".", color='red'
     )
-    axs[index, 0].set_xlim(-3, 3)
-    axs[index, 0].set_ylim(-3, 3)
+    axs[index, 0].set_xlim(-0.5, 0.5)
+    axs[index, 0].set_ylim(-0.5, 0.5)
     # axs[index, 0].set_xlabel("x (km)", fontsize=18)
     axs[index, 0].set_ylabel(r"y ($10^7$ km)", fontsize=18)
     axs[index, 1].plot(

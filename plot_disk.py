@@ -54,7 +54,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 # define the planet parameters
 mass_mars = 6.39e23
 equatorial_radius = 3390e3
-square_scale = 10 ** 4
+square_scale = 4
 
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(iterations), len(runs), figsize=(20, 24.5), sharex='all',
@@ -92,8 +92,8 @@ for run_index, run in enumerate(runs):
         if time_index == 0:
             ax[time_index, run_index].set_title(f"{run['name']}", fontsize=22)
         if run_index == 0:
-            ax[time_index, run_index].text(square_scale - (0.75 * square_scale), -square_scale + (0.3 * square_scale),
-                                           f"{time} hrs.", fontsize=22)
+            ax[time_index, run_index].text(0.65, 0.3, f"{time} hrs.", transform=ax[0, 0].transAxes, ha='center',
+                                           va="center", fontsize=20, weight='bold')
 
         for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
@@ -104,8 +104,8 @@ for run_index, run in enumerate(runs):
                 label = l.title()
             # plot the particles
             ax[time_index, run_index].scatter(
-                relevant_particles['x'] / (10 ** 3 * square_scale),  # to km and units of the square scale
-                relevant_particles['y'] / (10 ** 3 * square_scale),
+                relevant_particles['x'] / (10 ** 7),  # to km and units of the square scale
+                relevant_particles['y'] / (10 ** 7),
                 marker='.',
                 s=6,
                 alpha=1,
@@ -126,8 +126,8 @@ for index, a in enumerate(ax.flatten()):
     # y_loc = y2 - (0.08 * (y2 - y1))
     # a.text(x_loc, y_loc, letters[index], fontweight="bold", fontsize=20)
     a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=22, weight='bold')
-    a.set_xlim(-square_scale * 10 ** 3, square_scale * 10 ** 3)
-    a.set_ylim(-square_scale * 10 ** 3, square_scale * 10 ** 3)
+    a.set_xlim(-square_scale, square_scale)
+    a.set_ylim(-square_scale, square_scale)
     a.axes.set_aspect('equal')
     # increase axis font size
     a.tick_params(axis='both', which='major', labelsize=20)

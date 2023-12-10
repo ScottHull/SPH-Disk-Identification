@@ -136,7 +136,8 @@ for index, run in enumerate(runs):
 
     with open(fname, 'a') as f:
         f.write(
-            run['name'] + "," + str(run['times'][max_iteration]) + "," + str(run['velocities'][max_iteration]) + "," + str(run['temperatures'][max_iteration]) + "," + str(run['vmfs'][max_iteration]) + "\n"
+            run['name'] + "," + str(max_iteration) + "," + str(run['times'][max_iteration])+ "," + str(run['velocities'][max_iteration]) + "," +
+            str(run['temperatures'][max_iteration]) + "," + str(run['vmfs'][max_iteration]) + "\n"
         )
     f.close()
 

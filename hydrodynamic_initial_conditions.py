@@ -70,7 +70,7 @@ for index, run in enumerate(runs):
                                          "entropy_sol_liq", "entropy_vap"])
         r = GiantImpactReport()
         vmf_w_circ, vmf_wo_circ = r.calculate_vmf(particles=disk_particles[disk_particles['tag'] % 2 == 0],
-                                                  phase_curve=phase_curve)
+                                                  phase_curve=phase_curve, entropy_col='entropy')
 
         run['iterations'].append(iteration)
         run['times'].append(time)

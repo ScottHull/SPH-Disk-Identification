@@ -103,7 +103,7 @@ for index, run in enumerate(runs):
     axs[0, index].set_xlabel("x (km)", fontsize=18)
     axs[0, index].set_ylabel("y (km)", fontsize=18)
     axs[1, index].plot(
-        run['times'], run['velocities'] / 1000, linewidth=2.0, color='black'
+        run['times'], np.array(run['velocities']) / 1000, linewidth=2.0, color='black'
     )
     axs[1, index].set_xlabel("Time (hrs.)", fontsize=18)
     axs[1, index].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)

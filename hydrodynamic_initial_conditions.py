@@ -123,7 +123,7 @@ for index, run in enumerate(runs):
         run['times'], run['temperatures'], linewidth=2.0, color='blue'
     )
     ax2 = axs[index, 2].twinx()
-    axs[index, 2].plot(
+    axs2.plot(
         run['times'], run['vmfs'], linewidth=2.0, color='red'
     )
     axs[index, 2].axvline(run['times'][max_iteration], color='black', linestyle='--')

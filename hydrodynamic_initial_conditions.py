@@ -130,7 +130,7 @@ letters = list(string.ascii_lowercase)
 for index, ax in enumerate(axs.flatten()):
     ax.grid(alpha=0.4)
     ax[index].text(
-        0.05, 0.9, f"({letters[index]})", transform=axs[index].transAxes, size=20
+        0.05, 0.9, f"({letters[index]})", transform=ax[index].transAxes, size=20
     )
 
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)

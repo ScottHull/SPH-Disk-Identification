@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import numpy as np
 import pandas as pd
 import string
@@ -29,9 +30,16 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
                 "potential energy", "entropy", "temperature"]
 
 to_track = ['iterations', 'times', 'velocities', 'temperatures', 'vmfs']
+fname = "hydrodynamic_initial_conditions.csv"
+if os.path.exists(fname):
+    os.remove(fname)
+with open(fname, 'w') as f:
+    # write the header
+    f.write("name,iteration,time,velocity,temperature,vmf\n")
+f.close()
 
 # fig, axs = plt.subplots(len(runs), 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
-fig, axs = plt.subplots(2, 3, figsize=(20, 20 / 3))
+fig, axs = plt.subplots(2, 3, figsize=(20, 20 / 2))
 
 for index, run in enumerate(runs):
     for t in to_track:
@@ -100,12 +108,12 @@ for index, run in enumerate(runs):
     axs[index, 0].scatter(
         disk_particles['x'] / 1000, disk_particles['y'] / 1000, s=2, marker=".", color='red'
     )
-    axs[index, 0].set_xlabel("x (km)", fontsize=18)
+    # axs[index, 0].set_xlabel("x (km)", fontsize=18)
     axs[index, 0].set_ylabel("y (km)", fontsize=18)
     axs[index, 1].plot(
         run['times'], np.array(run['velocities']) / 1000, linewidth=2.0, color='black'
     )
-    axs[index, 1].set_xlabel("Time (hrs.)", fontsize=18)
+    # axs[index, 1].set_xlabel("Time (hrs.)", fontsize=18)
     axs[index, 1].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)
     axs[index, 1].axvline(run['times'][max_iteration], color='black', linestyle='--')
     axs[index, 1].text(
@@ -119,18 +127,30 @@ for index, run in enumerate(runs):
         run['times'], run['vmfs'], linewidth=2.0, color='red'
     )
     axs[index, 2].axvline(run['times'][max_iteration], color='black', linestyle='--')
-    axs[index, 2].set_xlabel("Time (hrs.)", fontsize=18)
+    # axs[index, 2].set_xlabel("Time (hrs.)", fontsize=18)
     axs[index, 2].set_ylabel("Avg. Disk Temperature (K)", fontsize=18)
     ax2.set_ylabel("Disk VMF (%)", fontsize=18)
     axs[index, 0].text(
         0.7, 0.9, f"{run['name']}", transform=axs[index, 0].transAxes, size=20
     )
 
+    with open(fname, 'a') as f:
+        f.write(
+            run['name'] + "," + str(run['times'][max_iteration]) + "," + str(run['velocities'][max_iteration]) + "," + str(run['temperatures'][max_iteration]) + "," + str(run['vmfs'][max_iteration]) + "\n"
+        )
+    f.close()
+
 letters = list(string.ascii_lowercase)
 for index, ax in enumerate(axs.flatten()):
     ax.grid(alpha=0.4)
     ax.text(
-        0.05, 0.9, f"({letters[index]})", transform=ax.transAxes, size=20
+        0.05, 0.9, f"{letters[index]}", transform=ax.transAxes, fontweight='bold', size=20
     )
+    # increase the axis font size
+    ax.tick_params(axis='both', which='major', labelsize=18)
 
+for ax, label in zip(axs.flatten()[:-3], ["x (km)", "Time (hrs.)", "Time (hrs.)"]):
+    ax.set_xlabel(label, fontsize=18)
+
+plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)

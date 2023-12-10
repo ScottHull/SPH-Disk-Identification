@@ -13,7 +13,7 @@ from src.report import GiantImpactReport
 runs = [
     {
         "name": "H",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_stewart/mars_citron_1vesc_b073_stewart_undiff",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
         "num_processes": 400,
         'final_iteration': 1800,
         'max_vel_profile_iteration': 60,

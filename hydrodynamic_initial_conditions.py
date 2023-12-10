@@ -103,10 +103,10 @@ for index, run in enumerate(runs):
 
 
     axs[index, 0].scatter(
-        combined_file['x'] / 10 ** 7, combined_file['y'] / 10 ** 7, s=2, marker=".", color='black'
+        combined_file['x'] / 10 ** 6, combined_file['y'] / 10 ** 7, s=2, marker=".", color='black'
     )
     axs[index, 0].scatter(
-        disk_particles['x'] / 10 ** 7, disk_particles['y'] / 10 ** 7, s=2, marker=".", color='red'
+        disk_particles['x'] / 10 ** 6, disk_particles['y'] / 10 ** 7, s=2, marker=".", color='red'
     )
     axs[index, 0].set_xlim(-6, 6)
     axs[index, 0].set_ylim(-6, 6)

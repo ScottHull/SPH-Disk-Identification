@@ -108,8 +108,8 @@ for index, run in enumerate(runs):
     axs[index, 0].scatter(
         disk_particles['x'] / 10 ** 6, disk_particles['y'] / 10 ** 6, s=2, marker=".", color='red'
     )
-    axs[index, 0].set_xlim(-6, 6)
-    axs[index, 0].set_ylim(-6, 6)
+    axs[index, 0].set_xlim(-8, 8)
+    axs[index, 0].set_ylim(-8, 8)
     # axs[index, 0].set_xlabel("x (km)", fontsize=18)
     axs[index, 0].set_ylabel(r"y ($10^3$ km)", fontsize=18)
     axs[index, 1].plot(
@@ -133,7 +133,7 @@ for index, run in enumerate(runs):
     axs[index, 2].set_ylabel("Avg. Disk Temperature (K)", fontsize=18)
     ax2.set_ylabel("Disk VMF (%)", fontsize=18)
     axs[index, 0].text(
-        0.7, 0.9, f"{run['name']}", transform=axs[index, 0].transAxes, size=20
+        0.75, 0.9, f"Run {run['name']}", transform=axs[index, 0].transAxes, size=20
     )
 
     with open(fname, 'a') as f:

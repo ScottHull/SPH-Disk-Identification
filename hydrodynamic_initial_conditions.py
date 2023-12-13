@@ -187,7 +187,7 @@ plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
 
 
-fig, axs = plt.subplots(4, 2, figsize=(20, 10))
+fig, axs = plt.subplots(4, 2, figsize=(10, 20))
 
 for index, run in enumerate(runs):
     disk_particles = run['disk_particles']
@@ -197,6 +197,8 @@ for index, run in enumerate(runs):
                                      "entropy_sol_liq", "entropy_vap"])
     vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
                                               phase_curve=phase_curve, entropy_col='entropy')
+    # sort disk particles by vmf
+    disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
 
     axs[index, 0].scatter(
         disk_bound_particles['velocity'] / 1000, disk_bound_particles['vmf_wo_circ'] * 100, s=5, marker="."
@@ -216,7 +218,7 @@ for index, run in enumerate(runs):
         disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
         color='black', linestyle='--', linewidth=2.0
     )
-    axs[index, 1].axhline(
+    axs[index, 1].axvline(
         disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
         color='black', linestyle='--', linewidth=2.0
     )

@@ -127,7 +127,7 @@ for index, run in enumerate(runs):
     combined_file.columns = file_headers
     time = c.sim_time
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
-
+    run['disk_particles'] = disk_particles
 
     axs[index, 0].scatter(
         combined_file['x'] / 10 ** 6, combined_file['y'] / 10 ** 6, s=2, marker=".", color='black'
@@ -189,20 +189,8 @@ plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
 fig, axs = plt.subplots(4, 2, figsize=(20, 10))
 
 for index, run in enumerate(runs):
-    # create the combined file
-    c = CombinedFile(
-        path=run['path'],
-        iteration=run['max_iteration'],
-        number_of_processes=run['num_processes'],
-        to_fname=f"merged_{run['final_iteration']}_{randint(1, int(1e5))}.dat"
-    )
-    combined_file = c.combine_to_memory()
-    # replace the headers
-    combined_file.columns = file_headers
-    disk_bound_particles = combined_file[combined_file['id'].isin(run['final_disk_particle_ids'])]
-    disk_bound_particles['velocity'] = np.sqrt(disk_bound_particles['vx'] ** 2 + disk_bound_particles['vy'] ** 2 + disk_bound_particles['vz'] ** 2)
-    # sort the particles based on vmf
-    disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'])
+    disk_particles = run['disk_particles']
+    disk_bound_particles = disk_particles[disk_particles['tag'] % 2 == 0]
 
     axs[index, 0].scatter(
         disk_bound_particles['velocity'] / 1000, disk_bound_particles['vmf_wo_circ'] * 100, s=5, marker="."

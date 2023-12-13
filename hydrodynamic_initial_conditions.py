@@ -225,6 +225,7 @@ for ax in axs.flatten():
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
 
+axs = axs.flatten()
 axs[-2].set_xlabel("Velocity (km/s)", fontsize=18)
 axs[-1].set_xlabel("VMF (%)", fontsize=18)
 plt.tight_layout()

@@ -182,3 +182,7 @@ for ax, label in zip(axs.flatten()[-3:], [r"x ($10^3$ km)", "Time (hrs.)", "Time
 
 plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
+
+
+
+

@@ -221,7 +221,7 @@ for index, run in enumerate(runs):
         color='black', linestyle='--', linewidth=2.0
     )
 
-for ax in axs:
+for ax in axs.flatten():
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
 

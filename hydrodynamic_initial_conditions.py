@@ -127,6 +127,7 @@ for index, run in enumerate(runs):
     combined_file.columns = file_headers
     time = c.sim_time
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
+    disk_particles['velocity'] = np.sqrt(disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
     run['disk_particles'] = disk_particles
 
     axs[index, 0].scatter(

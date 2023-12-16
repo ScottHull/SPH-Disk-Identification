@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+import pandas
 import pandas as pd
 import string
 from random import randint
@@ -89,6 +90,20 @@ mass_mars = 6.39e23
 equatorial_radius = 3390e3
 square_scale = 4
 
+def center_of_mass(particles: pandas.DataFrame):
+    """
+    Calculate the center of mass of the particles
+    """
+    # calculate the center of mass
+    x = particles['x'].values
+    y = particles['y'].values
+    z = particles['z'].values
+    m = particles['mass'].values
+    x_cm = np.sum(x * m) / np.sum(m)
+    y_cm = np.sum(y * m) / np.sum(m)
+    z_cm = np.sum(z * m) / np.sum(m)
+    return x_cm, y_cm, z_cm
+
 # make a figure with len(runs) columns and len(iterations) rows, and scale the figure size accordingly
 fig, ax = plt.subplots(len(iterations), len(runs), figsize=(20, 24.5), sharex='all',
                        sharey='all', gridspec_kw=dict(hspace=0, wspace=0))
@@ -122,6 +137,9 @@ for run_index, run in enumerate(runs):
         combined_file.columns = file_headers
         time = c.sim_time
 
+        # center on core of target
+        com_x, com_y, com_z = center_of_mass(combined_file[combined_file['tag'] == 1])
+
         if time_index == 0:
             ax[time_index, run_index].set_title(f"{run['name']}", fontsize=22)
         if run_index == 0:
@@ -137,8 +155,8 @@ for run_index, run in enumerate(runs):
                 label = l.title()
             # plot the particles
             ax[time_index, run_index].scatter(
-                relevant_particles['x'] / (10 ** 7),  # to km and units of the square scale
-                relevant_particles['y'] / (10 ** 7),
+                (relevant_particles['x'] - com_x) / (10 ** 7),  # to km and units of the square scale
+                (relevant_particles['y'] - com_y) / (10 ** 7),
                 marker='.',
                 s=6,
                 alpha=1,

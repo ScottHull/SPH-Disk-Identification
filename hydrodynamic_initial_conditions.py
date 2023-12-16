@@ -146,9 +146,9 @@ for index, run in enumerate(runs):
     # axs[index, 1].set_xlabel("Time (hrs.)", fontsize=18)
     axs[index, 1].set_ylabel("Avg. Ejecta Velocity (km/s)", fontsize=18)
     axs[index, 1].axvline(run['times'][max_iteration], color='black', linestyle='--')
-    axs[index, 1].text(
-        0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[index, 1].transAxes, size=20
-    )
+    # axs[index, 1].text(
+    #     0.6, 0.9, r"$t_{\rm ic} = $" + f"{run['times'][max_iteration]} hrs.", transform=axs[index, 1].transAxes, size=20
+    # )
     axs[index, 2].plot(
         run['times'], run['temperatures'], linewidth=2.0, color='blue'
     )

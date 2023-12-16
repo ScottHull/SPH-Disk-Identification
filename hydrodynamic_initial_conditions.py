@@ -63,7 +63,7 @@ with open(fname, 'w') as f:
 f.close()
 
 # fig, axs = plt.subplots(len(runs), 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
-fig, axs = plt.subplots(2, 3, figsize=(20, 20 / 2))
+fig, axs = plt.subplots(4, 3, figsize=(20 / 3, 20))
 
 for index, run in enumerate(runs):
     for t in to_track:

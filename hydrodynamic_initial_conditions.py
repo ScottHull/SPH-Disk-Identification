@@ -17,7 +17,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
+        'max_vel_profile_iteration': 35,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -25,7 +25,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
+        'max_vel_profile_iteration': 35,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -98,6 +98,7 @@ for index, run in enumerate(runs):
         time = c.sim_time
         disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
         disk_particles['velocity'] = np.sqrt(disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
+        run['final_disk_particle_ids'] = disk_particles['id'].tolist()
 
         # generate the report
         phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
@@ -114,6 +115,7 @@ for index, run in enumerate(runs):
         run['vmfs'].append(vmf_wo_circ)
 
     max_iteration = run['velocities'].index(max(run['velocities']))
+    run['max_iteration'] = max_iteration
     c = CombinedFile(
         path=run['path'],
         iteration=max_iteration,
@@ -125,7 +127,8 @@ for index, run in enumerate(runs):
     combined_file.columns = file_headers
     time = c.sim_time
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
-
+    disk_particles['velocity'] = np.sqrt(disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
+    run['disk_particles'] = disk_particles
 
     axs[index, 0].scatter(
         combined_file['x'] / 10 ** 6, combined_file['y'] / 10 ** 6, s=2, marker=".", color='black'
@@ -184,5 +187,48 @@ plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
 
 
+fig, axs = plt.subplots(4, 2, figsize=(10, 20))
 
+for index, run in enumerate(runs):
+    disk_particles = run['disk_particles']
+    disk_bound_particles = disk_particles[disk_particles['tag'] % 2 == 0]
+    phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
+                              names=["temperature", "density_sol_liq", "density_vap", "pressure",
+                                     "entropy_sol_liq", "entropy_vap"])
+    vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
+                                              phase_curve=phase_curve, entropy_col='entropy')
+    # sort disk particles by vmf
+    disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
 
+    axs[index, 0].scatter(
+        disk_bound_particles['velocity'] / 1000, disk_bound_particles['vmf_wo_circ'] * 100, s=5, marker="."
+    )
+    axs[index, 0].set_title(f"Run {run['name']}", fontsize=20)
+    axs[index, 0].set_ylabel("VMF (%)", fontsize=18)
+    axs[index, 1].plot(
+        disk_bound_particles['vmf_wo_circ'] * 100,
+        disk_bound_particles['vmf_wo_circ'].rank(method='average', pct=True), linewidth=2.0, color='black'
+    )
+    axs[index, 1].set_ylabel("CDF", fontsize=18)
+
+    axs[index, 0].axvline(
+        disk_bound_particles['velocity'].mean() / 1000, color='black', linestyle='--', linewidth=2.0
+    )
+    axs[index, 0].axhline(
+        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
+        color='black', linestyle='--', linewidth=2.0
+    )
+    axs[index, 1].axvline(
+        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
+        color='black', linestyle='--', linewidth=2.0
+    )
+
+for ax in axs.flatten():
+    ax.grid(alpha=0.4)
+    ax.tick_params(axis='both', which='major', labelsize=18)
+
+axs = axs.flatten()
+axs[-2].set_xlabel("Velocity (km/s)", fontsize=18)
+axs[-1].set_xlabel("VMF (%)", fontsize=18)
+plt.tight_layout()
+plt.savefig("hydrodynamic_initial_conditions_velocity_vs_vmf.png", format='png', dpi=200)

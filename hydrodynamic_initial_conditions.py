@@ -28,22 +28,22 @@ runs = [
         'max_vel_profile_iteration': 60,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
-    # {
-    #     "name": "K",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'max_vel_profile_iteration': 60,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "L",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'max_vel_profile_iteration': 60,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
+    {
+        "name": "K",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "L",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
 ]
 
 # define the planet parameters

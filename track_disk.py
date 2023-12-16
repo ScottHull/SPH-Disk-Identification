@@ -143,6 +143,6 @@ letters = string.ascii_lowercase
 # annotate the plots with letters in the upper left corner
 for ax, letter in zip(axs, letters):
     ax.text(0.95, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
-# axs[0].legend(fontsize=16)
+axs[0].legend(fontsize=16)
 plt.tight_layout()
 plt.savefig(f"disk_profile.png", dpi=200)

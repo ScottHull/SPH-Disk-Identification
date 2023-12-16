@@ -16,37 +16,70 @@ plt.style.use('dark_background')
 colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 runs = [
+    # {
+    #     "name": "A",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "B",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "C",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "F",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    # },
     {
-        "name": "A",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "G",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 35,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "B",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "H",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 35,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "C",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "K",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "F",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
-        'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+        "name": "L",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
 ]
 
-iterations = [50, 100, 200, 300, 360]
+# iterations = [50, 100, 200, 300, 360]
+iterations = [50, 200, 500, 1000, 1800]
 
 # define the dataframe headers
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",

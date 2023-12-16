@@ -63,7 +63,7 @@ with open(fname, 'w') as f:
 f.close()
 
 # fig, axs = plt.subplots(len(runs), 3, figsize=(20, len(runs) * 3), sharex='all', sharey='all')
-fig, axs = plt.subplots(4, 3, figsize=(20 / 3, 20))
+fig, axs = plt.subplots(4, 3, figsize=(20, 20 * 3 / 4))
 
 for index, run in enumerate(runs):
     for t in to_track:
@@ -186,49 +186,49 @@ for ax, label in zip(axs.flatten()[-3:], [r"x ($10^3$ km)", "Time (hrs.)", "Time
 plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
 
-
-fig, axs = plt.subplots(4, 2, figsize=(10, 20))
-
-for index, run in enumerate(runs):
-    disk_particles = run['disk_particles']
-    disk_bound_particles = disk_particles[disk_particles['tag'] % 2 == 0]
-    phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
-                              names=["temperature", "density_sol_liq", "density_vap", "pressure",
-                                     "entropy_sol_liq", "entropy_vap"])
-    vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
-                                              phase_curve=phase_curve, entropy_col='entropy')
-    # sort disk particles by vmf
-    disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
-
-    axs[index, 0].scatter(
-        disk_bound_particles['velocity'] / 1000, disk_bound_particles['vmf_wo_circ'] * 100, s=5, marker="."
-    )
-    axs[index, 0].set_title(f"Run {run['name']}", fontsize=20)
-    axs[index, 0].set_ylabel("VMF (%)", fontsize=18)
-    axs[index, 1].plot(
-        disk_bound_particles['vmf_wo_circ'] * 100,
-        disk_bound_particles['vmf_wo_circ'].rank(method='average', pct=True), linewidth=2.0, color='black'
-    )
-    axs[index, 1].set_ylabel("CDF", fontsize=18)
-
-    axs[index, 0].axvline(
-        disk_bound_particles['velocity'].mean() / 1000, color='black', linestyle='--', linewidth=2.0
-    )
-    axs[index, 0].axhline(
-        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
-        color='black', linestyle='--', linewidth=2.0
-    )
-    axs[index, 1].axvline(
-        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
-        color='black', linestyle='--', linewidth=2.0
-    )
-
-for ax in axs.flatten():
-    ax.grid(alpha=0.4)
-    ax.tick_params(axis='both', which='major', labelsize=18)
-
-axs = axs.flatten()
-axs[-2].set_xlabel("Velocity (km/s)", fontsize=18)
-axs[-1].set_xlabel("VMF (%)", fontsize=18)
-plt.tight_layout()
-plt.savefig("hydrodynamic_initial_conditions_velocity_vs_vmf.png", format='png', dpi=200)
+#
+# fig, axs = plt.subplots(4, 2, figsize=(10, 20))
+#
+# for index, run in enumerate(runs):
+#     disk_particles = run['disk_particles']
+#     disk_bound_particles = disk_particles[disk_particles['tag'] % 2 == 0]
+#     phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
+#                               names=["temperature", "density_sol_liq", "density_vap", "pressure",
+#                                      "entropy_sol_liq", "entropy_vap"])
+#     vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
+#                                               phase_curve=phase_curve, entropy_col='entropy')
+#     # sort disk particles by vmf
+#     disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
+#
+#     axs[index, 0].scatter(
+#         disk_bound_particles['velocity'] / 1000, disk_bound_particles['vmf_wo_circ'] * 100, s=5, marker="."
+#     )
+#     axs[index, 0].set_title(f"Run {run['name']}", fontsize=20)
+#     axs[index, 0].set_ylabel("VMF (%)", fontsize=18)
+#     axs[index, 1].plot(
+#         disk_bound_particles['vmf_wo_circ'] * 100,
+#         disk_bound_particles['vmf_wo_circ'].rank(method='average', pct=True), linewidth=2.0, color='black'
+#     )
+#     axs[index, 1].set_ylabel("CDF", fontsize=18)
+#
+#     axs[index, 0].axvline(
+#         disk_bound_particles['velocity'].mean() / 1000, color='black', linestyle='--', linewidth=2.0
+#     )
+#     axs[index, 0].axhline(
+#         disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
+#         color='black', linestyle='--', linewidth=2.0
+#     )
+#     axs[index, 1].axvline(
+#         disk_bound_particles['vmf_wo_circ'].sum() / len(disk_bound_particles['vmf_wo_circ']) * 100,
+#         color='black', linestyle='--', linewidth=2.0
+#     )
+#
+# for ax in axs.flatten():
+#     ax.grid(alpha=0.4)
+#     ax.tick_params(axis='both', which='major', labelsize=18)
+#
+# axs = axs.flatten()
+# axs[-2].set_xlabel("Velocity (km/s)", fontsize=18)
+# axs[-1].set_xlabel("VMF (%)", fontsize=18)
+# plt.tight_layout()
+# plt.savefig("hydrodynamic_initial_conditions_velocity_vs_vmf.png", format='png', dpi=200)

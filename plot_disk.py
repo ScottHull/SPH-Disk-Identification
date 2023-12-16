@@ -16,6 +16,10 @@ plt.style.use('dark_background')
 # get the color cycle as a list
 colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
+planet_color = colors[0]
+escape_color = colors[1]
+disk_color = colors[3]
+
 runs = [
     # {
     #     "name": "A",
@@ -146,7 +150,7 @@ for run_index, run in enumerate(runs):
             ax[time_index, run_index].text(0.68, 0.22, f"{time} hrs.", transform=ax[time_index, run_index].transAxes, ha='center',
                                            va="center", fontsize=20, weight='bold')
 
-        for label_index, l in enumerate(['PLANET', 'ESCAPE', 'DISK']):
+        for label_index, (l, color) in enumerate(zip(['PLANET', 'ESCAPE', 'DISK'], [planet_color, escape_color, disk_color])):
             endstate = endstate_particles[endstate_particles['label'] == l]['id'].values
             # get combined file particles that are in the end state
             relevant_particles = combined_file[combined_file['id'].isin(endstate)]
@@ -160,6 +164,7 @@ for run_index, run in enumerate(runs):
                 marker='.',
                 s=6,
                 alpha=1,
+                color=color,
                 label=l
             )
 

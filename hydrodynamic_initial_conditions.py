@@ -186,6 +186,89 @@ for ax, label in zip(axs.flatten()[-3:], [r"x ($10^3$ km)", "Time (hrs.)", "Time
 plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions.png", format='png', dpi=200)
 
+
+
+fig, axs = plt.subplots(3, 4, figsize=(20, 20 * (3 / 4)))
+initial_conditions = pd.read_csv("hydrodynamic_initial_conditions.csv", index_col="name")
+for index, run in enumerate(runs):
+    # create the combined file
+    c = CombinedFile(
+        path=run['path'],
+        iteration=run['final_iteration'],
+        number_of_processes=run['num_processes'],
+        to_fname=f"merged_{run['final_iteration']}_{randint(1, int(1e5))}.dat"
+    )
+    combined_file = c.combine_to_memory()
+    # replace the headers
+    combined_file.columns = file_headers
+    time = c.sim_time
+    # create the particle map
+    particle_map = ParticleMap(particles=combined_file, mass_planet=mass_mars, equatorial_radius=equatorial_radius)
+    endstate_particles = particle_map.loop()
+    endstate_disk_particles = endstate_particles[endstate_particles['label'] == 'DISK']
+    impactor_disk_mass_fraction = endstate_disk_particles[endstate_disk_particles['tag'] > 1]['mass'].sum() / \
+                                  endstate_disk_particles['mass'].sum() * 100
+
+    iteration = initial_conditions.loc[run['name']]['iteration']
+
+    c = CombinedFile(
+        path=run['path'],
+        iteration=max_iteration,
+        number_of_processes=run['num_processes'],
+        to_fname=f"merged_{run['final_iteration']}_{randint(1, int(1e5))}.dat"
+    )
+    combined_file = c.combine_to_memory()
+    # replace the headers
+    combined_file.columns = file_headers
+    time = c.sim_time
+    disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
+    disk_particles['velocity'] = np.sqrt(
+        disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
+
+    disk_bound_particles = disk_particles[disk_particles['tag'] % 2 == 0]
+    phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
+                              names=["temperature", "density_sol_liq", "density_vap", "pressure",
+                                     "entropy_sol_liq", "entropy_vap"])
+    vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
+                                              phase_curve=phase_curve, entropy_col='entropy')
+    # sort disk particles by vmf
+    disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
+
+    # plot a PDF of entropy
+    axs[0, index].hist(
+        disk_bound_particles['entropy'], bins=50, density=True, color='black', alpha=1
+    )
+
+    # plot a PDF of temperature
+    axs[1, index].hist(
+        disk_bound_particles['temperature'], bins=50, density=True, color='black', alpha=1
+    )
+
+    # plot a PDF of velocity
+    axs[2, index].hist(
+        disk_bound_particles['velocity'] / 1000, bins=50, density=True, color='black', alpha=1
+    )
+
+    axs[0, index].set_title(f"Run {run['name']}", fontsize=20)
+
+for ax in axs.flatten():
+    ax.grid(alpha=0.4)
+    ax.tick_params(axis='both', which='major', labelsize=18)
+    ax.set_ylabel("PDF", fontsize=18)
+
+axs = axs.flatten()
+for ax in axs[0:2]:
+    ax.set_xlabel("Entropy (J/kg/K)", fontsize=18)
+for ax in axs[2:4]:
+    ax.set_xlabel("Temperature (K)", fontsize=18)
+for ax in axs[4:6]:
+    ax.set_xlabel("Velocity (km/s)", fontsize=18)
+plt.tight_layout()
+plt.savefig("hydrodynamic_initial_conditions_pdfs.png", format='png', dpi=200)
+
+
+
+
 #
 # fig, axs = plt.subplots(4, 2, figsize=(10, 20))
 #

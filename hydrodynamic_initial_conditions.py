@@ -190,6 +190,7 @@ to_track = ['iterations', 'times', 'velocities', 'temperatures', 'vmfs']
 
 fig, axs = plt.subplots(3, 4, figsize=(20, 20 * (3 / 4)))
 initial_conditions = pd.read_csv("hydrodynamic_initial_conditions.csv", index_col="name")
+bins = 10
 for index, run in enumerate(runs):
     # create the combined file
     c = CombinedFile(
@@ -235,17 +236,17 @@ for index, run in enumerate(runs):
 
     # plot a PDF of entropy
     axs[0, index].hist(
-        disk_bound_particles['entropy'], bins=50, density=True, color='black', alpha=1
+        disk_bound_particles['entropy'], bins=bins, density=True, color='black', alpha=1
     )
 
     # plot a PDF of temperature
     axs[1, index].hist(
-        disk_bound_particles['temperature'], bins=50, density=True, color='black', alpha=1
+        disk_bound_particles['temperature'], bins=bins, density=True, color='black', alpha=1
     )
 
     # plot a PDF of velocity
     axs[2, index].hist(
-        disk_bound_particles['velocity'] / 1000, bins=50, density=True, color='black', alpha=1
+        disk_bound_particles['velocity'] / 1000, bins=bins, density=True, color='black', alpha=1
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)
@@ -253,7 +254,7 @@ for index, run in enumerate(runs):
 for ax in axs.flatten():
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
-    ax.set_ylabel("PDF", fontsize=18)
+    ax.set_ylabel("Frequency", fontsize=18)
 
 axs = axs.flatten()
 for ax in axs[0:4]:

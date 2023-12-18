@@ -212,7 +212,7 @@ for index, run in enumerate(runs):
 
     c = CombinedFile(
         path=run['path'],
-        iteration=int(initial_conditions.loc[run['name']]['iteration'].values[0]),
+        iteration=int(initial_conditions.loc[run['name']]['iteration']),
         number_of_processes=run['num_processes'],
         to_fname=f"merged_{run['final_iteration']}_{randint(1, int(1e5))}.dat"
     )

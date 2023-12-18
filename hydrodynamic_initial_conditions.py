@@ -256,11 +256,11 @@ for ax in axs.flatten():
     ax.set_ylabel("PDF", fontsize=18)
 
 axs = axs.flatten()
-for ax in axs[0:2]:
+for ax in axs[0:4]:
     ax.set_xlabel("Entropy (J/kg/K)", fontsize=18)
-for ax in axs[2:4]:
+for ax in axs[4:8]:
     ax.set_xlabel("Temperature (K)", fontsize=18)
-for ax in axs[4:6]:
+for ax in axs[8:12]:
     ax.set_xlabel("Velocity (km/s)", fontsize=18)
 plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions_pdfs.png", format='png', dpi=200)

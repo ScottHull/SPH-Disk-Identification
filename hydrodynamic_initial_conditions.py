@@ -238,15 +238,24 @@ for index, run in enumerate(runs):
     axs[0, index].hist(
         disk_bound_particles['entropy'], bins=bins, density=True, color='black', alpha=1
     )
+    axs[0, index].axvline(
+        disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
+    )
 
     # plot a PDF of temperature
     axs[1, index].hist(
         disk_bound_particles['temperature'], bins=bins, density=True, color='black', alpha=1
     )
+    axs[1, index].axvline(
+        disk_bound_particles['temperature'].mean(), color='red', linestyle='--', linewidth=2.0
+    )
 
     # plot a PDF of velocity
     axs[2, index].hist(
         disk_bound_particles['velocity'] / 1000, bins=bins, density=True, color='black', alpha=1
+    )
+    axs[2, index].axvline(
+        disk_bound_particles['velocity'].mean() / 1000, color='red', linestyle='--', linewidth=2.0
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)

@@ -171,10 +171,10 @@ for index, run in enumerate(runs):
     #     disk_particles['total entropy'], disk_particles['temperature'], s=5, alpha=1, label=run['name']
     # )
     axs[index].scatter(
-        disk_particles['entropy'], disk_particles['temperature'], s=20, alpha=1
+        disk_particles['entropy'], disk_particles['temperature'], s=20, alpha=1, color=colors[3]
     )
     # add text in lower right hand corner saying how many particles there are
-    axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles.", transform=axs[index].transAxes,
+    axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
                     ha='center', va="center", fontsize=18, weight='bold')
     axs[index].axvline(disk_particles['entropy'].mean(), color='black', linestyle='--')
     axs[index].axhline(disk_particles['temperature'].mean(), color='black', linestyle='--')

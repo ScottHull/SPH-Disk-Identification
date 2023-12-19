@@ -171,7 +171,7 @@ for index, run in enumerate(runs):
     #     disk_particles['total entropy'], disk_particles['temperature'], s=5, alpha=1, label=run['name']
     # )
     axs[index].scatter(
-        disk_particles['entropy'], disk_particles['temperature'], s=5, alpha=1
+        disk_particles['entropy'], disk_particles['temperature'], s=20, alpha=1
     )
     # axs[index].axvline(disk_particles['entropy'].mean(), color='black', linestyle='--')
     # axs[index].axhline(disk_particles['temperature'].mean(), color='black', linestyle='--')

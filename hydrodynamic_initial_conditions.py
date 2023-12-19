@@ -270,7 +270,7 @@ for index, run in enumerate(runs):
 for ax in axs.flatten():
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
-    ax.set_ylabel("Frequency", fontsize=18)
+    ax.set_ylabel("# Particles", fontsize=18)
 
 axs = axs.flatten()
 for ax in axs[0:4]:

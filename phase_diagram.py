@@ -151,7 +151,8 @@ for index, run in enumerate(runs):
     # create the particle map
     particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
     particles = particle_map.loop()
-    final_disk_particles = particles[particles['label'] == 'DISK'][particles['tag'] % 2 == 0]
+    final_disk_particles = particles[particles['label'] == 'DISK']
+    final_disk_particles = final_disk_particles[final_disk_particles['tag'] % 2 == 0]
 
     c = CombinedFile(
         path=run['path'],

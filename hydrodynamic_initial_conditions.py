@@ -190,7 +190,7 @@ to_track = ['iterations', 'times', 'velocities', 'temperatures', 'vmfs']
 
 fig, axs = plt.subplots(4, 4, figsize=(20, 20))
 initial_conditions = pd.read_csv("hydrodynamic_initial_conditions.csv", index_col="name")
-bins = 10
+bins = 20
 for index, run in enumerate(runs):
     # create the combined file
     c = CombinedFile(
@@ -236,7 +236,7 @@ for index, run in enumerate(runs):
 
     # plot a PDF of entropy
     axs[0, index].hist(
-        disk_bound_particles['entropy'], bins=bins, density=True, color='black', alpha=1
+        disk_bound_particles['entropy'], bins=bins, density=False, color='black', alpha=1
     )
     axs[0, index].axvline(
         disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
@@ -244,7 +244,7 @@ for index, run in enumerate(runs):
 
     # plot a PDF of temperature
     axs[1, index].hist(
-        disk_bound_particles['temperature'], bins=bins, density=True, color='black', alpha=1
+        disk_bound_particles['temperature'], bins=bins, density=False, color='black', alpha=1
     )
     axs[1, index].axvline(
         disk_bound_particles['temperature'].mean(), color='red', linestyle='--', linewidth=2.0
@@ -252,14 +252,14 @@ for index, run in enumerate(runs):
 
     # plot a PDF of velocity
     axs[2, index].hist(
-        disk_bound_particles['velocity'] / 1000, bins=bins, density=True, color='black', alpha=1
+        disk_bound_particles['velocity'] / 1000, bins=bins, density=False, color='black', alpha=1
     )
     axs[2, index].axvline(
         disk_bound_particles['velocity'].mean() / 1000, color='red', linestyle='--', linewidth=2.0
     )
 
     axs[3, index].hist(
-        disk_bound_particles['vmf_wo_circ'], bins=bins, density=True, color='black', alpha=1
+        disk_bound_particles['vmf_wo_circ'], bins=bins, density=False, color='black', alpha=1
     )
     axs[3, index].axvline(
         disk_bound_particles['vmf_wo_circ'].sum() / len(disk_particles), color='red', linestyle='--', linewidth=2.0

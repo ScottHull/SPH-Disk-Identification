@@ -70,7 +70,7 @@ phase_curve = pd.read_fwf("src/phase_curves/forstSTS__vapour_curve.txt", skiprow
                                   "entropy_sol_liq", "entropy_vap"])
 critical_point = max(phase_curve['temperature'])
 
-fig, ax = plt.subplots(1, 2, figsize=(16, 9), sharex='all', sharey='all')
+fig, ax = plt.subplots(2, 2, figsize=(12, 12), sharex='all', sharey='all')
 axs = ax.flatten()
 
 colors = plt.rcParams['axes.prop_cycle'].by_key()['color']

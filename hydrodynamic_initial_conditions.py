@@ -259,7 +259,7 @@ for index, run in enumerate(runs):
     )
 
     axs[3, index].hist(
-        disk_bound_particles['vmf_wo_circ'], bins=bins, density=False, color='black', alpha=1
+        disk_bound_particles['vmf_wo_circ'] * 100, bins=bins, density=False, color='black', alpha=1
     )
     axs[3, index].axvline(
         disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0

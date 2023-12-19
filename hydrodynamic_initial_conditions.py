@@ -262,7 +262,7 @@ for index, run in enumerate(runs):
         disk_bound_particles['vmf_wo_circ'], bins=bins, density=False, color='black', alpha=1
     )
     axs[3, index].axvline(
-        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_particles), color='red', linestyle='--', linewidth=2.0
+        disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)

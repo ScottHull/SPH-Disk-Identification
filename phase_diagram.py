@@ -75,9 +75,10 @@ axs = ax.flatten()
 
 colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
-for a in axs:
-    a.set_xlabel("Entropy (J/kg/K)", fontsize=18)
-ax[0].set_ylabel("Temperature (K)", fontsize=18)
+for ax in axs[-2:]:
+    ax.set_xlabel("Entropy (J/kg/K)", fontsize=18)
+for ax in [axs[0], axs[2]]:
+    ax.set_ylabel("Temperature (K)", fontsize=18)
 
 for ax in axs:
     # shade the phase diagram

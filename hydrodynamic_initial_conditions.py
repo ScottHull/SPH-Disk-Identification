@@ -188,7 +188,7 @@ to_track = ['iterations', 'times', 'velocities', 'temperatures', 'vmfs']
 
 
 
-fig, axs = plt.subplots(3, 4, figsize=(20, 20 * (3 / 4)))
+fig, axs = plt.subplots(4, 4, figsize=(20, 20))
 initial_conditions = pd.read_csv("hydrodynamic_initial_conditions.csv", index_col="name")
 bins = 10
 for index, run in enumerate(runs):
@@ -258,6 +258,13 @@ for index, run in enumerate(runs):
         disk_bound_particles['velocity'].mean() / 1000, color='red', linestyle='--', linewidth=2.0
     )
 
+    axs[3, index].hist(
+        disk_bound_particles['vmf_wo_circ'], bins=bins, density=True, color='black', alpha=1
+    )
+    axs[3, index].axvline(
+        disk_bound_particles['vmf_wo_circ'].sum() / len(disk_particles), color='red', linestyle='--', linewidth=2.0
+    )
+
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)
 
 for ax in axs.flatten():
@@ -272,6 +279,8 @@ for ax in axs[4:8]:
     ax.set_xlabel("Temperature (K)", fontsize=18)
 for ax in axs[8:12]:
     ax.set_xlabel("Velocity (km/s)", fontsize=18)
+for ax in axs[12:16]:
+    ax.set_xlabel("VMF (%)", fontsize=18)
 plt.tight_layout()
 plt.savefig("hydrodynamic_initial_conditions_pdfs.png", format='png', dpi=200)
 

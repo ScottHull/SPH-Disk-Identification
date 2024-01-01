@@ -231,7 +231,7 @@ for index, run in enumerate(runs):
                                      "entropy_sol_liq", "entropy_vap"])
     vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_bound_particles,
                                               phase_curve=phase_curve, entropy_col='entropy')
-    disk_particles = disk_particles[disk_particles['vmf_wo_circ'] < 1]
+    disk_bound_particles = disk_bound_particles[disk_bound_particles['vmf_wo_circ'] < 1]
     # sort disk particles by vmf
     disk_bound_particles = disk_bound_particles.sort_values(by=['vmf_wo_circ'], ascending=False)
 

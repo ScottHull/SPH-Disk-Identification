@@ -243,7 +243,7 @@ for index, run in enumerate(runs):
     )
     axs[0, index].text(
         0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
-        fontsize=18
+        fontsize=12
     )
 
     # plot a PDF of temperature
@@ -255,7 +255,7 @@ for index, run in enumerate(runs):
     )
     axs[1, index].text(
         0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['temperature'].mean():.2f} K", transform=axs[1, index].transAxes,
-        fontsize=18
+        fontsize=12
     )
 
     # plot a PDF of velocity
@@ -267,7 +267,7 @@ for index, run in enumerate(runs):
     )
     axs[2, index].text(
         0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['velocity'].mean() / 1000:.2f} km/s", transform=axs[2, index].transAxes,
-        fontsize=18
+        fontsize=12
     )
 
     axs[3, index].hist(
@@ -278,7 +278,7 @@ for index, run in enumerate(runs):
     )
     axs[3, index].text(
         0.6, 0.85, f"Bulk Avg.: {sum(disk_bound_particles['vmf_wo_circ'] * 100) / len(disk_bound_particles['vmf_wo_circ']):.2f}", transform=axs[3, index].transAxes,
-        fontsize=18
+        fontsize=12
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)
@@ -286,7 +286,6 @@ for index, run in enumerate(runs):
 for index, ax in enumerate(axs.flatten()):
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
-    ax.set_yscale('log')
     if index == 0 or index % 4 == 0:
         ax.set_ylabel("Probability Density", fontsize=18)
 

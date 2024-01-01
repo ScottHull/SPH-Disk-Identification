@@ -286,6 +286,7 @@ for index, run in enumerate(runs):
 for index, ax in enumerate(axs.flatten()):
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
+    ax.set_yscale('log')
     if index == 0 or index % 4 == 0:
         ax.set_ylabel("Probability Density", fontsize=18)
 

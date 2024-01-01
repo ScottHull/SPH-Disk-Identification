@@ -59,7 +59,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
                 "potential energy", "entropy", "temperature"]
 
 # make a 4x4 plot
-fig, axs = plt.subplots(4, 4, figsize=(16, 16))
+fig, axs = plt.subplots(4, 4, figsize=(20, 20))
 
 # each run corresponds to a column
 # plot a PDF of the velocity, entropy, temperature, and vmf for each run

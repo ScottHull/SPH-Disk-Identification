@@ -242,7 +242,7 @@ for index, run in enumerate(runs):
         disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
     )
     axs[0, index].text(
-        0.6, 0.85, f"Bulk Avg.:\n{disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
+        0.5, 0.85, f"Bulk Avg.:\n{disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
         fontsize=16, horizontalalignment='left'
     )
 

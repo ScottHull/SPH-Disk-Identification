@@ -241,6 +241,10 @@ for index, run in enumerate(runs):
     axs[0, index].axvline(
         disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
     )
+    axs[0, index].text(
+        0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
+        fontsize=18
+    )
 
     # plot a PDF of temperature
     axs[1, index].hist(
@@ -248,6 +252,10 @@ for index, run in enumerate(runs):
     )
     axs[1, index].axvline(
         disk_bound_particles['temperature'].mean(), color='red', linestyle='--', linewidth=2.0
+    )
+    axs[1, index].text(
+        0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['temperature'].mean():.2f} K", transform=axs[1, index].transAxes,
+        fontsize=18
     )
 
     # plot a PDF of velocity
@@ -257,12 +265,20 @@ for index, run in enumerate(runs):
     axs[2, index].axvline(
         disk_bound_particles['velocity'].mean() / 1000, color='red', linestyle='--', linewidth=2.0
     )
+    axs[2, index].text(
+        0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['velocity'].mean() / 1000:.2f} km/s", transform=axs[2, index].transAxes,
+        fontsize=18
+    )
 
     axs[3, index].hist(
         disk_bound_particles['vmf_wo_circ'] * 100, bins=bins, density=False, color='black', alpha=1
     )
     axs[3, index].axvline(
         disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0
+    )
+    axs[3, index].text(
+        0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['vmf_wo_circ'] * 100:.2f}", transform=axs[3, index].transAxes,
+        fontsize=18
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)

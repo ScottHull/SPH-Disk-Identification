@@ -153,6 +153,7 @@ for run_index, run in enumerate(runs):
 axs = axs.flatten()
 for ax in axs:
     ax.grid()
+    ax.set_yscale('log')
 
 plt.tight_layout()
 plt.savefig("disk_initial_condition_pdfs.png", format='png', dpi=200)

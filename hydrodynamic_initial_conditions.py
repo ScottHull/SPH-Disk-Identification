@@ -277,7 +277,7 @@ for index, run in enumerate(runs):
         disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0
     )
     axs[3, index].text(
-        0.6, 0.85, f"Bulk Avg.: {disk_bound_particles['vmf_wo_circ'] * 100:.2f}", transform=axs[3, index].transAxes,
+        0.6, 0.85, f"Bulk Avg.: {sum(disk_bound_particles['vmf_wo_circ'] * 100) / len(disk_bound_particles['vmf_wo_circ']):.2f}", transform=axs[3, index].transAxes,
         fontsize=18
     )
 

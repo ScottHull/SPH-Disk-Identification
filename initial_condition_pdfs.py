@@ -89,8 +89,7 @@ for run_index, run in enumerate(runs):
     combined_file.columns = file_headers
     time = c.sim_time
     # create the particle map
-    particle_map = ParticleMap(particles=combined_file, mass_planet=mass_mars, equatorial_radius=equatorial_radius)
-    disk_particles = particle_map[particle_map['id'].isin(endstate_disk_particles['id'].tolist())]
+    disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
     disk_particles = disk_particles[disk_particles['tag'] % 2 == 0]
 
     axs[0, run_index].set_title(f"Run {run['name']}")

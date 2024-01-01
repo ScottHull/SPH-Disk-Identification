@@ -242,8 +242,8 @@ for index, run in enumerate(runs):
         disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
     )
     axs[0, index].text(
-        0.4, 0.85, f"Bulk Avg.:\n{disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
-        fontsize=14, horizontalalignment='left'
+        0.6, 0.85, f"Bulk Avg.:\n{disk_bound_particles['entropy'].mean():.2f} J/kg/K", transform=axs[0, index].transAxes,
+        fontsize=16, horizontalalignment='left'
     )
 
     # plot a PDF of temperature
@@ -254,8 +254,8 @@ for index, run in enumerate(runs):
         disk_bound_particles['temperature'].mean(), color='red', linestyle='--', linewidth=2.0
     )
     axs[1, index].text(
-        0.4, 0.85, f"Bulk Avg.:\n{disk_bound_particles['temperature'].mean():.2f} K", transform=axs[1, index].transAxes,
-        fontsize=14, horizontalalignment='left'
+        0.6, 0.85, f"Bulk Avg.:\n{disk_bound_particles['temperature'].mean():.2f} K", transform=axs[1, index].transAxes,
+        fontsize=16, horizontalalignment='left'
     )
 
     # plot a PDF of velocity
@@ -267,7 +267,7 @@ for index, run in enumerate(runs):
     )
     axs[2, index].text(
         0.05, 0.85, f"Bulk Avg.:\n{disk_bound_particles['velocity'].mean() / 1000:.2f} km/s", transform=axs[2, index].transAxes,
-        fontsize=14, horizontalalignment='left'
+        fontsize=16, horizontalalignment='left'
     )
 
     axs[3, index].hist(
@@ -277,8 +277,8 @@ for index, run in enumerate(runs):
         disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0
     )
     axs[3, index].text(
-        0.4, 0.85, f"Bulk Avg.:\n{sum(disk_bound_particles['vmf_wo_circ'] * 100) / len(disk_bound_particles['vmf_wo_circ']):.2f} %", transform=axs[3, index].transAxes,
-        fontsize=14, horizontalalignment='left'
+        0.6, 0.85, f"Bulk Avg.:\n{sum(disk_bound_particles['vmf_wo_circ'] * 100) / len(disk_bound_particles['vmf_wo_circ']):.2f} %", transform=axs[3, index].transAxes,
+        fontsize=16, horizontalalignment='left'
     )
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)

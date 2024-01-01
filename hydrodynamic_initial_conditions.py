@@ -236,7 +236,7 @@ for index, run in enumerate(runs):
 
     # plot a PDF of entropy
     axs[0, index].hist(
-        disk_bound_particles['entropy'], bins=bins, density=False, color='black', alpha=1
+        disk_bound_particles['entropy'], bins=bins, density=True, color='black', alpha=1
     )
     axs[0, index].axvline(
         disk_bound_particles['entropy'].mean(), color='red', linestyle='--', linewidth=2.0
@@ -248,7 +248,7 @@ for index, run in enumerate(runs):
 
     # plot a PDF of temperature
     axs[1, index].hist(
-        disk_bound_particles['temperature'], bins=bins, density=False, color='black', alpha=1
+        disk_bound_particles['temperature'], bins=bins, density=True, color='black', alpha=1
     )
     axs[1, index].axvline(
         disk_bound_particles['temperature'].mean(), color='red', linestyle='--', linewidth=2.0
@@ -260,7 +260,7 @@ for index, run in enumerate(runs):
 
     # plot a PDF of velocity
     axs[2, index].hist(
-        disk_bound_particles['velocity'] / 1000, bins=bins, density=False, color='black', alpha=1
+        disk_bound_particles['velocity'] / 1000, bins=bins, density=True, color='black', alpha=1
     )
     axs[2, index].axvline(
         disk_bound_particles['velocity'].mean() / 1000, color='red', linestyle='--', linewidth=2.0
@@ -271,7 +271,7 @@ for index, run in enumerate(runs):
     )
 
     axs[3, index].hist(
-        disk_bound_particles['vmf_wo_circ'] * 100, bins=bins, density=False, color='black', alpha=1
+        disk_bound_particles['vmf_wo_circ'] * 100, bins=bins, density=True, color='black', alpha=1
     )
     axs[3, index].axvline(
         disk_bound_particles['vmf_wo_circ'].sum() * 100 / len(disk_particles), color='red', linestyle='--', linewidth=2.0
@@ -283,10 +283,11 @@ for index, run in enumerate(runs):
 
     axs[0, index].set_title(f"Run {run['name']}", fontsize=20)
 
-for ax in axs.flatten():
+for index, ax in enumerate(axs.flatten()):
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=18)
-    ax.set_ylabel("# Particles", fontsize=18)
+    if index == 0 or index % 4 == 0:
+        ax.set_ylabel("Probability Density", fontsize=18)
 
 axs = axs.flatten()
 for ax in axs[0:4]:

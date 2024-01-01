@@ -91,6 +91,7 @@ for run_index, run in enumerate(runs):
     # create the particle map
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
     disk_particles = disk_particles[disk_particles['tag'] % 2 == 0]
+    disk_particles['velocity'] = np.sqrt(disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
 
     axs[0, run_index].set_title(f"Run {run['name']}")
 

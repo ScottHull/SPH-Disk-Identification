@@ -58,6 +58,10 @@ equatorial_radius = 3390e3
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
                 "potential energy", "entropy", "temperature"]
 
+phase_curve = pd.read_fwf(run['phase_curve'], skiprows=1,
+                              names=["temperature", "density_sol_liq", "density_vap", "pressure",
+                                     "entropy_sol_liq", "entropy_vap"])
+
 # make a 4x4 plot
 fig, axs = plt.subplots(4, 4, figsize=(16, 16))
 
@@ -91,6 +95,10 @@ for run_index, run in enumerate(runs):
     # create the particle map
     disk_particles = combined_file[combined_file['id'].isin(endstate_disk_particles['id'].tolist())]
     disk_particles = disk_particles[disk_particles['tag'] % 2 == 0]
+
+    vmf_w_circ, vmf_wo_circ = GiantImpactReport().calculate_vmf(particles=disk_particles,
+                                                                phase_curve=phase_curve, entropy_col='entropy')
+
     disk_particles['velocity'] = np.sqrt(disk_particles['vx'] ** 2 + disk_particles['vy'] ** 2 + disk_particles['vz'] ** 2)
 
     axs[0, run_index].set_title(f"Run {run['name']}")

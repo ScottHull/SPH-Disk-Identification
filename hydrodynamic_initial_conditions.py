@@ -115,9 +115,14 @@ for index, run in enumerate(runs):
         run['vmfs'].append(vmf_wo_circ)
 
     max_iteration = run['velocities'].index(max(run['velocities']))
-    # if run L, get the second largest velocity
+    # if run L, get the largest velocity after 0.5 hours
     if run['name'] == 'L':
-        max_iteration = run['velocities'].index(sorted(run['velocities'])[-2])
+        # get the range of list indices that correspond to the all times after 0.5 hours
+        indices = [i for i, x in enumerate(run['times']) if x > 0.5]
+        # get the index of the max velocity after 0.5 hours
+        candidate_times = [run['velocities'][i] for i in indices]
+        max_velocity = max(candidate_times)
+        max_iteration = run['velocities'].index(max_velocity)
     run['max_iteration'] = max_iteration
     c = CombinedFile(
         path=run['path'],

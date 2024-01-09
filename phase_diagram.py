@@ -188,3 +188,72 @@ for ax in axs:
 axs[0].legend(fontsize=18)
 plt.tight_layout()
 plt.savefig("phase_diagram.png", dpi=200)
+
+
+# we're going to do a delta entropy plot for the initial condition
+MELT_THRESHOLD = 623  # delta S, J/kg/K
+silicate_S = 3165
+metal_S = 1500
+disk_delta_S = {}
+
+for index, run in enumerate(runs):
+    disk_delta_S[f'{run['name']}'] = {}
+    axs[index].set_title(f"{run['name']}", fontsize=20)
+    # create the combined file
+    c = CombinedFile(
+        path=run['path'],
+        iteration=run['final_iteration'],
+        # iteration=iteration,
+        number_of_processes=run['num_processes'],
+        to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"
+    )
+    combined_file = c.combine_to_memory()
+    # replace the headers
+    combined_file.columns = file_headers
+    time = c.sim_time
+    # create the particle map
+    particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
+    particles = particle_map.loop()
+    final_disk_particles = particles[particles['label'] == 'DISK']
+    final_disk_particles = final_disk_particles[final_disk_particles['tag'] % 2 == 0]
+
+    c = CombinedFile(
+        path=run['path'],
+        iteration=run['max_vel_profile_iteration'],
+        number_of_processes=run['num_processes'],
+        to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"
+    )
+    combined_file = c.combine_to_memory()
+    # replace the headers
+    combined_file.columns = file_headers
+    disk_particles_ic = combined_file[combined_file['id'].isin(final_disk_particles['id']).tolist()]
+    disk_delta_S[f'{run['name']}'].update({'initial conditions': np.array(disk_particles_ic['entropy'] - silicate_S)})
+    disk_delta_S[f'{run['name']}'].update({'final disk wo circ': np.array(final_disk_particles['entropy'] - silicate_S)})
+    disk_delta_S[f'{run['name']}'].update({'final disk w circ': np.array(final_disk_particles['total entropy'] - silicate_S)})
+
+# make a 3 column 1 row figure
+fig, axs = plt.subplots(1, 3, figsize=(18, 6), sharex='all', sharey='all')
+axs = axs.flatten()
+
+for run_index, run in enumerate(runs):
+    df = pd.DataFrame()
+    for index, key in enumerate(disk_delta_S[f'{run['name']}'].keys()):
+        # sort the delta_s list
+        delta_s = np.array(disk_delta_S[f'{run['name']}'][key])
+        # sort the delta_s array
+        # plot a CDF of the delta S
+        axs[index].plot(
+            delta_s, np.cumsum(delta_s), linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
+        )
+
+for ax in axs:
+    ax.set_xlabel(r"$\Delta S$ (J/kg/K)", fontsize=18)
+    ax.grid()
+
+for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'End-State Disk (w/ circ.)'], axs):
+    ax.set_title(label, fontsize=18)
+
+axs[0].set_ylabel("CDF")
+axs[-1].legend(fontsize=18)
+plt.tight_layout()
+plt.savefig("delta_s_cdf.png", format='png', dpi=200)

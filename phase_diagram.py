@@ -156,7 +156,8 @@ for index, run in enumerate(runs):
 
     c = CombinedFile(
         path=run['path'],
-        iteration=run['final_iteration'],
+        # iteration=run['final_iteration'],
+        iteration=run['max_vel_profile_iteration'],
         # iteration=iteration,
         number_of_processes=run['num_processes'],
         to_fname=f"merged_{iteration}_{randint(1, int(1e5))}.dat"

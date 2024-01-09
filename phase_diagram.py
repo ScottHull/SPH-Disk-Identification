@@ -18,7 +18,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 35,
+        'max_vel_profile_iteration': 27,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -26,7 +26,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 35,
+        'max_vel_profile_iteration': 19,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -34,7 +34,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
+        'max_vel_profile_iteration': 27,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -42,7 +42,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
+        'max_vel_profile_iteration': 20,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     # {

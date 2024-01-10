@@ -236,6 +236,7 @@ for index, run in enumerate(runs):
 # make a 3 column 1 row figure
 fig, axs = plt.subplots(1, 3, figsize=(18, 6), sharex='all', sharey='all')
 axs = axs.flatten()
+frac_above_delta_S = {'initial conditions': {}, 'final disk wo circ': {}, 'final disk w circ': {}}
 
 for run_index, run in enumerate(runs):
     df = pd.DataFrame()
@@ -243,15 +244,20 @@ for run_index, run in enumerate(runs):
         # sort the delta_s list
         delta_s = np.sort(np.array(disk_delta_S[f"{run['name']}"][key]))
         frac_delta_s_above_threshold = len(delta_s[delta_s >= MELT_THRESHOLD]) / len(delta_s) * 100
+        frac_above_delta_S[key][run['run_name']] = frac_delta_s_above_threshold
         # make a CDF
         cdf = np.arange(1, len(delta_s) + 1) / len(delta_s)
         # plot a CDF of the delta S
         axs[index].plot(
             delta_s, cdf, linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
         )
-        # annotate frac above threshold in lower right corner of each plot
-        axs[index].text(0.50, 0.10, r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K" + f"\n{frac_delta_s_above_threshold:.2f} %", transform=axs[index].transAxes,
-                        ha='left', va="center", fontsize=18)
+
+for index, key in enumerate(frac_above_delta_S.keys()):
+    s = r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K"
+    for run in frac_above_delta_S[key].keys():
+        s += f"\nRun {run}: {frac_above_delta_S[key][run]:.2f} %"
+    # annotate frac above threshold in lower right corner of each plot
+    axs[index].text(0.50, 0.40, s, transform=axs[index].transAxes, ha='left', va="center", fontsize=18)
 
 for ax in axs:
     ax.set_xlabel(r"$\rm \Delta S_{melt}$ (J/kg/K)", fontsize=18)

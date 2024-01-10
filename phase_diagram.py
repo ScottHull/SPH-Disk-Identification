@@ -182,7 +182,7 @@ for index, run in enumerate(runs):
     axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
                     ha='center', va="center", fontsize=18, weight='bold')
     axs[index].axvline(disk_particles['entropy'].mean(), color='black', linestyle='--')
-    # axs[index].axvline(disk_particles['total_entropy'].mean(), color='black', linestyle='--')
+    # axs[index].axvline(disk_particles['total entropy'].mean(), color='black', linestyle='--')
     axs[index].axhline(disk_particles['temperature'].mean(), color='black', linestyle='--')
 
 for ax in axs:

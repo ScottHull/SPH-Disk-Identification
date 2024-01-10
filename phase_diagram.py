@@ -248,8 +248,8 @@ for run_index, run in enumerate(runs):
             delta_s, cdf, linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
         )
         # annotate frac above threshold in lower right corner of each plot
-        axs[index].text(0.60, 0.10, r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K" f"\n{frac_delta_s_above_threshold:.2f} %", transform=axs[index].transAxes,
-                        ha='left', va="center", fontsize=18, weight='bold')
+        axs[index].text(0.50, 0.10, r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K" + f"\n{frac_delta_s_above_threshold:.2f} %", transform=axs[index].transAxes,
+                        ha='left', va="center", fontsize=18)
 
 for ax in axs:
     ax.set_xlabel(r"$\rm \Delta S_{melt}$ (J/kg/K)", fontsize=18)
@@ -260,6 +260,6 @@ for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'E
     ax.set_title(label, fontsize=18)
 
 axs[0].set_ylabel("CDF")
-axs[-1].legend(fontsize=18)
+axs[0].legend(fontsize=18, loc='upper right')
 plt.tight_layout()
 plt.savefig("delta_s_cdf.png", format='png', dpi=200)

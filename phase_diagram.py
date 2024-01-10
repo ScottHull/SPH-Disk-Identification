@@ -11,6 +11,8 @@ from src.report import GiantImpactReport
 
 # use seaborn colorblind palette
 plt.style.use('seaborn-colorblind')
+# increase font size
+plt.rcParams.update({'font.size': 18})
 
 runs = [
     {

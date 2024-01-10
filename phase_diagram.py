@@ -239,7 +239,7 @@ for run_index, run in enumerate(runs):
     df = pd.DataFrame()
     for index, key in enumerate(disk_delta_S[f"{run['name']}"].keys()):
         # sort the delta_s list
-        delta_s = np.array(disk_delta_S[f"{run['name']}"][key])
+        delta_s = np.array(disk_delta_S[f"{run['name']}"][key]).sort()
         # make a CDF
         cdf = np.arange(1, len(delta_s) + 1) / len(delta_s)
         # plot a CDF of the delta S

@@ -265,7 +265,7 @@ for index, ax in enumerate(axs):
     ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
     ax.grid()
     ax.text(
-        0.95, 0.5, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'
+        0.95, 0.05, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'
     )
 
 for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'End-State Disk (w/ circ.)'], axs):

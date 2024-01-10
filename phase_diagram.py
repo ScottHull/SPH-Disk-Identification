@@ -248,6 +248,7 @@ for run_index, run in enumerate(runs):
 
 for ax in axs:
     ax.set_xlabel(r"$\Delta S$ (J/kg/K)", fontsize=18)
+    ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
     ax.grid()
 
 for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'End-State Disk (w/ circ.)'], axs):

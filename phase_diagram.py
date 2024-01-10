@@ -240,15 +240,19 @@ for run_index, run in enumerate(runs):
     for index, key in enumerate(disk_delta_S[f"{run['name']}"].keys()):
         # sort the delta_s list
         delta_s = np.sort(np.array(disk_delta_S[f"{run['name']}"][key]))
+        frac_delta_s_above_threshold = len(delta_s[delta_s >= MELT_THRESHOLD]) / len(delta_s) * 100
         # make a CDF
         cdf = np.arange(1, len(delta_s) + 1) / len(delta_s)
         # plot a CDF of the delta S
         axs[index].plot(
             delta_s, cdf, linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
         )
+        # annotate frac above threshold in lower right corner of each plot
+        axs[index].text(0.60, 0.10, r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K" f"\n{frac_delta_s_above_threshold:.2f} %", transform=axs[index].transAxes,
+                        ha='left', va="center", fontsize=18, weight='bold')
 
 for ax in axs:
-    ax.set_xlabel(r"$\Delta S$ (J/kg/K)", fontsize=18)
+    ax.set_xlabel(r"$\rm \Delta S_{melt}$ (J/kg/K)", fontsize=18)
     ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
     ax.grid()
 

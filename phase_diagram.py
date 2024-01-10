@@ -167,6 +167,8 @@ for index, run in enumerate(runs):
     combined_file = c.combine_to_memory()
     # replace the headers
     combined_file.columns = file_headers
+    # particle_map = ParticleMap(particles=combined_file, mass_planet=mass_planet, equatorial_radius=equatorial_radius)
+    # combined_file = particle_map.loop()
     disk_particles = combined_file[combined_file['id'].isin(final_disk_particles['id']).tolist()]
 
     # disk_particles = pd.read_csv(run['path'])
@@ -180,6 +182,7 @@ for index, run in enumerate(runs):
     axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
                     ha='center', va="center", fontsize=18, weight='bold')
     axs[index].axvline(disk_particles['entropy'].mean(), color='black', linestyle='--')
+    # axs[index].axvline(disk_particles['total_entropy'].mean(), color='black', linestyle='--')
     axs[index].axhline(disk_particles['temperature'].mean(), color='black', linestyle='--')
 
 for ax in axs:

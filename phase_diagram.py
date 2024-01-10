@@ -253,14 +253,14 @@ for run_index, run in enumerate(runs):
         )
 
 for index, key in enumerate(frac_above_delta_S.keys()):
-    s = r"$\rm \Delta S_{melt} > $" + f"{MELT_THRESHOLD} J/kg/K"
+    s = r"$\rm \Delta S > $" + f"{MELT_THRESHOLD} J/kg/K"
     for run in frac_above_delta_S[key].keys():
         s += f"\nRun {run}: {frac_above_delta_S[key][run]:.2f} %"
     # annotate frac above threshold in lower right corner of each plot
     axs[index].text(0.50, 0.30, s, transform=axs[index].transAxes, ha='left', va="center", fontsize=18)
 
 for ax in axs:
-    ax.set_xlabel(r"$\rm \Delta S_{melt}$ (J/kg/K)", fontsize=18)
+    ax.set_xlabel(r"$\rm \Delta S$ (J/kg/K)", fontsize=18)
     ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
     ax.grid()
 

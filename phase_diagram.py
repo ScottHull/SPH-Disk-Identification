@@ -259,10 +259,14 @@ for index, key in enumerate(frac_above_delta_S.keys()):
     # annotate frac above threshold in lower right corner of each plot
     axs[index].text(0.50, 0.30, s, transform=axs[index].transAxes, ha='left', va="center", fontsize=18)
 
-for ax in axs:
+letters = list(string.ascii_lowercase)
+for index, ax in enumerate(axs):
     ax.set_xlabel(r"$\rm \Delta S$ (J/kg/K)", fontsize=18)
     ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
     ax.grid()
+    ax.text(
+        0.95, 0.5, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'
+    )
 
 for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'End-State Disk (w/ circ.)'], axs):
     ax.set_title(label, fontsize=18)

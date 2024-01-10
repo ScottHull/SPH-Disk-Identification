@@ -240,10 +240,11 @@ for run_index, run in enumerate(runs):
     for index, key in enumerate(disk_delta_S[f"{run['name']}"].keys()):
         # sort the delta_s list
         delta_s = np.array(disk_delta_S[f"{run['name']}"][key])
-        # sort the delta_s array
+        # make a CDF
+        cdf = np.arange(1, len(delta_s) + 1) / len(delta_s)
         # plot a CDF of the delta S
         axs[index].plot(
-            delta_s, np.cumsum(delta_s), linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
+            delta_s, cdf, linewidth=3.0, color=colors[run_index], label=f"Run {run['name']}"
         )
 
 for ax in axs:

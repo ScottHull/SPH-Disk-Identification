@@ -244,7 +244,7 @@ for run_index, run in enumerate(runs):
         # sort the delta_s list
         delta_s = np.sort(np.array(disk_delta_S[f"{run['name']}"][key]))
         frac_delta_s_above_threshold = len(delta_s[delta_s >= MELT_THRESHOLD]) / len(delta_s) * 100
-        frac_above_delta_S[key][run['run_name']] = frac_delta_s_above_threshold
+        frac_above_delta_S[key][run['name']] = frac_delta_s_above_threshold
         # make a CDF
         cdf = np.arange(1, len(delta_s) + 1) / len(delta_s)
         # plot a CDF of the delta S

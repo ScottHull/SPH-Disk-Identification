@@ -257,7 +257,7 @@ for index, key in enumerate(frac_above_delta_S.keys()):
     for run in frac_above_delta_S[key].keys():
         s += f"\nRun {run}: {frac_above_delta_S[key][run]:.2f} %"
     # annotate frac above threshold in lower right corner of each plot
-    axs[index].text(0.50, 0.40, s, transform=axs[index].transAxes, ha='left', va="center", fontsize=18)
+    axs[index].text(0.50, 0.30, s, transform=axs[index].transAxes, ha='left', va="center", fontsize=18)
 
 for ax in axs:
     ax.set_xlabel(r"$\rm \Delta S_{melt}$ (J/kg/K)", fontsize=18)
@@ -268,6 +268,9 @@ for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'E
     ax.set_title(label, fontsize=18)
 
 axs[0].set_ylabel("CDF")
-axs[0].legend(fontsize=18, loc='upper right')
+legend = axs[0].legend(fontsize=18, loc='upper right')
+# increase the linewidth of the lines in the legend
+for line in legend.get_lines():
+    line.set_linewidth(5.0)
 plt.tight_layout()
 plt.savefig("delta_s_cdf.png", format='png', dpi=200)

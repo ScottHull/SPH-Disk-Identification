@@ -197,7 +197,7 @@ metal_S = 1500
 disk_delta_S = {}
 
 for index, run in enumerate(runs):
-    disk_delta_S[f'{run['name']}'] = {}
+    disk_delta_S[f"{run['name']}"] = {}
     axs[index].set_title(f"{run['name']}", fontsize=20)
     # create the combined file
     c = CombinedFile(
@@ -227,9 +227,9 @@ for index, run in enumerate(runs):
     # replace the headers
     combined_file.columns = file_headers
     disk_particles_ic = combined_file[combined_file['id'].isin(final_disk_particles['id']).tolist()]
-    disk_delta_S[f'{run['name']}'].update({'initial conditions': np.array(disk_particles_ic['entropy'] - silicate_S)})
-    disk_delta_S[f'{run['name']}'].update({'final disk wo circ': np.array(final_disk_particles['entropy'] - silicate_S)})
-    disk_delta_S[f'{run['name']}'].update({'final disk w circ': np.array(final_disk_particles['total entropy'] - silicate_S)})
+    disk_delta_S[f"{run['name']}"].update({'initial conditions': np.array(disk_particles_ic['entropy'] - silicate_S)})
+    disk_delta_S[f"{run['name']}"].update({'final disk wo circ': np.array(final_disk_particles['entropy'] - silicate_S)})
+    disk_delta_S[f"{run['name']}"].update({'final disk w circ': np.array(final_disk_particles['total entropy'] - silicate_S)})
 
 # make a 3 column 1 row figure
 fig, axs = plt.subplots(1, 3, figsize=(18, 6), sharex='all', sharey='all')
@@ -237,9 +237,9 @@ axs = axs.flatten()
 
 for run_index, run in enumerate(runs):
     df = pd.DataFrame()
-    for index, key in enumerate(disk_delta_S[f'{run['name']}'].keys()):
+    for index, key in enumerate(disk_delta_S[f"{run['name']}"].keys()):
         # sort the delta_s list
-        delta_s = np.array(disk_delta_S[f'{run['name']}'][key])
+        delta_s = np.array(disk_delta_S[f"{run['name']}"][key])
         # sort the delta_s array
         # plot a CDF of the delta S
         axs[index].plot(

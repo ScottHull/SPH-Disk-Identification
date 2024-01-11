@@ -111,13 +111,16 @@ for run in runs:
             disk_mass = disk_particles[disk_particles['tag'] % 2 == 0]['mass'].sum() / (1000 * (mass_phobos + mass_deimos))
             disk_ang_mom = disk_particles['angular momentum'].sum()
             disk_impactor_mass_fraction = disk_particles[disk_particles['tag'] > 1]
-            disk_impactor_mass_fraction = disk_impactor_mass_fraction[disk_impactor_mass_fraction['tag'] % 2 != 0]['mass'].sum() / disk_particles['mass'].sum() * 100
+            disk_impactor_mass_fraction = disk_impactor_mass_fraction[disk_impactor_mass_fraction['tag'] % 2 == 0]['mass'].sum() / disk_particles['mass'].sum() * 100
         else:
             disk_mass = 0.0
             disk_ang_mom = 0.0
             disk_impactor_mass_fraction = 0.0
         # scale the disk angular momentum
-        L_scaled = disk_ang_mom / (disk_mass * np.sqrt((6.67 * 10 ** -11) * mass_planet * 2.5 * equatorial_radius))
+        if disk_mass > 0:
+            L_scaled = disk_ang_mom / ((disk_mass * (1000 * (mass_phobos + mass_deimos))) * np.sqrt((6.67 * 10 ** -11) * mass_planet * 2.5 * equatorial_radius))
+        else:
+            L_scaled = 0.0
         disk_vmf_w_circ, disk_vmf_wo_circ = dr.calculate_vmf(disk_particles, phase_curve)
         run['times'].append(time)
         run['disk_mass'].append(disk_mass)

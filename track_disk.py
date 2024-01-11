@@ -112,10 +112,16 @@ for run in runs:
             disk_ang_mom = disk_particles['angular momentum'].sum()
             disk_impactor_mass_fraction = disk_particles[disk_particles['tag'] > 1]
             disk_impactor_mass_fraction = disk_impactor_mass_fraction[disk_impactor_mass_fraction['tag'] % 2 == 0]['mass'].sum() / disk_particles['mass'].sum() * 100
+            disk_entropy = disk_particles['entropy'].mean()
+            disk_total_entropy = disk_particles['total entropy'].mean()
+            disk_temperature = disk_particles['temperature'].mean()
         else:
             disk_mass = 0.0
             disk_ang_mom = 0.0
             disk_impactor_mass_fraction = 0.0
+            disk_entropy = 0
+            disk_total_entropy = 0
+            disk_temperature = 0
         # scale the disk angular momentum
         if disk_mass > 0:
             L_scaled = disk_ang_mom / ((disk_mass * (1000 * (mass_phobos + mass_deimos))) * np.sqrt((6.67 * 10 ** -11) * mass_planet * 2.5 * equatorial_radius))
@@ -125,10 +131,10 @@ for run in runs:
         run['times'].append(time)
         run['disk_mass'].append(disk_mass)
         run['disk_angular_momentum'].append(L_scaled)
-        run['disk_entropy_w_circ'].append(disk_particles['total entropy'].mean())
-        run['disk_entropy_wo_circ'].append(disk_particles['entropy'].mean())
+        run['disk_entropy_w_circ'].append(disk_total_entropy)
+        run['disk_entropy_wo_circ'].append(disk_entropy)
         run['disk_impactor_mass_fraction'].append(disk_impactor_mass_fraction)
-        run['disk_temperature'].append(disk_particles['temperature'].mean())
+        run['disk_temperature'].append(disk_temperature)
         run['disk_vmf_w_circ'].append(disk_vmf_w_circ)
         run['disk_vmf_wo_circ'].append(disk_vmf_wo_circ)
 

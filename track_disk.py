@@ -32,11 +32,17 @@ runs = [
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "K",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "name": "I",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff_rho_c_5kgm3",
         "num_processes": 400,
         'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "J",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff_rho_c_5kgm3",
+        "num_processes": 400,
+        'final_iteration': 1800,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {

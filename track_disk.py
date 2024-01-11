@@ -82,7 +82,7 @@ file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density",
 axes = ['times', 'disk_entropy_w_circ', 'disk_temperature', 'disk_vmf_w_circ', 'disk_mass', 'disk_angular_momentum',
         'disk_impactor_mass_fraction', 'disk_vmf_wo_circ', 'disk_entropy_wo_circ']
 ylabels = ["Avg. Disk Entropy (J/kg/K)", "Avg. Disk Temperature (K)", "Disk VMF (%)", r"Disk Mass ($10^3$ $M_{\rm PD}$)",
-             r"$L_{\rm disk}^*$", "$f_{\rm disk}$ (%)"]
+             r"$L_{\rm disk}^*$", r"$f_{\rm disk}$ (%)"]
 phase_curve = pd.read_fwf("src/phase_curves/forstSTS__vapour_curve.txt", skiprows=1,
                            names=["temperature", "density_sol_liq", "density_vap", "pressure",
                                   "entropy_sol_liq", "entropy_vap"])

@@ -156,7 +156,7 @@ fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()
 axs[1].set_ylim(1500, 3000)
 axs[2].set_ylim(0, 30)
-axs[2].set_yscale('log')
+# axs[2].set_yscale('log')
 for ax_index, (ax, (axis, ylabel)) in enumerate(zip(axs, zip(axes[1:-2], ylabels))):
     for index, run in enumerate(runs):
         label = None

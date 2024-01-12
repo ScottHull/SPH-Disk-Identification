@@ -23,44 +23,44 @@ runs = [
         'max_vel_profile_iteration': 60,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
-    # {
-    #     "name": "H",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'max_vel_profile_iteration': 60,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "K",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'max_vel_profile_iteration': 60,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "L",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'max_vel_profile_iteration': 60,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "I",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff_rho_c_5kgm3",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "J",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff_rho_c_5kgm3",
-    #     "num_processes": 400,
-    #     'final_iteration': 1800,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
+    {
+        "name": "H",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "K",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "L",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "I",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff_rho_c_5kgm3",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "J",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff_rho_c_5kgm3",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
     # {
     #     "name": "K",
     #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
@@ -156,6 +156,7 @@ fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()
 axs[1].set_ylim(1500, 3000)
 axs[2].set_ylim(0, 30)
+axs[2].set_yscale('log')
 for ax_index, (ax, (axis, ylabel)) in enumerate(zip(axs, zip(axes[1:-2], ylabels))):
     for index, run in enumerate(runs):
         label = None

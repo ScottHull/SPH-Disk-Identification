@@ -156,9 +156,12 @@ fig, axs = plt.subplots(2, 3, figsize=(18, 9), sharex='all')
 axs = axs.flatten()
 axs[1].set_ylim(1500, 3000)
 axs[2].set_ylim(0, 30)
-for ax, (axis, ylabel) in zip(axs, zip(axes[1:-2], ylabels)):
+for ax_index, (ax, (axis, ylabel)) in enumerate(zip(axs, zip(axes[1:-2], ylabels))):
     for index, run in enumerate(runs):
-        ax.plot(run['times'], run[axis], linewidth=2.0, color=colors[index], label=f"Run {run['name']}")
+        label = None
+        if ax_index == 0:
+            label = f"Run {run['name']}"
+        ax.plot(run['times'], run[axis], linewidth=2.0, color=colors[index], label=label)
     ax.set_ylabel(ylabel, fontsize=16)
     ax.set_xlabel("Time (hrs.)", fontsize=16)
     ax.grid()
@@ -172,8 +175,8 @@ letters = string.ascii_lowercase
 for ax, letter in zip(axs, letters):
     ax.text(0.90, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
 plt.tight_layout()
-legend = axs[0].legend(loc=7, fontsize=16)
+legend = fig.legend(loc=7, fontsize=16)
 for handle in legend.legendHandles:
     handle.set_linewidth(5.0)
-fig.subplots_adjust(right=0.82)
+fig.subplots_adjust(right=0.90)
 plt.savefig(f"disk_profile.png", dpi=200)

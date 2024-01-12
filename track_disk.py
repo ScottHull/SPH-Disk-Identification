@@ -32,6 +32,22 @@ runs = [
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
+        "name": "K",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
+        "name": "L",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'final_iteration': 1800,
+        'max_vel_profile_iteration': 60,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    },
+    {
         "name": "I",
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff_rho_c_5kgm3",
         "num_processes": 400,
@@ -43,14 +59,6 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff_rho_c_5kgm3",
         "num_processes": 400,
         'final_iteration': 1800,
-        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    },
-    {
-        "name": "L",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
-        "num_processes": 400,
-        'final_iteration': 1800,
-        'max_vel_profile_iteration': 60,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     # {
@@ -150,7 +158,7 @@ axs[1].set_ylim(1500, 3000)
 axs[2].set_ylim(0, 30)
 for ax, (axis, ylabel) in zip(axs, zip(axes[1:-2], ylabels)):
     for index, run in enumerate(runs):
-        ax.plot(run['times'], run[axis], linewidth=2.0, color=colors[index], label=run['name'])
+        ax.plot(run['times'], run[axis], linewidth=2.0, color=colors[index], label=f"Run {run['name']}")
     ax.set_ylabel(ylabel, fontsize=16)
     ax.set_xlabel("Time (hrs.)", fontsize=16)
     ax.grid()
@@ -162,7 +170,7 @@ for index, run in enumerate(runs):
 letters = string.ascii_lowercase
 # annotate the plots with letters in the upper left corner
 for ax, letter in zip(axs, letters):
-    ax.text(0.05, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
+    ax.text(0.90, 0.95, f"{letter}", transform=ax.transAxes, fontsize=16, fontweight='bold', va='top')
 legend = axs[0].legend(fontsize=16)
 for handle in legend.legendHandles:
     handle.set_linewidth(5.0)

@@ -21,6 +21,13 @@ def z_angular_momentum_vector(df: pd.DataFrame):
     return df['angular momentum vector'][2]
 
 
+def orbital_period(df: pd.DataFrame, mass_grav_body: float):
+    """
+    Returns the orbital period of a particle.
+    """
+    return 2 * np.pi * np.sqrt((df['semi major axis'] ** 3) / (G * mass_grav_body))
+
+
 def angular_momentum(df: pd.DataFrame):
     """
     Returns the magnitude of the angular momentum of a particle.

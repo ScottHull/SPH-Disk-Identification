@@ -168,7 +168,7 @@ class ParticleMap:
                                                                                          self.mass_planet)
         self.particles['circularization entropy gain'] = circularization_entropy_gain(self.particles, self.mass_planet)
         self.particles['total entropy'] = self.particles['entropy'] + self.particles['circularization entropy gain']
-        self.particles['orbital period'] = orbital_period(self.particles, self.mass_planet)
+        # self.particles['orbital period'] = orbital_period(self.particles, self.mass_planet)
         print("Calculating orbital elements complete.")
 
     def calculate_planetary_oblateness(self, K=0.335):

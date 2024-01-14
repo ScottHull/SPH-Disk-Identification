@@ -137,7 +137,7 @@ class ParticleMap:
         Use numpy.where to do this faster so that the operation can be vectorized.
         """
         is_planet = (self.particles['position'] <= self.equatorial_radius) | (
-                    self.particles['circular semi major axis'] <= self.equatorial_radius)
+                self.particles['circular semi major axis'] <= self.equatorial_radius)
         is_disk = (self.particles['periapsis'] > self.equatorial_radius) & (self.particles['eccentricity'] <= 1)
         is_escape = (self.particles['eccentricity'] > 1) & (self.particles['position'] > self.equatorial_radius)
         return np.where(is_planet, 'PLANET', np.where(is_disk, 'DISK', np.where(is_escape, 'ESCAPE', None)))

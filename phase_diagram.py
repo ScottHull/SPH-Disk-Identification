@@ -200,6 +200,7 @@ MELT_THRESHOLD = 623  # delta S, J/kg/K
 silicate_S = 3165
 metal_S = 1500
 disk_delta_S = {}
+disk_temperature = {}
 
 for index, run in enumerate(runs):
     disk_delta_S[f"{run['name']}"] = {}
@@ -235,6 +236,7 @@ for index, run in enumerate(runs):
     disk_delta_S[f"{run['name']}"].update({'initial conditions': np.array(disk_particles_ic['entropy'] - silicate_S)})
     disk_delta_S[f"{run['name']}"].update({'final disk wo circ': np.array(final_disk_particles['entropy'] - silicate_S)})
     disk_delta_S[f"{run['name']}"].update({'final disk w circ': np.array(final_disk_particles['total entropy'] - silicate_S)})
+    disk_temperature[f"{run['name']}"] = np.array(final_disk_particles['temperature'])
 
 # make a 3 column 1 row figure
 fig, axs = plt.subplots(1, 3, figsize=(18, 6), sharex='all', sharey='all')
@@ -282,3 +284,32 @@ for line in legend.get_lines():
     line.set_linewidth(5.0)
 plt.tight_layout()
 plt.savefig("delta_s_cdf.png", format='png', dpi=200)
+
+# make a 3 column 1 row figure
+fig, axs = plt.subplots(1, 3, figsize=(18, 6), sharex='all', sharey='all')
+axs = axs.flatten()
+for index, run_name in enumerate(disk_delta_S):
+    for index2, key in enumerate(disk_delta_S[run_name]):
+        axs[index2].scatter(
+            disk_temperature[run_name], disk_delta_S[run_name][key], s=20, alpha=1, label=run_name
+        )
+
+letters = list(string.ascii_lowercase)
+for index, ax in enumerate(axs):
+    ax.set_xlabel("Temperature (K)", fontsize=18)
+    ax.axhline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
+    ax.grid()
+    ax.text(
+        0.95, 0.05, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'
+    )
+
+for label, ax in zip(['Initial Jet Conditions', 'End-State Disk (w/o circ.)', 'End-State Disk (w/ circ.)'], axs):
+    ax.set_title(label, fontsize=18)
+
+axs[0].set_ylabel(r"$\rm \Delta S$ (J/kg/K)")
+legend = axs[0].legend(fontsize=18, loc='upper right')
+# increase the linewidth of the lines in the legend
+for line in legend.get_lines():
+    line.set_linewidth(5.0)
+plt.tight_layout()
+plt.savefig("delta_s_vs_temp.png", format='png', dpi=200)

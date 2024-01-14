@@ -122,10 +122,10 @@ for run in runs:
         particles = particle_map.loop()
         disk_particles = particles[particles['label'] == 'DISK']
         if len(disk_particles) > 0:
-            disk_mass = disk_particles[disk_particles['tag'] % 2 == 0]['mass'].sum() / (1000 * (mass_phobos + mass_deimos))
+            disk_mass = disk_particles['mass'].sum() / (1000 * (mass_phobos + mass_deimos))
             disk_ang_mom = disk_particles['angular momentum'].sum()
             disk_impactor_mass_fraction = disk_particles[disk_particles['tag'] > 1]
-            disk_impactor_mass_fraction = disk_impactor_mass_fraction[disk_impactor_mass_fraction['tag'] % 2 == 0]['mass'].sum() / disk_particles['mass'].sum() * 100
+            disk_impactor_mass_fraction = disk_impactor_mass_fraction['mass'].sum() / disk_particles['mass'].sum() * 100
             disk_entropy = disk_particles['entropy'].mean()
             disk_total_entropy = disk_particles['total entropy'].mean()
             disk_temperature = disk_particles['temperature'].mean()

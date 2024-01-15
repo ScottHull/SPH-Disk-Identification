@@ -18,7 +18,7 @@ from src.report import GiantImpactReport
 target_param = 'entropy'
 verbose_name = r"$\Delta S$ (1000 J/kg/K)"
 min_normalize = 0
-max_normalize = 3000
+max_normalize = 2
 target_param_norm = 1000
 square_scale = 2
 

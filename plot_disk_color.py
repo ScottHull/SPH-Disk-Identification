@@ -144,4 +144,4 @@ for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs),
     nbins_y = len(ax.get_yticklabels())
     ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
 plt.tight_layout()
-plt.savefig("source_scenes.png", format='png', dpi=200)
+plt.savefig("source_scenes_colored.png", format='png', dpi=200)

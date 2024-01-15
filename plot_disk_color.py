@@ -51,10 +51,39 @@ runs = [
         "num_processes": 400,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
+    # {
+    #     "name": "A",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "B",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "C",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "F",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    # },
 ]
 
 # iterations = [50, 100, 200, 300, 360]
 iterations = [50, 200, 500, 1000, 1800]
+iterations = [15, 20, 25, 30, 35]
 
 # define the dataframe headers
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",

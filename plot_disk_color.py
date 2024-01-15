@@ -20,7 +20,7 @@ verbose_name = r"$\Delta S$ (1000 J/kg/K)"
 min_normalize = 0
 max_normalize = 2
 target_param_norm = 1000
-square_scale = 1
+square_scale = 1.5
 
 # normalizer = LogNorm(min_normalize, max_normalize)
 normalizer = Normalize(min_normalize, max_normalize)
@@ -144,7 +144,7 @@ for run_index, run in enumerate(runs):
 
 sm = cm.ScalarMappable(norm=normalizer, cmap=cmap)
 sm.set_array([])
-cbaxes = inset_axes(axs[0, 0], width="70%", height="10%", loc=1, borderpad=2)
+cbaxes = inset_axes(axs[0, len(runs)], width="70%", height="10%", loc=1, borderpad=2)
 cbar = plt.colorbar(sm, cax=cbaxes, orientation='horizontal')
 cbar.ax.tick_params(labelsize=14)
 cbar.ax.set_title(verbose_name, fontsize=16)

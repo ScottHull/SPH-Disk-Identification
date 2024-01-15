@@ -27,58 +27,58 @@ normalizer = Normalize(min_normalize, max_normalize)
 cmap = cm.get_cmap('cool')
 
 runs = [
-    # {
-    #     "name": "G",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "H",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
-    #     "num_processes": 400,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "K",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
-    # {
-    #     "name": "L",
-    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
-    #     "num_processes": 400,
-    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
-    # },
     {
-        "name": "A",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "G",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_undiff",
+        "num_processes": 400,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "B",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "H",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_undiff",
+        "num_processes": 400,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "C",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
+        "name": "K",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1vesc_b073_stewart_diff",
+        "num_processes": 400,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
-        "name": "F",
-        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
-        "num_processes": 600,
-        'final_iteration': 360,
-        'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+        "name": "L",
+        "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_citron_1.4vesc_b073_stewart_diff",
+        "num_processes": 400,
+        'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
+    # {
+    #     "name": "A",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_2v_esc/500_mars_b073_2v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "B",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "C",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b050_1v_esc/500_mars_b050_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
+    # },
+    # {
+    #     "name": "F",
+    #     "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
+    #     "num_processes": 600,
+    #     'final_iteration': 360,
+    #     'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
+    # },
 ]
 
 # iterations = [50, 100, 200, 300, 360]
@@ -173,4 +173,4 @@ for ax in [axs[i] for i in np.arange(len(runs) * 2, len(iterations) * len(runs),
     nbins_y = len(ax.get_yticklabels())
     ax.yaxis.set_major_locator(MaxNLocator(nbins=nbins_y, prune='upper'))
 plt.tight_layout()
-plt.savefig("source_scenes_colored_canup.png", format='png', dpi=200)
+plt.savefig("source_scenes_colored.png", format='png', dpi=200)

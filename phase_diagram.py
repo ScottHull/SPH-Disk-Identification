@@ -52,6 +52,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_stewart/500_mars_b073_1v_esc/500_mars_b073_1v_esc",
         "num_processes": 600,
         'final_iteration': 360,
+        'max_vel_profile_iteration': 20,
         'phase_curve': "src/phase_curves/forstSTS__vapour_curve.txt",
     },
     {
@@ -59,6 +60,7 @@ runs = [
         "path": "/home/theia/scotthull/Paper3_SPH/gi/mars_canup_n_sph/500_mars_b073_1v_esc",
         "num_processes": 600,
         'final_iteration': 360,
+        'max_vel_profile_iteration': 20,
         'phase_curve': "src/phase_curves/duniteN_vapour_curve.txt",
     },
     # {

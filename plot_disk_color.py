@@ -115,7 +115,7 @@ for run_index, run in enumerate(runs):
 
 sm = cm.ScalarMappable(norm=normalizer, cmap=cmap)
 sm.set_array([])
-cbaxes = inset_axes(axs[0], width="70%", height="10%", loc=1, borderpad=1.8)
+cbaxes = inset_axes(axs[0, 0], width="70%", height="10%", loc=1, borderpad=1.8)
 cbar = plt.colorbar(sm, cax=cbaxes, orientation='horizontal')
 cbar.ax.tick_params(labelsize=14)
 cbar.ax.set_title(verbose_name, fontsize=16)

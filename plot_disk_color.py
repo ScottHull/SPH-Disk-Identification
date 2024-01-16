@@ -83,7 +83,7 @@ runs = [
 
 # iterations = [50, 100, 200, 300, 360]
 # iterations = [50, 200, 500, 1000, 1800]
-iterations = [15, 20, 25, 30, 35]
+iterations = [15, 20, 25, 1000, 1800]
 
 # define the dataframe headers
 file_headers = ["id", "tag", "mass", "x", "y", "z", "vx", "vy", "vz", "density", "internal energy", "pressure",
@@ -152,8 +152,12 @@ cbar.ax.set_title(verbose_name, fontsize=16)
 letters = list(string.ascii_lowercase)
 for index, a in enumerate(axs.flatten()):
     a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=22, weight='bold')
-    a.set_xlim(-square_scale, square_scale)
-    a.set_ylim(-square_scale, square_scale)
+    if a <= 11:
+        a.set_xlim(-square_scale, square_scale)
+        a.set_ylim(-square_scale, square_scale)
+    else:
+        a.set_xlim(-square_scale * 4, square_scale * 4)
+        a.set_ylim(-square_scale * 4, square_scale * 4)
     a.axes.set_aspect('equal')
     # increase axis font size
     a.tick_params(axis='both', which='major', labelsize=20)

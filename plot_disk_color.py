@@ -152,7 +152,7 @@ cbar.ax.set_title(verbose_name, fontsize=16)
 letters = list(string.ascii_lowercase)
 for index, a in enumerate(axs.flatten()):
     a.text(0.05, 0.08, f"{letters[index]}", transform=a.transAxes, va="center", fontsize=22, weight='bold')
-    if a <= 11:
+    if index <= 11:
         a.set_xlim(-square_scale, square_scale)
         a.set_ylim(-square_scale, square_scale)
     else:

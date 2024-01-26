@@ -121,6 +121,12 @@ for ax in axs:
         linewidth=2.0,
         color='red'
     )
+    ax.plot(
+        melt_curve['SOLID'],
+        melt_curve['T'],
+        linewidth=2.0,
+        color='green'
+    )
     ax.fill_between(
         x=phase_curve['entropy_vap'],
         y1=phase_curve['temperature'],

@@ -111,19 +111,19 @@ for ax in axs:
         phase_curve['entropy_sol_liq'],
         phase_curve['temperature'],
         linewidth=2.0,
-        color='black'
+        color='k'
     )
     ax.plot(
         phase_curve['entropy_vap'],
         phase_curve['temperature'],
         linewidth=2.0,
-        color='black'
+        color='k'
     )
     ax.plot(
         np.arange(3000, 11000, 10),
         [2178] * len(np.arange(3000, 11000, 10)),
         linewidth=2.0,
-        color='black'
+        color='k'
     )
     ax.plot(
         
@@ -133,7 +133,7 @@ for ax in axs:
         y1=phase_curve['temperature'],
         y2=critical_point,
         color=colors[-1],
-        alpha=0.2,
+        alpha=0,
         label="Vapor"
     )
     ax.fill_between(
@@ -141,7 +141,7 @@ for ax in axs:
         y1=phase_curve['temperature'],
         y2=critical_point,
         color=colors[-2],
-        alpha=0.2,
+        alpha=0,
         label="Liquid"
     )
     ax.fill_between(
@@ -149,7 +149,7 @@ for ax in axs:
         y1=critical_point,
         y2=1e10,
         color=colors[-3],
-        alpha=0.2,
+        alpha=0,
         label="Supercritical"
     )
     ax.fill_between(
@@ -157,7 +157,7 @@ for ax in axs:
         y1=phase_curve['temperature'],
         color=colors[-4],
         edgecolor="none",
-        alpha=0.2,
+        alpha=0,
         label="Liquid-Vapor"
     )
     ax.fill_between(
@@ -165,19 +165,19 @@ for ax in axs:
         y1=phase_curve['temperature'],
         color=colors[-4],
         edgecolor="none",
-        alpha=0.2,
+        alpha=0,
     )
     ax.plot(
         melt_curve['SOLID'],
         melt_curve['T'],
         linewidth=2.0,
-        color='black'
+        color='k'
     )
     ax.plot(
         melt_curve['SLIQ'],
         melt_curve['T'],
         linewidth=2.0,
-        color='black'
+        color='k'
     )
     # fill between the solid and liquid curves
     ax.fill_between(
@@ -186,7 +186,7 @@ for ax in axs:
         y2=melt_curve['T'].min(),
         where=(melt_curve['T'] > melt_curve['T'].min()),
         color=colors[-4],
-        alpha=1,
+        alpha=0,
         label="Solid-Liquid"
     )
     # fill the region to the left of the solid curve
@@ -195,7 +195,7 @@ for ax in axs:
         y1=melt_curve['T'].min(),
         y2=melt_curve['T'],
         color=colors[-5],
-        alpha=1,
+        alpha=0,
         label="Solid"
     )
     ax.fill_between(
@@ -204,7 +204,7 @@ for ax in axs:
         where=(phase_curve['temperature'] < melt_curve['T'].min()),
         y2=2178,
         color=colors[-5],
-        alpha=1
+        alpha=0
     )
     # # fill the sublimation region
     # ax.fill_between(
@@ -212,7 +212,7 @@ for ax in axs:
     #     y2=sublimation_phase_curve['temperature'],
     #     y1=[2178] * len(sublimation_phase_curve['temperature']),
     #     color=colors[-6],
-    #     alpha=1,
+    #     alpha=0,
     #     label="Sublimation"
     # )
     ax.fill_between(
@@ -220,14 +220,14 @@ for ax in axs:
         y1=0,
         y2=sublimation_phase_curve['temperature'],
         color=colors[-6],
-        alpha=1,
+        alpha=0,
     )
     ax.fill_between(
         x=sublimation_phase_curve['entropy_vap'],
         y1=0,
         y2=sublimation_phase_curve['temperature'],
         color=colors[-6],
-        alpha=1,
+        alpha=0,
         label="Solid-Vapor"
     )
     ax.fill_between(
@@ -235,14 +235,14 @@ for ax in axs:
         y1=0,
         y2=sublimation_phase_curve['temperature'],
         color=colors[-6],
-        alpha=1,
+        alpha=0,
     )
     ax.fill_between(
         x=np.arange(3000, 11000, 10),
         y1=0,
         y2=2178,
         color=colors[-6],
-        alpha=1,
+        alpha=0,
     )
 
 for ax in axs:
@@ -250,7 +250,6 @@ for ax in axs:
     ax.set_ylim(0, 12500)
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=14)
-axs[0].legend(fontsize=16)
 plt.tight_layout()
 plt.show()
 
@@ -299,9 +298,9 @@ plt.show()
 #     # add text in lower right hand corner saying how many particles there are
 #     axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
 #                     ha='center', va="center", fontsize=18, weight='bold')
-#     axs[index].axvline(disk_particles['entropy'].mean(), color='black', linestyle='--')
-#     # axs[index].axvline(disk_particles['total entropy'].mean(), color='black', linestyle='--')
-#     axs[index].axhline(disk_particles['temperature'].mean(), color='black', linestyle='--')
+#     axs[index].axvline(disk_particles['entropy'].mean(), color='k', linestyle='--')
+#     # axs[index].axvline(disk_particles['total entropy'].mean(), color='k', linestyle='--')
+#     axs[index].axhline(disk_particles['temperature'].mean(), color='k', linestyle='--')
 #
 # for ax in axs:
 #     ax.set_xlim(1800, 12000)
@@ -386,7 +385,7 @@ plt.show()
 # letters = list(string.ascii_lowercase)
 # for index, ax in enumerate(axs):
 #     ax.set_xlabel(r"$\rm \Delta S$ (J/kg/K)", fontsize=18)
-#     ax.axvline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
+#     ax.axvline(MELT_THRESHOLD, color='k', linestyle='--', linewidth=3.0)
 #     ax.grid()
 #     ax.text(
 #         0.95, 0.05, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'
@@ -415,7 +414,7 @@ plt.show()
 # letters = list(string.ascii_lowercase)
 # for index, ax in enumerate(axs):
 #     ax.set_xlabel("Temperature (K)", fontsize=18)
-#     ax.axhline(MELT_THRESHOLD, color='black', linestyle='--', linewidth=3.0)
+#     ax.axhline(MELT_THRESHOLD, color='k', linestyle='--', linewidth=3.0)
 #     ax.grid()
 #     ax.text(
 #         0.95, 0.05, letters[index], ha='center', va="center", transform=ax.transAxes, fontsize=20, weight='bold'

@@ -339,7 +339,7 @@ for index, run in enumerate(runs):
         disk_particles['entropy'], disk_particles['temperature'], s=20, alpha=1, color='red'
     )
     # add text in lower right hand corner saying how many particles there are
-    axs[index].text(0.80, 0.10, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
+    axs[index].text(0.80, 0.80, f"{len(disk_particles)} particles", transform=axs[index].transAxes,
                     ha='center', va="center", fontsize=18, weight='bold')
     axs[index].axvline(disk_particles['entropy'].mean(), color='k', linestyle='--')
     # axs[index].axvline(disk_particles['total entropy'].mean(), color='k', linestyle='--')
@@ -350,7 +350,7 @@ for ax in axs:
     ax.set_ylim(0, 12500)
     ax.grid(alpha=0.4)
     ax.tick_params(axis='both', which='major', labelsize=14)
-axs[0].legend(fontsize=18)
+# axs[0].legend(fontsize=18)
 plt.tight_layout()
 plt.savefig("phase_diagram.png", dpi=200)
 

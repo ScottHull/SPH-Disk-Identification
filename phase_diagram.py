@@ -287,14 +287,14 @@ for ax in axs:
     ax.text(
         0.08, 0.40, "S", transform=ax.transAxes, ha='center', va="center", fontsize=18
     )
-
-for ax in axs:
-    ax.set_xlim(1800, 12000)
-    ax.set_ylim(0, 12500)
-    ax.grid(alpha=0.4)
-    ax.tick_params(axis='both', which='major', labelsize=14)
-plt.tight_layout()
-plt.show()
+#
+# for ax in axs:
+#     ax.set_xlim(1800, 12000)
+#     ax.set_ylim(0, 12500)
+#     ax.grid(alpha=0.4)
+#     ax.tick_params(axis='both', which='major', labelsize=14)
+# plt.tight_layout()
+# plt.show()
 
 for index, run in enumerate(runs):
     axs[index].set_title(f"{run['name']}", fontsize=20)

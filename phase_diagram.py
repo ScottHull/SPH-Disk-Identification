@@ -253,7 +253,7 @@ for ax in axs:
 
     # annotate the melt-vapor mixed region
     ax.text(
-        0.45, 0.30, "M + V", transform=ax.transAxes, ha='center', va="center", fontsize=18
+        0.45, 0.30, "L + V", transform=ax.transAxes, ha='center', va="center", fontsize=18
     )
     # annotate the solid-melt mixed region with an arrow
     ax.annotate(
